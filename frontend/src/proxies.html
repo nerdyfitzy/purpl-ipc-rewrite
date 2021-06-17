@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="../assets/css/style.css" />
+    <link rel="stylesheet" href="../assets/css/responsive.css" />
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="../assets/js/jquery-3.3.1.min.js"></script>
+    <script src="../assets/js/popper.min.js"></script>
+    <script src="../assets/js/bootstrap.min.js"></script>
+    <script src="../assets/js/main.js"></script>
+    <script defer src="proxies.js"></script>
+    <title>Purpl</title>
+  </head>
+
+  <body>
+    <div class="w-100" style="height: 29px; background-color: #1c1923">
+      <div class="drag">
+        <div class="control-keys">
+          <span class="d-inline-block close nodrag" id="close-button"
+            ><i class="fas fa-times"></i
+          ></span>
+          <span class="d-inline-block minimize nodrag" id="minimize-button"
+            ><i class="fas fa-minus"></i
+          ></span>
+          <span class="d-inline-block expand nodrag" id="maximize-button"
+            ><i class="fas fa-expand-alt"></i
+          ></span>
+        </div>
+      </div>
+    </div>
+    <div class="desktop">
+      <div class="w-100">
+        <div class="custom-cm">
+          <div class="custom-cm_item" id="start-sel">Start Selected</div>
+          <div class="custom-cm_item" id="stop-sel">Stop Selected</div>
+          <div class="custom-cm_item" id="copy-sub-sub">
+            Copy »
+            <div class="sub-sub">
+              <ul>
+                <li id="copy-email" class="sub-sub_item">Email</li>
+                <li id="copy-password" class="sub-sub_item">Password</li>
+                <li id="copy-proxy" class="sub-sub_item">Proxy</li>
+                <li id="copy-recovery" class="sub-sub_item">Recovery</li>
+                <li id="copy-security" class="sub-sub_item">Security</li>
+              </ul>
+            </div>
+          </div>
+          <div class="custom-cm_item" id="test-v2v-sel">Test v2 Visible</div>
+          <div class="custom-cm_item" id="test-v2i-sel">Test v2 Invisible</div>
+          <div class="custom-cm_item" id="test-v3-sel">Test v3</div>
+          <div class="custom-cm_item" id="manual-login">Manual Login</div>
+        </div>
+        <div class="health-menu">
+          <div class="health-menu-item" id="v3-score">v3 Score</div>
+          <div class="health-menu-item" id="v2i-score">v2 Invisible</div>
+          <div class="health-menu-item" id="v2v-score">v2 Visible</div>
+        </div>
+        <div
+          class="
+            user-nav
+            d-flex
+            align-items-center
+            justify-content-between
+            w-100
+          "
+        >
+          <div>
+            <img style="width: 120px" src="../assets/images/LOGO.svg" alt="" />
+          </div>
+          <div class="d-flex align-items-center justify-content-between">
+            <span class="notifications">
+              <img src="../assets/images/Notification.png" alt="" />
+            </span>
+            <span>
+              <div class="dropdown">
+                <button
+                  class="btn user-drop dropdown-toggle"
+                  type="button"
+                  id="dropdownMenuButton"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  <span class="text-white user-arrow"
+                    ><i
+                      style="vertical-align: middle"
+                      class="fas fa-chevron-down"
+                    ></i
+                  ></span>
+                  <img
+                    id="profile-picture"
+                    src="../assets/images/PERSON.png"
+                    alt=""
+                  />
+                </button>
+                <ul
+                  class="dropdown-menu"
+                  aria-labelledby="dropdownMenuButton"
+                  style="font-size: 12px"
+                >
+                  <li>
+                    <a
+                      class="dropdown-item text-white"
+                      style="padding: 10px 18px"
+                      href="#"
+                    >
+                      <img
+                        style="margin-right: 10px"
+                        src="../assets/images/SETTINGS.png"
+                        alt=""
+                      />
+                      SETTINGS</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      class="dropdown-item"
+                      href="#"
+                      style="color: #ff6a6a; padding: 10px 18px"
+                      ><img
+                        style="margin-right: 10px"
+                        src="../assets/images/LOGOUT.png"
+                        alt=""
+                      />
+                      LOGOUT</a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </span>
+          </div>
+        </div>
+        <div
+          class="
+            links-nav
+            d-flex
+            align-items-center
+            justify-content-arround
+            w-100
+          "
+        >
+          <nav
+            class="
+              navbar navbar-expand-lg navbar-light
+              bg-transparent
+              w-100
+              p-0
+            "
+          >
+            <div class="w-100">
+              <a class="navbar-brand" href="#">Navbar</a>
+              <button
+                class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+              >
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul
+                  class="
+                    nav-dash-links
+                    list-unstyled
+                    px-0
+                    mb-0
+                    d-flex
+                    align-items-center
+                    justify-content-around
+                    flex-wrap
+                    w-100
+                  "
+                >
+                  <li class="d-inline-block">
+                    <a href="#" class="main-nav-link ui-disabled">
+                      <span class="link-attr">
+                        <span class="img-link dash"></span>
+                        <span>Dashboard</span>
+                      </span>
+                    </a>
+                  </li>
+                  <li class="d-inline-block">
+                    <a href="./dashboard.html" class="main-nav-link">
+                      <span class="link-attr">
+                        <span class="img-link task"></span>
+                        <span>Task</span>
+                      </span>
+                    </a>
+                  </li>
+                  <li class="d-inline-block">
+                    <a href="./profile.html" class="main-nav-link">
+                      <span class="link-attr">
+                        <span class="img-link profile"></span>
+                        <span>Profiles</span>
+                      </span>
+                    </a>
+                  </li>
+                  <li class="d-inline-block">
+                    <a href="#" class="main-nav-link">
+                      <span class="link-attr active">
+                        <span class="img-link proxies"></span>
+                        <span>Proxies</span>
+                      </span>
+                    </a>
+                  </li>
+                  <li class="d-inline-block">
+                    <a href="./profits/Analytic.html" class="main-nav-link">
+                      <span class="link-attr">
+                        <span class="img-link account"></span>
+                        <span>Profits</span>
+                      </span>
+                    </a>
+                  </li>
+                  <li class="d-inline-block">
+                    <a href="#" class="main-nav-link ui-disabled">
+                      <span class="link-attr">
+                        <span class="img-link settings"></span>
+                        <span>Settings</span>
+                      </span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </nav>
+        </div>
+        <div class="w-100 row mx-0 px-0">
+          <div
+            class="left-dash position-relative col-lg-4"
+            style="padding: 25px"
+          >
+            <div
+              class="d-flex align-items-center justify-content-between"
+              style="margin-bottom: 10px"
+            >
+              <span class="task-group text-white">Proxy Group</span>
+              <button
+                class="create-task-btn"
+                data-bs-toggle="modal"
+                data-bs-target="#groupModal"
+              >
+                <img
+                  style="height: 16.67px; width: 16.67px"
+                  src="../assets/images/plus-circle.svg"
+                  alt=""
+                />
+                Add Group
+              </button>
+              <!-- Modal -->
+              <div
+                class="modal fade"
+                id="groupModal"
+                tabindex="-1"
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true"
+              >
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content bg-transparent">
+                    <div class="box-purb text-white">
+                      <div>
+                        <span
+                          class="dialog-title"
+                          style="font-size: 20px; font-weight: bold"
+                          >CREATE GROUP</span
+                        >
+                      </div>
+                      <div>
+                        <span class="dialog-subtitle" style="font-size: 12px"
+                          ><span style="color: #ffffffb8"
+                            >Create a new proxy group.</span
+                          >
+                        </span>
+                      </div>
+                    </div>
+                    <div class="main-dia-box proxy-group-box">
+                      <form action="#" id="new-group-form">
+                        <div class="form-group">
+                          <label for="group-new">Group Name</label>
+                          <input
+                            type="text"
+                            placeholder="Input the group name"
+                            id="group-name-input"
+                          />
+                        </div>
+
+                        <div class="form-dialog-btn">
+                          <button
+                            class="cancel"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                          >
+                            Cancel
+                          </button>
+                          <button class="submit" id="new-group-submit">
+                            submit
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- GROUP EDIT MODAL -->
+              <div
+                class="modal fade"
+                id="groupEditModal"
+                tabindex="-1"
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true"
+              >
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content bg-transparent">
+                    <div class="box-purb text-white">
+                      <div>
+                        <span
+                          class="dialog-title"
+                          style="font-size: 20px; font-weight: bold"
+                          >EDIT GROUP</span
+                        >
+                      </div>
+                      <div>
+                        <span class="dialog-subtitle" style="font-size: 12px"
+                          ><span style="color: #ffffffb8"
+                            >Edit an existing gmail group.</span
+                          >
+                        </span>
+                      </div>
+                    </div>
+                    <div class="main-dia-box group-box">
+                      <form action="#" id="new-group-form">
+                        <div class="form-group">
+                          <label for="group-new">Group Name</label>
+                          <input
+                            type="text"
+                            placeholder="Input the group name"
+                            id="group-name-input"
+                          />
+                        </div>
+
+                        <div class="form-dialog-btn">
+                          <button
+                            class="cancel"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                          >
+                            Cancel
+                          </button>
+                          <button class="submit" id="new-group-submit">
+                            submit
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tasks-card" id="group-section">
+              <div class="side-card text-white" id="default">
+                <div
+                  class="d-flex align-items-center justify-content-between"
+                  id="default"
+                >
+                  <span id="default_name">Default List</span>
+                  <div
+                    class="d-flex align-items-center justify-content-between"
+                  >
+                    <button
+                      style="margin-right: 5px"
+                      class="border-0 p-0 edit-ic icon-btn"
+                      id="default_edit"
+                    ></button>
+                  </div>
+                </div>
+                <div
+                  class="
+                    controls
+                    d-flex
+                    align-items-center
+                    justify-content-between
+                  "
+                  id=""
+                >
+                  <span
+                    class="d-inline-flex align-items-center"
+                    style="font-size: 12px"
+                    id="${uuid}_startall"
+                    ><button
+                      class="icon-btn p-0 border-0 run bg-transparent"
+                    ></button>
+                    <span id="default_start_num">0</span>
+                  </span>
+                  <span
+                    class="d-inline-flex align-items-center"
+                    style="font-size: 12px"
+                    id="${uuid}_stopall"
+                    ><button
+                      class="icon-btn p-0 border-0 stop bg-transparent"
+                    ></button>
+                    <span id="default_stop_num">0</span>
+                  </span>
+                  <span
+                    class="d-inline-flex align-items-center"
+                    style="font-size: 12px"
+                    id="${uuid}_point9s"
+                    ><button
+                      style="background-size: 12px"
+                      class="icon-btn p-0 border-0 check bg-transparent"
+                    ></button>
+                    <span id="default_good_num">0</span>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="right-dash col" style="padding: 25px">
+            <div
+              class="
+                d-flex
+                align-items-center
+                justify-content-between
+                right-task
+              "
+              style="margin-bottom: 10px"
+            >
+              <span class="task-group text-white">Proxy List</span>
+              <button
+                data-bs-toggle="modal"
+                data-bs-target="#exampleModal"
+                class="create-task-btn"
+              >
+                <img
+                  style="height: 16.67px; width: 16.67px"
+                  src="../assets/images/plus-circle.svg"
+                  alt=""
+                />
+                Add Proxies
+              </button>
+              <!-- Modal -->
+              <div
+                class="modal fade"
+                id="exampleModal"
+                tabindex="-1"
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true"
+              >
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content bg-transparent">
+                    <div class="box-purb text-white">
+                      <div>
+                        <span
+                          class="dialog-title"
+                          style="font-size: 20px; font-weight: bold"
+                          >Add Proxies</span
+                        >
+                      </div>
+                      <div>
+                        <span
+                          class="dialog-subtitle"
+                          style="font-size: 12px"
+                          id="new-gmail-group-name"
+                          ><span style="color: #ffffffb8"
+                            >add proxies to group</span
+                          ></span
+                        >
+                      </div>
+                    </div>
+                    <div class="main-dia-box proxy-box">
+                      <form action="#" id="new-gmail-form">
+                        <div class="form-group">
+                          <label for="proxy-input">Proxies</label>
+                          <textarea
+                            name="proxies"
+                            id="proxy-input"
+                            placeholder="input your proxies!"
+                            style="height: 400px; font-size: small"
+                          ></textarea>
+                        </div>
+
+                        <div class="form-dialog-btn">
+                          <button
+                            class="cancel"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                          >
+                            Cancel
+                          </button>
+                          <button class="submit" id="new-proxy-submit">
+                            Submit
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="d-flex align-items-center justify-content-between w-100"
+            >
+              <div
+                class="
+                  list
+                  d-flex
+                  align-items-center
+                  justify-content-between
+                  w-100
+                "
+                style="padding-bottom: 5px"
+              >
+                <ul class="list-unstyled px-0 mb-0" id="proxy-filters">
+                  <li class="d-inline-block">
+                    <button class="bg-transparent border-0 active" id="allTask">
+                      All <span class="badge" id="allTask-text"> ..</span>
+                    </button>
+                  </li>
+                  <li class="d-inline-block">
+                    <button class="bg-transparent border-0" id="100ms">
+                      &lt; 100ms
+                      <span class="badge" id="100ms-filter"> .. </span>
+                    </button>
+                  </li>
+                  <li class="d-inline-block">
+                    <button class="bg-transparent border-0" id="100-500ms">
+                      100 - 500ms
+                      <span class="badge" id="100-500ms-filter"> .. </span>
+                    </button>
+                  </li>
+                  <li class="d-inline-block">
+                    <button class="bg-transparent border-0" id="500-1000ms">
+                      500 - 1000ms
+                      <span class="badge" id="500-1000ms-filter"> .. </span>
+                    </button>
+                  </li>
+                  <li class="d-inline-block">
+                    <button class="bg-transparent border-0" id="1000-2000ms">
+                      1000 - 2000ms
+                      <span class="badge" id="1000-2000ms-filter"> .. </span>
+                    </button>
+                  </li>
+                  <li class="d-inline-block">
+                    <button class="bg-transparent border-0" id="2000ms">
+                      2000ms+<span class="badge" id="2000ms-filter"> .. </span>
+                    </button>
+                  </li>
+                </ul>
+                <div
+                  class="
+                    text-white
+                    d-flex
+                    align-items-center
+                    justify-content-between
+                  "
+                >
+                  <span
+                    class="d-inline-flex align-items-center"
+                    style="font-size: 12px; margin-right: 15px"
+                    ><button
+                      class="ply-all text-white p-0 border-0 bg-transparent"
+                      id="start-all-currentgroup"
+                    >
+                      <span class="run icon-btn bg-transparent"></span> Test All
+                    </button>
+                  </span>
+                  <span
+                    class="d-inline-flex align-items-center"
+                    style="font-size: 12px"
+                    ><button
+                      class="text-white p-0 border-0 bg-transparent"
+                      id="delete-all-currentgroup"
+                    >
+                      <span class="delete-ic-r icon-btn bg-transparent"></span>
+                      Delete All
+                    </button>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="dashboard-table">
+              <table
+                class="table text-white"
+                style="margin-top: 20px; min-width: 540px"
+              >
+                <thead>
+                  <tr>
+                    <td
+                      style="
+                        text-align: center;
+                        border: 1px solid #1d1926;
+                        width: 50px;
+                      "
+                      scope="col"
+                    >
+                      <input type="checkbox" id="selectAll" />
+                    </td>
+                    <td scope="col" style="width: 350px">Proxy</td>
+                    <td scope="col" style="width: 200px">Speed</td>
+                    <td scope="col" style="width: 300px">Site</td>
+                    <td
+                      scope="col"
+                      style="text-align: left; width: 0px; position: relative"
+                    >
+                      Actions
+                    </td>
+                  </tr>
+                </thead>
+                <tbody id="proxy-tbody">
+                  <!-- <tr id="proxy-holder">
+                                <th style="text-align: center;border: 1px solid #1D1926;width: 50px;" scope="row"><input  type="checkbox" id="proxy-checkbox"></th>
+                                <td id="proxy-ip">127.0.0.1</td>
+                                <td id="${gmail.uuid}-proxy"><i style="font-size: 10px;margin-right: 5px;" class="fas fa-circle"></i> <span class="health" id="${gmail.uuid}_health"> Untested</span></td>
+                                <td id="proxy-site"> <img src="../assets/images/shopify.svg" style="width: 10%;" alt="">  </td>
+                                <td><div class="text-white d-flex align-items-center justify-content-end ">
+                                    <span class="d-inline-flex align-items-center" style="font-size: 12px;margin-right: 5px;"><button class=" text-white p-0 border-0  bg-transparent" id="${gmail.uuid}-start"><span class="run icon-btn d-inline-block" id="${gmail.uuid}-run-span"></span>  </button> </span>
+                                    <span class="d-inline-flex align-items-center" style="font-size: 12px;"><button  class="text-white  p-0 border-0  bg-transparent" id="${gmail.uuid}-delete"><span class="delete-ic-r icon-btn d-inline-block"></span>  </button> </span>
+                                </div></td>
+                            </tr>
+                            <tr id="proxy-holder">
+                                <th style="text-align: center;border: 1px solid #1D1926;width: 50px;" scope="row"><input  type="checkbox" id="proxy-checkbox"></th>
+                                <td id="proxy-ip">127.0.0.1</td>
+                                <td id="proxy-speed"><i style="font-size: 10px;margin-right: 5px;" class="fas fa-circle"></i> <span class="health" id="speed-amt"> Untested</span></td>
+                                <td id="proxy-site"> <img src="../assets/images/walmart_us.svg" style="width: 50%;" alt="">  </td>
+                                <td><div class="text-white d-flex align-items-center justify-content-end ">
+                                    <span class="d-inline-flex align-items-center" style="font-size: 12px;margin-right: 5px;"><button class=" text-white p-0 border-0  bg-transparent" id="${gmail.uuid}-start"><span class="run icon-btn d-inline-block" id="${gmail.uuid}-run-span"></span>  </button> </span>
+                                    <span class="d-inline-flex align-items-center" style="font-size: 12px;"><button  class="text-white  p-0 border-0  bg-transparent" id="${gmail.uuid}-delete"><span class="delete-ic-r icon-btn d-inline-block"></span>  </button> </span>
+                                </div></td>
+                            </tr>
+                            <tr id="proxy-holder">
+                                <th style="text-align: center;border: 1px solid #1D1926;width: 50px;" scope="row"><input  type="checkbox" id="proxy-checkbox"></th>
+                                <td id="proxy-ip">127.0.0.1</td>
+                                <td id="proxy-speed"><i style="font-size: 10px;margin-right: 5px;" class="fas fa-circle"></i> <span class="health" id="speed-amt"> Untested</span></td>
+                                <td id="proxy-site"> <img src="../assets/images/walmart_ca.svg" style="width: 30%;" alt="">  </td>
+                                <td><div class="text-white d-flex align-items-center justify-content-end ">
+                                    <span class="d-inline-flex align-items-center" style="font-size: 12px;margin-right: 5px;"><button class=" text-white p-0 border-0  bg-transparent" id="${gmail.uuid}-start"><span class="run icon-btn d-inline-block" id="${gmail.uuid}-run-span"></span>  </button> </span>
+                                    <span class="d-inline-flex align-items-center" style="font-size: 12px;"><button  class="text-white  p-0 border-0  bg-transparent" id="${gmail.uuid}-delete"><span class="delete-ic-r icon-btn d-inline-block"></span>  </button> </span>
+                                </div></td>
+                            </tr>
+                            <tr id="proxy-holder">
+                                <th style="text-align: center;border: 1px solid #1D1926;width: 50px;" scope="row"><input  type="checkbox" id="proxy-checkbox"></th>
+                                <td id="proxy-ip">127.0.0.1</td>
+                                <td id="proxy-speed"><i style="font-size: 10px;margin-right: 5px;" class="fas fa-circle"></i> <span class="health" id="speed-amt"> Untested</span></td>
+                                <td id="proxy-site"> <img src="../assets/images/target.svg" style="width: 10%;" alt="">  </td>
+                                <td><div class="text-white d-flex align-items-center justify-content-end ">
+                                    <span class="d-inline-flex align-items-center" style="font-size: 12px;margin-right: 5px;"><button class=" text-white p-0 border-0  bg-transparent" id="${gmail.uuid}-start"><span class="run icon-btn d-inline-block" id="${gmail.uuid}-run-span"></span>  </button> </span>
+                                    <span class="d-inline-flex align-items-center" style="font-size: 12px;"><button  class="text-white  p-0 border-0  bg-transparent" id="${gmail.uuid}-delete"><span class="delete-ic-r icon-btn d-inline-block"></span>  </button> </span>
+                                </div></td>
+                            </tr>
+                            <tr id="proxy-holder">
+                                <th style="text-align: center;border: 1px solid #1D1926;width: 50px;" scope="row"><input  type="checkbox" id="proxy-checkbox"></th>
+                                <td id="proxy-ip">127.0.0.1</td>
+                                <td id="proxy-speed"><i style="font-size: 10px;margin-right: 5px;" class="fas fa-circle"></i> <span class="health" id="speed-amt"> Untested</span></td>
+                                <td id="proxy-site"> <img src="../assets/images/supreme.svg" style="width: 25%;" alt="">  </td>
+                                <td><div class="text-white d-flex align-items-center justify-content-end ">
+                                    <span class="d-inline-flex align-items-center" style="font-size: 12px;margin-right: 5px;"><button class=" text-white p-0 border-0  bg-transparent" id="${gmail.uuid}-start"><span class="run icon-btn d-inline-block" id="${gmail.uuid}-run-span"></span>  </button> </span>
+                                    <span class="d-inline-flex align-items-center" style="font-size: 12px;"><button  class="text-white  p-0 border-0  bg-transparent" id="${gmail.uuid}-delete"><span class="delete-ic-r icon-btn d-inline-block"></span>  </button> </span>
+                                </div></td>
+                            </tr>
+                            <tr id="proxy-holder">
+                                <th style="text-align: center;border: 1px solid #1D1926;width: 50px;" scope="row"><input  type="checkbox" id="proxy-checkbox"></th>
+                                <td id="proxy-ip">127.0.0.1</td>
+                                <td id="proxy-speed"><i style="font-size: 10px;margin-right: 5px;" class="fas fa-circle"></i> <span class="health" id="speed-amt"> Untested</span></td>
+                                <td id="proxy-site"> <img src="../assets/images/nike.svg" style="width: 25%;" alt="">  </td>
+                                <td><div class="text-white d-flex align-items-center justify-content-end ">
+                                    <span class="d-inline-flex align-items-center" style="font-size: 12px;margin-right: 5px;"><button class=" text-white p-0 border-0  bg-transparent" id="${gmail.uuid}-start"><span class="run icon-btn d-inline-block" id="${gmail.uuid}-run-span"></span>  </button> </span>
+                                    <span class="d-inline-flex align-items-center" style="font-size: 12px;"><button  class="text-white  p-0 border-0  bg-transparent" id="${gmail.uuid}-delete"><span class="delete-ic-r icon-btn d-inline-block"></span>  </button> </span>
+                                </div></td>
+                            </tr>
+                            <tr id="proxy-holder">
+                                <th style="text-align: center;border: 1px solid #1D1926;width: 50px;" scope="row"><input  type="checkbox" id="proxy-checkbox"></th>
+                                <td id="proxy-ip">127.0.0.1</td>
+                                <td id="proxy-speed"><i style="font-size: 10px;margin-right: 5px;" class="fas fa-circle"></i> <span class="health" id="speed-amt"> Untested</span></td>
+                                <td id="proxy-site"> <img src="../assets/images/google.svg" style="width: 25%;" alt="">  </td>
+                                <td><div class="text-white d-flex align-items-center justify-content-end ">
+                                    <span class="d-inline-flex align-items-center" style="font-size: 12px;margin-right: 5px;"><button class=" text-white p-0 border-0  bg-transparent" id="${gmail.uuid}-start"><span class="run icon-btn d-inline-block" id="${gmail.uuid}-run-span"></span>  </button> </span>
+                                    <span class="d-inline-flex align-items-center" style="font-size: 12px;"><button  class="text-white  p-0 border-0  bg-transparent" id="${gmail.uuid}-delete"><span class="delete-ic-r icon-btn d-inline-block"></span>  </button> </span>
+                                </div></td>
+                            </tr>
+                            <tr id="proxy-holder">
+                                <th style="text-align: center;border: 1px solid #1D1926;width: 50px;" scope="row"><input  type="checkbox" id="proxy-checkbox"></th>
+                                <td id="proxy-ip">127.0.0.1</td>
+                                <td id="proxy-speed"><i style="font-size: 10px;margin-right: 5px;" class="fas fa-circle"></i> <span class="health" id="speed-amt"> Untested</span></td>
+                                <td id="proxy-site"> <img src="../assets/images/ftl.svg" style="width: 20%;" alt="">  </td>
+                                <td><div class="text-white d-flex align-items-center justify-content-end ">
+                                    <span class="d-inline-flex align-items-center" style="font-size: 12px;margin-right: 5px;"><button class=" text-white p-0 border-0  bg-transparent" id="${gmail.uuid}-start"><span class="run icon-btn d-inline-block" id="${gmail.uuid}-run-span"></span>  </button> </span>
+                                    <span class="d-inline-flex align-items-center" style="font-size: 12px;"><button  class="text-white  p-0 border-0  bg-transparent" id="${gmail.uuid}-delete"><span class="delete-ic-r icon-btn d-inline-block"></span>  </button> </span>
+                                </div></td>
+                            </tr>
+                            <tr id="proxy-holder">
+                                <th style="text-align: center;border: 1px solid #1D1926;width: 50px;" scope="row"><input  type="checkbox" id="proxy-checkbox"></th>
+                                <td id="proxy-ip">127.0.0.1</td>
+                                <td id="proxy-speed"><i style="font-size: 10px;margin-right: 5px;" class="fas fa-circle"></i> <span class="health" id="speed-amt"> Untested</span></td>
+                                <td id="proxy-site"> <img src="../assets/images/dicks.svg" style="width: 20%;" alt="">  </td>
+                                <td><div class="text-white d-flex align-items-center justify-content-end ">
+                                    <span class="d-inline-flex align-items-center" style="font-size: 12px;margin-right: 5px;"><button class=" text-white p-0 border-0  bg-transparent" id="${gmail.uuid}-start"><span class="run icon-btn d-inline-block" id="${gmail.uuid}-run-span"></span>  </button> </span>
+                                    <span class="d-inline-flex align-items-center" style="font-size: 12px;"><button  class="text-white  p-0 border-0  bg-transparent" id="${gmail.uuid}-delete"><span class="delete-ic-r icon-btn d-inline-block"></span>  </button> </span>
+                                </div></td>
+                            </tr> -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

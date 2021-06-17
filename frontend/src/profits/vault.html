@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../assets/css/bootstrap.min.css" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="../../assets/css/profits.css" />
+    <link rel="stylesheet" href="../../assets/css/profits_responsive.css" />
+    <title>Purpl</title>
+  </head>
+
+  <body class="hidden-scroll">
+    <div class="w-100" style="height: 29px; background-color: #1c1923">
+      <div class="control-keys">
+        <span class="d-inline-block close"><i class="fas fa-times"></i></span>
+        <span class="d-inline-block minimize"
+          ><i class="fas fa-minus"></i
+        ></span>
+        <span class="d-inline-block expand"
+          ><i class="fas fa-expand-alt"></i
+        ></span>
+      </div>
+    </div>
+    <div class="desktop d-block">
+      <div class="w-100">
+        <div
+          class="user-nav d-flex align-items-center justify-content-between w-100"
+        >
+          <div>
+            <img
+              style="width: 120px"
+              src="../../assets/images/LOGO.svg"
+              alt=""
+            />
+          </div>
+          <div class="d-flex align-items-center justify-content-between">
+            <span class="notifications">
+              <img src="../../assets/images/Notification.png" alt="" />
+            </span>
+            <span>
+              <div class="dropdown">
+                <button
+                  class="btn user-drop dropdown-toggle"
+                  type="button"
+                  id="dropdownMenuButton"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  <span class="text-white user-arrow"
+                    ><i
+                      style="vertical-align: middle"
+                      class="fas fa-chevron-down"
+                    ></i
+                  ></span>
+                  <img src="../../assets/images/PERSON.png" alt="" />
+                </button>
+                <ul
+                  class="dropdown-menu"
+                  aria-labelledby="dropdownMenuButton"
+                  style="font-size: 12px"
+                >
+                  <li>
+                    <a
+                      class="dropdown-item text-white"
+                      style="padding: 10px 18px"
+                      href="#"
+                    >
+                      <img
+                        style="margin-right: 10px"
+                        src="../../assets/images/SETTINGS.png"
+                        alt=""
+                      />
+                      SETTINGS</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      class="dropdown-item"
+                      href="#"
+                      style="color: #ff6a6a; padding: 10px 18px"
+                      ><img
+                        style="margin-right: 10px"
+                        src="../../assets/images/LOGOUT.png"
+                        alt=""
+                      />
+                      LOGOUT</a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </span>
+          </div>
+        </div>
+        <div
+          class="links-nav d-flex align-items-center justify-content-arround w-100"
+        >
+          <nav
+            class="navbar navbar-expand-lg navbar-light bg-transparent w-100 p-0"
+          >
+            <div class="w-100">
+              <a class="navbar-brand" href="#">Navbar</a>
+              <button
+                class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+              >
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div
+                class="collapse navbar-collapse flex-wrap"
+                id="navbarSupportedContent"
+              >
+                <ul
+                  class="nav-dash-links list-unstyled px-0 mb-0 d-flex align-items-center justify-content-around flex-wrap w-100"
+                >
+                  <li class="d-inline-block">
+                    <a href="#" class="main-nav-link ui-disabled">
+                      <span class="link-attr">
+                        <span class="img-link dash"></span>
+                        <span>Dashboard</span>
+                      </span>
+                    </a>
+                  </li>
+                  <li class="d-inline-block">
+                    <a href="../dashboard.html" class="main-nav-link">
+                      <span class="link-attr">
+                        <span class="img-link task"></span>
+                        <span>Task</span>
+                      </span>
+                    </a>
+                  </li>
+                  <li class="d-inline-block">
+                    <a href="../profile.html" class="main-nav-link">
+                      <span class="link-attr">
+                        <span class="img-link profile"></span>
+                        <span>Profiles</span>
+                      </span>
+                    </a>
+                  </li>
+                  <li class="d-inline-block">
+                    <a href="../proxies.html" class="main-nav-link">
+                      <span class="link-attr">
+                        <span class="img-link proxies"></span>
+                        <span>Proxies</span>
+                      </span>
+                    </a>
+                  </li>
+                  <li class="d-inline-block">
+                    <a href="#" class="main-nav-link">
+                      <span class="link-attr active">
+                        <span class="img-link account active"></span>
+                        <span>Profits</span>
+                      </span>
+                    </a>
+                  </li>
+                  <li class="d-inline-block">
+                    <a href="" class="main-nav-link">
+                      <span class="link-attr">
+                        <span class="img-link settings"></span>
+                        <span>Settings</span>
+                      </span>
+                    </a>
+                  </li>
+                </ul>
+                <ul
+                  class="nav-dash-links list-unstyled px-0 mb-0 d-flex align-items-center justify-content-around flex-wrap w-100"
+                  style="background-color: #16131d"
+                >
+                  <li class="d-inline-block">
+                    <a href="./Analytic.html" class="main-nav-link">
+                      <span class="link-attr">
+                        <span class="img-link analytic"></span>
+                        <span>Analytic</span>
+                      </span>
+                    </a>
+                  </li>
+                  <li class="d-inline-block">
+                    <a href="./inventory.html" class="main-nav-link">
+                      <span class="link-attr">
+                        <span class="img-link inventory"></span>
+                        <span>Inventory</span>
+                      </span>
+                    </a>
+                  </li>
+                  <li class="d-inline-block">
+                    <a href="./sales.html" class="main-nav-link">
+                      <span class="link-attr">
+                        <span class="img-link sales"></span>
+                        <span>Sales</span>
+                      </span>
+                    </a>
+                  </li>
+                  <li class="d-inline-block">
+                    <a href="./expense.html" class="main-nav-link">
+                      <span class="link-attr">
+                        <span class="img-link expenses"></span>
+                        <span>Expenses</span>
+                      </span>
+                    </a>
+                  </li>
+                  <li class="d-inline-block">
+                    <a href="" class="main-nav-link ui-disabled">
+                      <span class="link-attr">
+                        <span class="img-link market"></span>
+                        <span>Market</span>
+                      </span>
+                    </a>
+                  </li>
+                  <li class="d-inline-block">
+                    <a href="#" class="main-nav-link">
+                      <span class="link-attr active">
+                        <span class="img-link vault"></span>
+                        <span>Vault</span>
+                      </span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </nav>
+        </div>
+      </div>
+
+      <div class="filter-search mx-4 mt-4 text-white">
+        <div class="mb-3 flex-grow-1 my-2">
+          <h2 class="f-16 fw-bold text-white">Market</h2>
+          <h4 style="color: #915bed" class="fw-normal f-10">Market</h4>
+        </div>
+        <div class="d-flex flex-wrap align-items-end">
+          <div class="form-group mb-3">
+            <input
+              style="height: 40px; width: 300px"
+              class="search-input-d me-2 text-white"
+              type="text"
+              placeholder="search here"
+            />
+            <button class="filter-btn-t r-8 f-16 mx-2" style="min-width: 94px">
+              <img src="../../assets/images/filter.svg" alt="" /> Filter
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="mx-4 mt-4 text-white gl-bg r-8 p-2 mb-3 nazm overflow-auto">
+        <table class="table text-white valt-table" style="min-width: 1350px">
+          <thead>
+            <tr class="mb-3">
+              <th style="width: 350px" class="f-16">Bot</th>
+              <th style="width: 200px" class="f-16">Lower Ask</th>
+              <th style="width: 200px" class="f-16">Highest Bid</th>
+              <th style="width: 200px" class="f-16">Purchase Price</th>
+              <th style="width: 600px" class="f-16 text-end">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                <div class="d-flex align-items-center">
+                  <div>
+                    <img
+                      style="width: 72px; height: 72px"
+                      src="../../assets/images/tab-1.svg"
+                      alt=""
+                    />
+                  </div>
+                  <div class="ms-3">
+                    <h2 class="mb-1 f-20 fe-bold">Cybersole</h2>
+                    <h5 class="f-14 w-5 fw-normal">Renewal</h5>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="fw-bold f-20">$12.904</div>
+                <div class="f-16 fw-bolder up-color">
+                  <img src="../../assets/images/up-index.svg" alt="" /> $20
+                </div>
+              </td>
+              <td>
+                <div class="fw-bold f-20">$5.800</div>
+                <div class="f-16 fw-bolder down-color">
+                  <img src="../../assets/images/down-index.svg" alt="" /> $90
+                </div>
+              </td>
+              <td>
+                <div class="fw-bold f-20">$128.640</div>
+                <div class="f-16 fw-bolder up-color">
+                  <img src="../../assets/images/up-index.svg" alt="" /> $1.980
+                  <sub>Profit</sub>
+                </div>
+              </td>
+              <td class="text-end">
+                <div
+                  class="d-flex align-items-center w-100 text-end justify-content-end"
+                >
+                  <span
+                    class="table-badge purple-bg text-white f-14 px-4 ms-2 fw-bolder d-inline-flex align-items-center justify-content-center"
+                    >Post WTS</span
+                  >
+                  <span
+                    class="table-badge purple-bg text-white f-14 px-4 ms-2 fw-bolder d-inline-flex align-items-center justify-content-center"
+                    >Post WTB</span
+                  >
+                  <span
+                    class="table-badge green-bg text-white f-14 px-4 ms-2 fw-bolder d-inline-flex align-items-center justify-content-center"
+                    >Mark as sold
+                    <img
+                      class="ms-2"
+                      src="../../assets/images/check.svg"
+                      alt=""
+                  /></span>
+                  <span
+                    data-bs-toggle="modal"
+                    data-bs-target="#exampleModal"
+                    class="table-badge select-menu text-white f-14 px-2 ms-2 fw-bolder d-inline-flex align-items-center justify-content-center"
+                    ><img src="../../assets/images/bolets.svg" alt=""
+                  /></span>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="d-flex align-items-center">
+                  <div>
+                    <img
+                      style="width: 72px; height: 72px"
+                      src="../../assets/images/tab-2.svg"
+                      alt=""
+                    />
+                  </div>
+                  <div class="ms-3">
+                    <h2 class="mb-1 f-20 fe-bold">Cybersole</h2>
+                    <h5 class="f-14 w-5 fw-normal">Renewal</h5>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="fw-bold f-20">$12.904</div>
+                <div class="f-16 fw-bolder up-color">
+                  <img src="../../assets/images/up-index.svg" alt="" /> $20
+                </div>
+              </td>
+              <td>
+                <div class="fw-bold f-20">$5.800</div>
+                <div class="f-16 fw-bolder down-color">
+                  <img src="../../assets/images/down-index.svg" alt="" /> $90
+                </div>
+              </td>
+              <td>
+                <div class="fw-bold f-20">$128.640</div>
+                <div class="f-16 fw-bolder up-color">
+                  <img src="../../assets/images/up-index.svg" alt="" /> $1.980
+                  <sub>Profit</sub>
+                </div>
+              </td>
+              <td class="text-end">
+                <div
+                  class="d-flex align-items-center w-100 text-end justify-content-end"
+                >
+                  <span
+                    class="table-badge purple-bg text-white f-14 px-4 ms-2 fw-bolder d-inline-flex align-items-center justify-content-center"
+                    >Post WTS</span
+                  >
+                  <span
+                    class="table-badge purple-bg text-white f-14 px-4 ms-2 fw-bolder d-inline-flex align-items-center justify-content-center"
+                    >Post WTB</span
+                  >
+                  <span
+                    class="table-badge green-bg text-white f-14 px-4 ms-2 fw-bolder d-inline-flex align-items-center justify-content-center"
+                    >Mark as sold
+                    <img
+                      class="ms-2"
+                      src="../../assets/images/check.svg"
+                      alt=""
+                  /></span>
+                  <span
+                    data-bs-toggle="modal"
+                    data-bs-target="#exampleModal"
+                    class="table-badge select-menu text-white f-14 px-2 ms-2 fw-bolder d-inline-flex align-items-center justify-content-center"
+                    ><img src="../../assets/images/bolets.svg" alt=""
+                  /></span>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="d-flex align-items-center">
+                  <div>
+                    <img
+                      style="width: 72px; height: 72px"
+                      src="../../assets/images/tab-3.svg"
+                      alt=""
+                    />
+                  </div>
+                  <div class="ms-3">
+                    <h2 class="mb-1 f-20 fe-bold">Cybersole</h2>
+                    <h5 class="f-14 w-5 fw-normal">Renewal</h5>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="fw-bold f-20">$12.904</div>
+                <div class="f-16 fw-bolder up-color">
+                  <img src="../../assets/images/up-index.svg" alt="" /> $20
+                </div>
+              </td>
+              <td>
+                <div class="fw-bold f-20">$5.800</div>
+                <div class="f-16 fw-bolder down-color">
+                  <img src="../../assets/images/down-index.svg" alt="" /> $90
+                </div>
+              </td>
+              <td>
+                <div class="fw-bold f-20">$128.640</div>
+                <div class="f-16 fw-bolder up-color">
+                  <img src="../../assets/images/up-index.svg" alt="" /> $1.980
+                  <sub>Profit</sub>
+                </div>
+              </td>
+              <td class="text-end">
+                <div
+                  class="d-flex align-items-center w-100 text-end justify-content-end"
+                >
+                  <span
+                    class="table-badge purple-bg text-white f-14 px-4 ms-2 fw-bolder d-inline-flex align-items-center justify-content-center"
+                    >Post WTS</span
+                  >
+                  <span
+                    class="table-badge purple-bg text-white f-14 px-4 ms-2 fw-bolder d-inline-flex align-items-center justify-content-center"
+                    >Post WTB</span
+                  >
+                  <span
+                    class="table-badge green-bg text-white f-14 px-4 ms-2 fw-bolder d-inline-flex align-items-center justify-content-center"
+                    >Mark as sold
+                    <img
+                      class="ms-2"
+                      src="../../assets/images/check.svg"
+                      alt=""
+                  /></span>
+                  <span
+                    data-bs-toggle="modal"
+                    data-bs-target="#exampleModal"
+                    class="table-badge select-menu text-white f-14 px-2 ms-2 fw-bolder d-inline-flex align-items-center justify-content-center"
+                    ><img src="../../assets/images/bolets.svg" alt=""
+                  /></span>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="d-flex align-items-center">
+                  <div>
+                    <img
+                      style="width: 72px; height: 72px"
+                      src="../../assets/images/tab-4.svg"
+                      alt=""
+                    />
+                  </div>
+                  <div class="ms-3">
+                    <h2 class="mb-1 f-20 fe-bold">Cybersole</h2>
+                    <h5 class="f-14 w-5 fw-normal">Renewal</h5>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="fw-bold f-20">$12.904</div>
+                <div class="f-16 fw-bolder up-color">
+                  <img src="../../assets/images/up-index.svg" alt="" /> $20
+                </div>
+              </td>
+              <td>
+                <div class="fw-bold f-20">$5.800</div>
+                <div class="f-16 fw-bolder down-color">
+                  <img src="../../assets/images/down-index.svg" alt="" /> $90
+                </div>
+              </td>
+              <td>
+                <div class="fw-bold f-20">$128.640</div>
+                <div class="f-16 fw-bolder up-color">
+                  <img src="../../assets/images/up-index.svg" alt="" /> $1.980
+                  <sub>Profit</sub>
+                </div>
+              </td>
+              <td class="text-end">
+                <div
+                  class="d-flex align-items-center w-100 text-end justify-content-end"
+                >
+                  <span
+                    class="table-badge purple-bg text-white f-14 px-4 ms-2 fw-bolder d-inline-flex align-items-center justify-content-center"
+                    >Post WTS</span
+                  >
+                  <span
+                    class="table-badge purple-bg text-white f-14 px-4 ms-2 fw-bolder d-inline-flex align-items-center justify-content-center"
+                    >Post WTB</span
+                  >
+                  <span
+                    class="table-badge green-bg text-white f-14 px-4 ms-2 fw-bolder d-inline-flex align-items-center justify-content-center"
+                    >Mark as sold
+                    <img
+                      class="ms-2"
+                      src="../../assets/images/check.svg"
+                      alt=""
+                  /></span>
+                  <span
+                    data-bs-toggle="modal"
+                    data-bs-target="#exampleModal"
+                    class="table-badge select-menu text-white f-14 px-2 ms-2 fw-bolder d-inline-flex align-items-center justify-content-center"
+                    ><img src="../../assets/images/bolets.svg" alt=""
+                  /></span>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="d-flex align-items-center">
+                  <div>
+                    <img
+                      style="width: 72px; height: 72px"
+                      src="../../assets/images/tab-1.svg"
+                      alt=""
+                    />
+                  </div>
+                  <div class="ms-3">
+                    <h2 class="mb-1 f-20 fe-bold">Cybersole</h2>
+                    <h5 class="f-14 w-5 fw-normal">Renewal</h5>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="fw-bold f-20">$12.904</div>
+                <div class="f-16 fw-bolder up-color">
+                  <img src="../../assets/images/up-index.svg" alt="" /> $20
+                </div>
+              </td>
+              <td>
+                <div class="fw-bold f-20">$5.800</div>
+                <div class="f-16 fw-bolder down-color">
+                  <img src="../../assets/images/down-index.svg" alt="" /> $90
+                </div>
+              </td>
+              <td>
+                <div class="fw-bold f-20">$128.640</div>
+                <div class="f-16 fw-bolder up-color">
+                  <img src="../../assets/images/up-index.svg" alt="" /> $1.980
+                  <sub>Profit</sub>
+                </div>
+              </td>
+              <td class="text-end">
+                <div
+                  class="d-flex align-items-center w-100 text-end justify-content-end"
+                >
+                  <span
+                    class="table-badge purple-bg text-white f-14 px-4 ms-2 fw-bolder d-inline-flex align-items-center justify-content-center"
+                    >Post WTS</span
+                  >
+                  <span
+                    class="table-badge purple-bg text-white f-14 px-4 ms-2 fw-bolder d-inline-flex align-items-center justify-content-center"
+                    >Post WTB</span
+                  >
+                  <span
+                    class="table-badge green-bg text-white f-14 px-4 ms-2 fw-bolder d-inline-flex align-items-center justify-content-center"
+                    >Mark as sold
+                    <img
+                      class="ms-2"
+                      src="../../assets/images/check.svg"
+                      alt=""
+                  /></span>
+                  <span
+                    data-bs-toggle="modal"
+                    data-bs-target="#exampleModal"
+                    class="table-badge select-menu text-white f-14 px-2 ms-2 fw-bolder d-inline-flex align-items-center justify-content-center"
+                    ><img src="../../assets/images/bolets.svg" alt=""
+                  /></span>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <div class="d-flex align-items-center">
+                  <div>
+                    <img
+                      style="width: 72px; height: 72px"
+                      src="../../assets/images/tab-3.svg"
+                      alt=""
+                    />
+                  </div>
+                  <div class="ms-3">
+                    <h2 class="mb-1 f-20 fe-bold">Cybersole</h2>
+                    <h5 class="f-14 w-5 fw-normal">Renewal</h5>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="fw-bold f-20">$12.904</div>
+                <div class="f-16 fw-bolder up-color">
+                  <img src="../../assets/images/up-index.svg" alt="" /> $20
+                </div>
+              </td>
+              <td>
+                <div class="fw-bold f-20">$5.800</div>
+                <div class="f-16 fw-bolder down-color">
+                  <img src="../../assets/images/down-index.svg" alt="" /> $90
+                </div>
+              </td>
+              <td>
+                <div class="fw-bold f-20">$128.640</div>
+                <div class="f-16 fw-bolder up-color">
+                  <img src="../../assets/images/up-index.svg" alt="" /> $1.980
+                  <sub>Profit</sub>
+                </div>
+              </td>
+              <td class="text-end">
+                <div
+                  class="d-flex align-items-center w-100 text-end justify-content-end"
+                >
+                  <span
+                    class="table-badge purple-bg text-white f-14 px-4 ms-2 fw-bolder d-inline-flex align-items-center justify-content-center"
+                    >Post WTS</span
+                  >
+                  <span
+                    class="table-badge purple-bg text-white f-14 px-4 ms-2 fw-bolder d-inline-flex align-items-center justify-content-center"
+                    >Post WTB</span
+                  >
+                  <span
+                    class="table-badge green-bg text-white f-14 px-4 ms-2 fw-bolder d-inline-flex align-items-center justify-content-center"
+                    >Mark as sold
+                    <img
+                      class="ms-2"
+                      src="../../assets/images/check.svg"
+                      alt=""
+                  /></span>
+                  <span
+                    data-bs-toggle="modal"
+                    data-bs-target="#exampleModal"
+                    class="table-badge select-menu text-white f-14 px-2 ms-2 fw-bolder d-inline-flex align-items-center justify-content-center"
+                    ><img src="../../assets/images/bolets.svg" alt=""
+                  /></span>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <!-- Modal -->
+        <div
+          class="modal fade"
+          id="exampleModal"
+          tabindex="-1"
+          aria-labelledby="exampleModalLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content bg-transparent">
+              <div class="box-purb text-white">
+                <div>
+                  <span
+                    class="dialog-title"
+                    style="font-size: 20px; font-weight: bold"
+                    >ADD ITEMS</span
+                  >
+                </div>
+                <div>
+                  <span class="dialog-subtitle" style="font-size: 12px"
+                    ><span style="color: #ffffffb8">Order Id</span>
+                    Inventory</span
+                  >
+                </div>
+              </div>
+              <div class="main-dia-box main-dia-box-selc">
+                <form action="">
+                  <div class="row">
+                    <div class="col-md-12 px-0">
+                      <div class="row w-100 mx-0 darad">
+                        <div class="col-md-12">
+                          <div class="form-group">
+                            <label
+                              for=""
+                              class="f-12 d-flex align-items-center justify-content-between"
+                              ><span>Name</span>
+                            </label>
+                            <div class="position-relative">
+                              <input
+                                style="max-width: 100%"
+                                type="text"
+                                placeholder="Enter here"
+                              />
+                              <img
+                                class="al-ico"
+                                src="../../assets/images/search.png"
+                                alt=""
+                              />
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row mx-0 w-100 mt-4 mb-2">
+                          <div class="col-md-3">
+                            <a href="" class="text-white">
+                              <div class="d-flex align-items-center smoh mb-2">
+                                <div>
+                                  <img
+                                    style="width: 40px; height: 40px"
+                                    src="../../assets/images/tab-4.svg"
+                                    alt=""
+                                  />
+                                </div>
+                                <div class="ms-3">
+                                  <h5 class="f-16 mb-0">Project Destroyer</h5>
+                                </div>
+                              </div>
+                            </a>
+                          </div>
+                          <div class="col-md-3">
+                            <a href="" class="text-white">
+                              <div class="d-flex align-items-center smoh mb-2">
+                                <div>
+                                  <img
+                                    style="width: 40px; height: 40px"
+                                    src="../../assets/images/tab-3.svg"
+                                    alt=""
+                                  />
+                                </div>
+                                <div class="ms-3">
+                                  <h5 class="f-16 mb-0">Cybersole</h5>
+                                </div>
+                              </div>
+                            </a>
+                          </div>
+                          <div class="col-md-3">
+                            <a href="" class="text-white">
+                              <div class="d-flex align-items-center smoh mb-2">
+                                <div>
+                                  <img
+                                    style="width: 40px; height: 40px"
+                                    src="../../assets/images/tab-2.svg"
+                                    alt=""
+                                  />
+                                </div>
+                                <div class="ms-3">
+                                  <h5 class="f-16 mb-0">Tohru AIO</h5>
+                                </div>
+                              </div>
+                            </a>
+                          </div>
+                          <div class="col-md-3">
+                            <a href="" class="text-white">
+                              <div class="d-flex align-items-center smoh mb-2">
+                                <div>
+                                  <img
+                                    style="width: 40px; height: 40px"
+                                    src="../../assets/images/tab-1.svg"
+                                    alt=""
+                                  />
+                                </div>
+                                <div class="ms-3">
+                                  <h5 class="f-16 mb-0">MEKPreme</h5>
+                                </div>
+                              </div>
+                            </a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-8">
+                      <div class="form-group">
+                        <label
+                          for=""
+                          class="f-12 d-flex align-items-center justify-content-between"
+                          ><span>Purchase Price</span>
+                        </label>
+                        <input type="text" placeholder="Enter here" />
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="" class="f-12">Lisence Type</label>
+                        <select name="" id="">
+                          <option value="">LifeTime</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label
+                          for=""
+                          class="f-12 d-flex align-items-center justify-content-between"
+                          ><span>Key Lisence</span>
+                        </label>
+                        <input
+                          style="max-width: 100%"
+                          type="text"
+                          placeholder="Enter lisence key here"
+                        />
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label
+                          for=""
+                          class="f-12 d-flex align-items-center justify-content-between"
+                          ><span>Delay</span>
+                        </label>
+                        <input type="text" placeholder="Enter here" />
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label
+                          for=""
+                          class="f-12 d-flex align-items-center justify-content-between"
+                          ><span>Purchase Date</span>
+                        </label>
+                        <input type="text" placeholder="Enter here" />
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="" class="f-12">Mode</label>
+                        <select name="" id="">
+                          <option value="">Retail</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="" class="f-12">Renewel Frequecy</label>
+                        <select name="" id="">
+                          <option value="">Select Renewel Frequecy</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label
+                          for=""
+                          class="f-12 d-flex align-items-center justify-content-between"
+                          ><span>Renewal Price</span>
+                        </label>
+                        <input type="text" placeholder="Enter here" />
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <div class="form-group">
+                        <label
+                          for=""
+                          class="f-12 d-flex align-items-center justify-content-between"
+                          ><span>Renewal Date</span>
+                        </label>
+                        <input type="text" placeholder="Enter here" />
+                      </div>
+                    </div>
+                    <div class="row w-100 px-0 mx-0">
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label
+                            for=""
+                            class="f-12 d-flex align-items-center justify-content-between"
+                            ><span>Marketplace Cofiguration</span>
+                          </label>
+                          <input type="text" placeholder="WTS Value (uder)" />
+                        </div>
+                        <div class="form-group my-2">
+                          <div class="d-flex align-items-center text-center">
+                            <label style="margin-top: 9px" class="switch">
+                              <input type="checkbox" checked="" />
+                              <span class="slider round"></span>
+                            </label>
+                            <span class="f-11 ms-2"
+                              >Play notification on taargeted value</span
+                            >
+                          </div>
+                        </div>
+                        <div class="form-group mb-2">
+                          <input type="text" placeholder="WTB Value (over)" />
+                        </div>
+                        <div class="form-group">
+                          <div class="d-flex align-items-center text-center">
+                            <label style="margin-top: 9px" class="switch">
+                              <input type="checkbox" checked="" />
+                              <span class="slider round"></span>
+                            </label>
+                            <span class="f-11 ms-2"
+                              >Play notification on taargeted value</span
+                            >
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-8">
+                        <div class="form-group">
+                          <label
+                            for=""
+                            class="f-12 d-flex align-items-center justify-content-between"
+                            ><span>notes</span>
+                          </label>
+                          <textarea
+                            class="w-100"
+                            name=""
+                            placeholder="Lisence related notes - which burner / account it is bound to..."
+                            id=""
+                            rows="7"
+                          ></textarea>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-dialog-btn">
+                    <button
+                      class="cancel"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      class="submit"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                    >
+                      submit
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="../../assets/js/jquery-3.3.1.min.js"></script>
+    <script src="../../assets/js/popper.min.js"></script>
+    <script src="../../assets/js/bootstrap.min.js"></script>
+    <script src="../../assets/js/main.js"></script>
+  </body>
+</html>

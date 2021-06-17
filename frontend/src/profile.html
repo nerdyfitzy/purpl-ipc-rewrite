@@ -1,0 +1,2526 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="../assets/css/profiles.css" />
+    <link rel="stylesheet" href="../assets/css/profiles_responsive.css" />
+    <title>Purpl</title>
+  </head>
+
+  <body>
+    <div class="w-100" style="height: 29px; background-color: #1c1923">
+      <div class="custom-cm">
+        <div
+          class="custom-cm_item"
+          id="move-sel"
+          data-bs-toggle="modal"
+          data-bs-target="#moveModal"
+        >
+          Move Selected To
+        </div>
+        <div class="custom-cm_item" id="copy-sel">Copy Selected</div>
+        <div class="custom-cm_item" id="del-sel">Delete Selected</div>
+        <div
+          class="custom-cm_item"
+          id="jig-sel"
+          data-bs-toggle="modal"
+          data-bs-target="#jigModal"
+        >
+          Jig Selected
+        </div>
+        <div
+          class="custom-cm_item"
+          id="exp-sel"
+          data-bs-toggle="modal"
+          data-bs-target="#exportModal"
+        >
+          Export Selected
+        </div>
+      </div>
+      <!-- jig modal -->
+      <div
+        class="modal fade"
+        id="jigModal"
+        tabindex="-1"
+        aria-labelledby="#jig-sel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content bg-transparent">
+            <div class="box-purb text-white">
+              <div>
+                <span
+                  class="dialog-title"
+                  style="font-size: 20px; font-weight: bold"
+                  >JIG PROFILES</span
+                >
+              </div>
+              <div>
+                <span class="dialog-subtitle" style="font-size: 12px"
+                  ><span style="color: #ffffffb8"
+                    >Jig the selected profiles</span
+                  >
+                </span>
+              </div>
+            </div>
+            <div class="main-dia-box group-box jig-box w-100">
+              <form action="#" id="move-group-form">
+                <div class="form-group">
+                  <div class="col-md-8 w-100">
+                    <div
+                      class="
+                        form-group
+                        d-flex
+                        align-items-center
+                        position-relative
+                      "
+                    >
+                      <input
+                        class="d-inline-block"
+                        type="checkbox"
+                        style="
+                          padding: 0;
+                          border-radius: 0;
+                          white-space: nowrap;
+                          width: 15px;
+                          min-width: 15px;
+                        "
+                        id="4-lett"
+                      />
+                      Random
+                      <input
+                        type="number"
+                        id="amt-letters"
+                        style="height: 25px; width: 50px; z-index: 1000"
+                      />
+                      letters
+                      <select
+                        name="letters-position"
+                        id="letters-position"
+                        style="height: 40px; width: 100px; white-space: nowrap"
+                      >
+                        <option value="before" selected>Before</option>
+                        <option value="after">After</option>
+                      </select>
+                      address 1
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div
+                      class="
+                        form-group
+                        d-flex
+                        align-items-center
+                        position-relative
+                      "
+                    >
+                      <input
+                        class="d-inline-block"
+                        type="checkbox"
+                        style="padding: 0; border-radius: 0"
+                        id="apt-jig"
+                      />
+                      Random apartment in<select
+                        name="apt-line-choose"
+                        id="apt-line-choose"
+                        style="width: 100px; height: 40px"
+                      >
+                        <option value="addy1">Line 1</option>
+                        <option value="addy2" selected>Line 2</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div
+                      class="
+                        form-group
+                        d-flex
+                        align-items-center
+                        position-relative
+                      "
+                    >
+                      <input
+                        class="d-inline-block"
+                        type="checkbox"
+                        style="padding: 0; border-radius: 0"
+                        id="ran-fname"
+                      />
+                      <label style="margin: 5px" for=""
+                        >Random first name</label
+                      >
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div
+                      class="
+                        form-group
+                        d-flex
+                        align-items-center
+                        position-relative
+                      "
+                    >
+                      <input
+                        class="d-inline-block"
+                        type="checkbox"
+                        style="padding: 0; border-radius: 0"
+                        id="ran-lname"
+                      />
+                      <label style="margin: 5px" for="">Random last name</label>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div
+                      class="
+                        form-group
+                        d-flex
+                        align-items-center
+                        position-relative
+                      "
+                    >
+                      <input
+                        class="d-inline-block"
+                        type="checkbox"
+                        style="padding: 0; border-radius: 0"
+                        id="ran-phone"
+                      />
+                      <label style="margin: 5px" for=""
+                        >Random phone number (same area code)</label
+                      >
+                    </div>
+                  </div>
+                  <!-- <div class="col-md-12">
+                    <div
+                      class="
+                        form-group
+                        d-flex
+                        align-items-center
+                        position-relative
+                      "
+                    >
+                      <input
+                        class="d-inline-block"
+                        type="checkbox"
+                        style="padding: 0; border-radius: 0"
+                        id="custom-jig"
+                      />
+                      <label style="margin: 5px" for="">Custom Jig</label>
+                    </div>
+                  </div> -->
+                </div>
+
+                <div class="form-dialog-btn">
+                  <button
+                    class="cancel"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    Cancel
+                  </button>
+                  <button class="submit" id="jig-submit">submit</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- move modal -->
+      <div
+        class="modal fade"
+        id="moveModal"
+        tabindex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content bg-transparent">
+            <div class="box-purb text-white">
+              <div>
+                <span
+                  class="dialog-title"
+                  style="font-size: 20px; font-weight: bold"
+                  >MOVE GROUP</span
+                >
+              </div>
+              <div>
+                <span class="dialog-subtitle" style="font-size: 12px"
+                  ><span style="color: #ffffffb8"
+                    >Move profiles to a different group.</span
+                  >
+                </span>
+              </div>
+            </div>
+            <div class="main-dia-box group-box">
+              <form action="#" id="move-group-form">
+                <div class="form-group">
+                  <label for="move">Group Name</label>
+                  <select name="bill-country-input" id="move-group">
+                    <option value="">Select Group</option>
+                  </select>
+                </div>
+
+                <div class="form-dialog-btn">
+                  <button
+                    class="cancel"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                  >
+                    Cancel
+                  </button>
+                  <button class="submit" id="move-group-submit">submit</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="control-keys">
+        <span class="d-inline-block close"><i class="fas fa-times"></i></span>
+        <span class="d-inline-block minimize"
+          ><i class="fas fa-minus"></i
+        ></span>
+        <span class="d-inline-block expand"
+          ><i class="fas fa-expand-alt"></i
+        ></span>
+      </div>
+    </div>
+    <div class="desktop">
+      <div class="w-100">
+        <div
+          class="
+            user-nav
+            d-flex
+            align-items-center
+            justify-content-between
+            w-100
+          "
+        >
+          <div>
+            <img style="width: 120px" src="../assets/images/LOGO.svg" alt="" />
+          </div>
+          <div class="d-flex align-items-center justify-content-between">
+            <span class="notifications">
+              <img src="../assets/images/Notification.png" alt="" />
+            </span>
+            <span>
+              <div class="dropdown">
+                <button
+                  class="btn user-drop dropdown-toggle"
+                  type="button"
+                  id="dropdownMenuButton"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  <span class="text-white user-arrow"
+                    ><i
+                      style="vertical-align: middle"
+                      class="fas fa-chevron-down"
+                    ></i
+                  ></span>
+                  <img src="../assets/images/PERSON.png" alt="" />
+                </button>
+                <ul
+                  class="dropdown-menu"
+                  aria-labelledby="dropdownMenuButton"
+                  style="font-size: 12px"
+                >
+                  <li>
+                    <a
+                      class="dropdown-item text-white"
+                      style="padding: 10px 18px"
+                      href="#"
+                    >
+                      <img
+                        style="margin-right: 10px"
+                        src="../assets/images/SETTINGS.png"
+                        alt=""
+                      />
+                      SETTINGS</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      class="dropdown-item"
+                      href="#"
+                      style="color: #ff6a6a; padding: 10px 18px"
+                      ><img
+                        style="margin-right: 10px"
+                        src="../assets/images/LOGOUT.png"
+                        alt=""
+                      />
+                      LOGOUT</a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </span>
+          </div>
+        </div>
+        <div
+          class="
+            links-nav
+            d-flex
+            align-items-center
+            justify-content-arround
+            w-100
+          "
+        >
+          <nav
+            class="
+              navbar navbar-expand-lg navbar-light
+              bg-transparent
+              w-100
+              p-0
+            "
+          >
+            <div class="w-100">
+              <a class="navbar-brand" href="#">Navbar</a>
+              <button
+                class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+              >
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul
+                  class="
+                    nav-dash-links
+                    list-unstyled
+                    px-0
+                    mb-0
+                    d-flex
+                    align-items-center
+                    justify-content-around
+                    flex-wrap
+                    w-100
+                  "
+                >
+                  <li class="d-inline-block">
+                    <a href="#" class="main-nav-link">
+                      <span class="link-attr">
+                        <span class="img-link dash"></span>
+                        <span>Dashboard</span>
+                      </span>
+                    </a>
+                  </li>
+                  <li class="d-inline-block">
+                    <a href="./dashboard.html" class="main-nav-link">
+                      <span class="link-attr">
+                        <span class="img-link task"></span>
+                        <span>Task</span>
+                      </span>
+                    </a>
+                  </li>
+                  <li class="d-inline-block">
+                    <a href="#" class="main-nav-link">
+                      <span class="link-attr active">
+                        <span class="img-link profile"></span>
+                        <span>Profiles</span>
+                      </span>
+                    </a>
+                  </li>
+                  <li class="d-inline-block">
+                    <a href="./proxies.html" class="main-nav-link">
+                      <span class="link-attr">
+                        <span class="img-link proxies"></span>
+                        <span>Proxies</span>
+                      </span>
+                    </a>
+                  </li>
+                  <li class="d-inline-block">
+                    <a href="./profits/Analytic.html" class="main-nav-link">
+                      <span class="link-attr">
+                        <span class="img-link account"></span>
+                        <span>Profits</span>
+                      </span>
+                    </a>
+                  </li>
+                  <li class="d-inline-block">
+                    <a href="#" class="main-nav-link">
+                      <span class="link-attr">
+                        <span class="img-link settings"></span>
+                        <span>Settings</span>
+                      </span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </nav>
+        </div>
+        <div class="w-100 row mx-0 px-0">
+          <div
+            class="left-dash position-relative col-lg-4"
+            style="padding: 25px"
+          >
+            <div
+              class="d-flex align-items-center justify-content-between"
+              style="margin-bottom: 10px"
+            >
+              <span class="task-group text-white">Task Group</span>
+              <button
+                class="create-task-btn"
+                data-bs-toggle="modal"
+                data-bs-target="#groupModal"
+              >
+                <img
+                  style="height: 16.67px; width: 16.67px"
+                  src="../assets/images/plus-circle.svg"
+                  alt=""
+                />Create New
+              </button>
+
+              <div
+                class="modal fade"
+                id="groupModal"
+                tabindex="-1"
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true"
+              >
+                <div class="modal-dialog modal-dialog-centered">
+                  <div class="modal-content bg-transparent">
+                    <div class="box-purb text-white">
+                      <div>
+                        <span
+                          class="dialog-title"
+                          style="font-size: 20px; font-weight: bold"
+                          >CREATE GROUP</span
+                        >
+                      </div>
+                      <div>
+                        <span class="dialog-subtitle" style="font-size: 12px"
+                          ><span style="color: #ffffffb8"
+                            >Create a new gmail group.</span
+                          >
+                        </span>
+                      </div>
+                    </div>
+                    <div class="main-dia-box group-box">
+                      <form action="#" id="new-group-form">
+                        <div class="form-group">
+                          <label for="group-new">Group Name</label>
+                          <input
+                            type="text"
+                            placeholder="Input the group name"
+                            id="group-name-input"
+                          />
+                        </div>
+
+                        <div class="form-dialog-btn">
+                          <button
+                            class="cancel"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                          >
+                            Cancel
+                          </button>
+                          <button class="submit" id="new-group-submit">
+                            submit
+                          </button>
+                        </div>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tasks-card" id="task-groups-add">
+              <div class="side-card text-white" id="default">
+                <div class="d-flex align-items-center justify-content-between">
+                  <span>Default Group</span>
+                  <div
+                    class="d-flex align-items-center justify-content-between"
+                  >
+                    <button
+                      style="margin-right: 5px"
+                      class="border-0 p-0 edit-ic icon-btn"
+                      id="default-edit"
+                    ></button>
+                  </div>
+                </div>
+                <div class="controls d-flex align-items-center">
+                  <span
+                    class="d-inline-flex align-items-center"
+                    style="font-size: 12px"
+                  >
+                    <img
+                      style="margin: -2px 5px 0 0"
+                      src="../assets/images/profile-account.png"
+                      alt=""
+                    />
+                    <span id="default-num"
+                      >0 <small class="ms-1">Profiles</small></span
+                    ></span
+                  >
+                </div>
+              </div>
+              <!-- import task groups here -->
+            </div>
+          </div>
+          <div class="right-dash col p-0">
+            <div class="dark-one" style="padding: 25px">
+              <div
+                class="
+                  d-flex
+                  align-items-center
+                  justify-content-between
+                  right-task
+                  flex-wrap
+                "
+                style="margin-bottom: 10px"
+              >
+                <div class="d-flex align-items-center">
+                  <span class="task-group text-white">Profiles List</span>
+                  <span
+                    class="d-inline-block mx-3"
+                    style="
+                      height: 25px;
+                      width: 1px;
+                      background-color: rgba(255, 255, 255, 0.25);
+                    "
+                  ></span>
+                  <a
+                    href=""
+                    data-bs-toggle="modal"
+                    data-bs-target="#accountModal"
+                    class="text-white me-3"
+                    style="font-size: 12px"
+                    id="accounts-modal-open"
+                    ><img
+                      style="width: 16px"
+                      class="me-1"
+                      src="../assets/images/account.png"
+                      alt=""
+                    />
+                    Accounts</a
+                  >
+                  <div
+                    class="modal fade"
+                    id="accountModal"
+                    tabindex="-1"
+                    aria-labelledby="#accounts-modal-open"
+                    aria-hidden="true"
+                  >
+                    <div class="modal-dialog modal-dialog-centered">
+                      <div class="modal-content bg-transparent">
+                        <div class="box-purb text-white">
+                          <div>
+                            <span
+                              class="dialog-title"
+                              style="font-size: 20px; font-weight: bold"
+                              >Create Accounts</span
+                            >
+                          </div>
+                          <div>
+                            <span
+                              class="dialog-subtitle"
+                              style="font-size: 12px"
+                              id="site-header"
+                            >
+                              on Walmart</span
+                            >
+                          </div>
+                        </div>
+                        <div class="main-dia-box account-box">
+                          <div class="col-md-12 mb-3">
+                            <div class="col-md-12">
+                              <label for="site-choose">Choose Site</label>
+                              <select name="site-choose" id="site-choose">
+                                <option value="Walmart">Walmart</option>
+                                <option value="Target">Target</option>
+                                <option value="Undefeated">Undefeated</option>
+                                <option value="Bestbuy">BestBuy</option>
+                                <option value="Amazon">Amazon</option>
+                              </select>
+                            </div>
+                          </div>
+                          <form action="#">
+                            <div style="height: 420px; overflow: auto">
+                              <div class="col-md-12">
+                                <label for="catchall-input"
+                                  >Input Catchall</label
+                                >
+                                <input
+                                  type="text"
+                                  placeholder="catchall.com"
+                                  id="catchall-input"
+                                />
+                              </div>
+                              <div class="col-md-12">
+                                <label for="qty-acc-input">Quantity</label>
+                                <input
+                                  type="number"
+                                  min="0"
+                                  placeholder="10"
+                                  id="qty-acc-input"
+                                />
+                              </div>
+                              <div class="col-md-12">
+                                <label for="proxies-acc-input"
+                                  >Proxies To Use</label
+                                >
+                                <select
+                                  name="proxies-acc-input"
+                                  id="proxies-acc-input"
+                                ></select>
+                              </div>
+                              <div class="form-dialog-btn">
+                                <button
+                                  class="cancel"
+                                  data-bs-dismiss="modal"
+                                  aria-label="Close"
+                                >
+                                  Cancel
+                                </button>
+                                <button
+                                  class="submit"
+                                  data-bs-dismiss="modal"
+                                  aria-label="Close"
+                                  id="create-accs"
+                                >
+                                  submit
+                                </button>
+                              </div>
+                            </div>
+                            <div class="position-relative"></div>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <a
+                    href=""
+                    class="text-white"
+                    style="font-size: 12px"
+                    data-bs-toggle="modal"
+                    data-bs-target="#vccModal"
+                    id="vcc-modal-open"
+                    ><img
+                      style="width: 16px"
+                      class="me-1"
+                      src="../assets/images/credit-card.png"
+                      alt=""
+                    />
+                    Card</a
+                  >
+                  <div
+                    class="modal fade"
+                    id="vccModal"
+                    tabindex="-1"
+                    aria-labelledby="#vcc-modal-open"
+                    aria-hidden="true"
+                  >
+                    <div class="modal-dialog modal-dialog-centered">
+                      <div class="modal-content bg-transparent">
+                        <div class="box-purb text-white">
+                          <div>
+                            <span
+                              class="dialog-title"
+                              style="font-size: 20px; font-weight: bold"
+                              >VCCs</span
+                            >
+                          </div>
+                        </div>
+                        <div class="main-dia-box account-box">
+                          <div class="col-md-12 mb-3">
+                            <div class="col-md-12">
+                              <label for="site-choose">Choose Service</label>
+                              <select
+                                name="vcc-service-choose"
+                                id="vcc-service-choose"
+                              >
+                                <option value="Privacy">Privacy</option>
+                              </select>
+                            </div>
+                          </div>
+                          <form action="#">
+                            <div style="height: 420px; overflow: auto">
+                              <div class="col-md-12">
+                                <label for="action-choose">Choose Action</label>
+                                <select name="action-choose" id="action-choose">
+                                  <option value="make">Make Cards</option>
+                                  <option value="get">Get Cards</option>
+                                </select>
+                              </div>
+                              <div class="col-md-12">
+                                <label for="cards-qty">Quantity Of Cards</label>
+                                <input
+                                  type="text"
+                                  placeholder="Only needed if making cards"
+                                  id="cards-qty"
+                                />
+                              </div>
+                              <div class="col-md-12">
+                                <label for="cards-qty">Name of Cards</label>
+                                <input
+                                  type="text"
+                                  placeholder="Only needed if making cards"
+                                  id="cards-name"
+                                />
+                              </div>
+                              <div class="col-md-12">
+                                <label for="profile-group-base"
+                                  >Profile Group</label
+                                >
+                                <select
+                                  name="profile-group-base"
+                                  id="profile-group-base"
+                                ></select>
+                              </div>
+                              <div class="col-md-12">
+                                <label for="profile-base"
+                                  >Specific Profile</label
+                                >
+                                <select
+                                  name="profile-base"
+                                  id="profile-base"
+                                ></select>
+                              </div>
+
+                              <div class="form-dialog-btn">
+                                <button
+                                  class="cancel"
+                                  data-bs-dismiss="modal"
+                                  aria-label="Close"
+                                >
+                                  Cancel
+                                </button>
+                                <button
+                                  class="submit"
+                                  data-bs-dismiss="modal"
+                                  aria-label="Close"
+                                  id="vcc-submit"
+                                >
+                                  submit
+                                </button>
+                              </div>
+                            </div>
+                            <div class="position-relative"></div>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="d-flex align-items-center flex-wrap">
+                  <div class="my-1 position-relative search-input flex-grow-1">
+                    <input type="text" placeholder="Search here..." />
+                    <img src="../assets/images/search.png" alt="" />
+                  </div>
+                  <div class="my-1">
+                    <button
+                      data-bs-toggle="modal"
+                      data-bs-target="#exportModal"
+                      class="create-task-btn f-12"
+                    >
+                      <img
+                        style="height: 16.67px; width: 16.67px"
+                        src="../assets/images/export-btn.png"
+                        alt=""
+                      />
+                      Export
+                    </button>
+
+                    <!-- modal exports -->
+                    <div
+                      class="modal fade"
+                      id="exportModal"
+                      tabindex="-1"
+                      aria-labelledby="exampleModalLabel"
+                      aria-hidden="true"
+                    >
+                      <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content bg-transparent">
+                          <div class="box-purb text-white">
+                            <div>
+                              <span
+                                class="dialog-title"
+                                style="font-size: 20px; font-weight: bold"
+                                >Export</span
+                              >
+                            </div>
+                            <div>
+                              <span
+                                class="dialog-subtitle"
+                                style="font-size: 12px"
+                                ><span style="color: #ffffffb8"> on</span>
+                                Terminator Group</span
+                              >
+                            </div>
+                          </div>
+                          <div class="main-dia-box">
+                            <div class="col-md-12 mb-3">
+                              <div
+                                class="
+                                  my-1
+                                  position-relative
+                                  search-input
+                                  flex-grow-1
+                                  w-100
+                                "
+                                style="max-width: 100%"
+                              >
+                                <input
+                                  type="text"
+                                  placeholder="Search here..."
+                                />
+                                <img src="../assets/images/search.png" alt="" />
+                              </div>
+                            </div>
+                            <form action="">
+                              <div style="height: 420px; overflow: auto">
+                                <div
+                                  class="row w-100 mx-0 px-0"
+                                  id="bots-export"
+                                >
+                                  <div class="col-6 col-lg-4 mb-3">
+                                    <div
+                                      class="
+                                        d-flex
+                                        align-items-center
+                                        justify-content-center
+                                        im-ex-icons
+                                      "
+                                      id="Cybersole"
+                                    >
+                                      <img
+                                        src="../assets/images/Cybersole-2.png"
+                                        alt=""
+                                      />
+                                    </div>
+                                  </div>
+                                  <div class="col-6 col-lg-4 mb-3">
+                                    <div
+                                      class="
+                                        d-flex
+                                        align-items-center
+                                        justify-content-center
+                                        im-ex-icons
+                                      "
+                                      id="Dashe"
+                                    >
+                                      <img
+                                        src="../assets/images/Cybersole-3.png"
+                                        alt=""
+                                      />
+                                    </div>
+                                  </div>
+                                  <div class="col-6 col-lg-4 mb-3">
+                                    <div
+                                      class="
+                                        d-flex
+                                        align-items-center
+                                        justify-content-center
+                                        im-ex-icons
+                                      "
+                                      id="Kodai"
+                                    >
+                                      <img
+                                        src="../assets/images/Cybersole-4.png"
+                                        alt=""
+                                      />
+                                    </div>
+                                  </div>
+                                  <div class="col-6 col-lg-4 mb-3">
+                                    <div
+                                      class="
+                                        d-flex
+                                        align-items-center
+                                        justify-content-center
+                                        im-ex-icons
+                                      "
+                                      id="Balkobot"
+                                    >
+                                      <img
+                                        class="bot-im"
+                                        src="../assets/images/balko.png"
+                                        alt=""
+                                      />
+                                    </div>
+                                  </div>
+                                  <div class="col-6 col-lg-4 mb-3">
+                                    <div
+                                      class="
+                                        d-flex
+                                        align-items-center
+                                        justify-content-center
+                                        im-ex-icons
+                                      "
+                                      id="Ganesh"
+                                    >
+                                      <img
+                                        class="bot-im"
+                                        src="../assets/images/ganesh.png"
+                                        alt=""
+                                      />
+                                    </div>
+                                  </div>
+                                  <div class="col-6 col-lg-4 mb-3">
+                                    <div
+                                      class="
+                                        d-flex
+                                        align-items-center
+                                        justify-content-center
+                                        im-ex-icons
+                                      "
+                                      id="Kage"
+                                    >
+                                      <img
+                                        class="bot-im"
+                                        src="../assets/images/kage.png"
+                                        alt=""
+                                      />
+                                    </div>
+                                  </div>
+                                  <div class="col-6 col-lg-4 mb-3">
+                                    <div
+                                      class="
+                                        d-flex
+                                        align-items-center
+                                        justify-content-center
+                                        im-ex-icons
+                                      "
+                                      id="MEKAIO"
+                                    >
+                                      <img
+                                        class="bot-im"
+                                        src="../assets/images/mekaio.png"
+                                        alt=""
+                                      />
+                                    </div>
+                                  </div>
+                                  <div class="col-6 col-lg-4 mb-3">
+                                    <div
+                                      class="
+                                        d-flex
+                                        align-items-center
+                                        justify-content-center
+                                        im-ex-icons
+                                      "
+                                      id="Nebula"
+                                    >
+                                      <img
+                                        class="bot-im"
+                                        src="../assets/images/nebula.png"
+                                        alt=""
+                                      />
+                                    </div>
+                                  </div>
+                                  <div class="col-6 col-lg-4 mb-3">
+                                    <div
+                                      class="
+                                        d-flex
+                                        align-items-center
+                                        justify-content-center
+                                        im-ex-icons
+                                      "
+                                      id="NSB"
+                                    >
+                                      <img
+                                        class="bot-im"
+                                        src="../assets/images/nsb.png"
+                                        alt=""
+                                      />
+                                    </div>
+                                  </div>
+                                  <div class="col-6 col-lg-4 mb-3">
+                                    <div
+                                      class="
+                                        d-flex
+                                        align-items-center
+                                        justify-content-center
+                                        im-ex-icons
+                                      "
+                                      id="Polaris"
+                                    >
+                                      <img
+                                        class="bot-im"
+                                        src="../assets/images/polaris.png"
+                                        alt=""
+                                      />
+                                    </div>
+                                  </div>
+                                  <div class="col-6 col-lg-4 mb-3">
+                                    <div
+                                      class="
+                                        d-flex
+                                        align-items-center
+                                        justify-content-center
+                                        im-ex-icons
+                                      "
+                                      id="Prism"
+                                    >
+                                      <img
+                                        class="bot-im"
+                                        src="../assets/images/prism.png"
+                                        alt=""
+                                      />
+                                    </div>
+                                  </div>
+                                  <div class="col-6 col-lg-4 mb-3">
+                                    <div
+                                      class="
+                                        d-flex
+                                        align-items-center
+                                        justify-content-center
+                                        im-ex-icons
+                                      "
+                                      id="RE AIO"
+                                    >
+                                      <img
+                                        class="bot-im"
+                                        src="../assets/images/reaio.png"
+                                        alt=""
+                                      />
+                                    </div>
+                                  </div>
+                                  <div class="col-6 col-lg-4 mb-3">
+                                    <div
+                                      class="
+                                        d-flex
+                                        align-items-center
+                                        justify-content-center
+                                        im-ex-icons
+                                      "
+                                      id="Rush"
+                                    >
+                                      <img
+                                        class="bot-im"
+                                        src="../assets/images/rush.png"
+                                        alt=""
+                                      />
+                                    </div>
+                                  </div>
+                                  <div class="col-6 col-lg-4 mb-3">
+                                    <div
+                                      class="
+                                        d-flex
+                                        align-items-center
+                                        justify-content-center
+                                        im-ex-icons
+                                      "
+                                      id="Splashforce"
+                                    >
+                                      <img
+                                        class="bot-im"
+                                        src="../assets/images/splashforce.png"
+                                        alt=""
+                                      />
+                                    </div>
+                                  </div>
+                                  <div class="col-6 col-lg-4 mb-3">
+                                    <div
+                                      class="
+                                        d-flex
+                                        align-items-center
+                                        justify-content-center
+                                        im-ex-icons
+                                      "
+                                      id="Torpedo"
+                                    >
+                                      <img
+                                        class="bot-im"
+                                        src="../assets/images/torpedo.png"
+                                        alt=""
+                                      />
+                                    </div>
+                                  </div>
+                                  <div class="col-6 col-lg-4 mb-3">
+                                    <div
+                                      class="
+                                        d-flex
+                                        align-items-center
+                                        justify-content-center
+                                        im-ex-icons
+                                      "
+                                      id="Wrath"
+                                    >
+                                      <img
+                                        class="bot-im"
+                                        src="../assets/images/wrath.png"
+                                        alt=""
+                                      />
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="position-relative"></div>
+                              <div class="form-dialog-btn">
+                                <button
+                                  class="cancel"
+                                  data-bs-dismiss="modal"
+                                  aria-label="Close"
+                                >
+                                  Cancel
+                                </button>
+                                <button
+                                  class="submit"
+                                  data-bs-dismiss="modal"
+                                  aria-label="Close"
+                                  id="export-button"
+                                >
+                                  submit
+                                </button>
+                              </div>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="my-1">
+                    <button
+                      data-bs-toggle="modal"
+                      data-bs-target="#importModal"
+                      class="create-task-btn f-12"
+                    >
+                      <img
+                        style="height: 16.67px; width: 16.67px"
+                        src="../assets/images/import-btn.png"
+                        alt=""
+                      />
+                      Import
+                    </button>
+                    <!-- Modal -->
+                    <div
+                      class="modal fade"
+                      id="importModal"
+                      tabindex="-1"
+                      aria-labelledby="exampleModalLabel"
+                      aria-hidden="true"
+                    >
+                      <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content bg-transparent">
+                          <div class="box-purb text-white">
+                            <div>
+                              <span
+                                class="dialog-title"
+                                style="font-size: 20px; font-weight: bold"
+                                >Import</span
+                              >
+                            </div>
+                            <div>
+                              <span
+                                class="dialog-subtitle"
+                                style="font-size: 12px"
+                                ><span style="color: #ffffffb8"> on</span>
+                                Terminator Group</span
+                              >
+                            </div>
+                          </div>
+                          <div class="main-dia-box">
+                            <div class="col-md-12 mb-3">
+                              <div
+                                class="
+                                  my-1
+                                  position-relative
+                                  search-input
+                                  flex-grow-1
+                                  w-100
+                                "
+                                style="max-width: 100%"
+                              >
+                                <input
+                                  type="text"
+                                  id="search-import"
+                                  placeholder="Search here..."
+                                />
+                                <img src="../assets/images/search.png" alt="" />
+                              </div>
+                            </div>
+                            <form action="">
+                              <div style="height: 420px; overflow: auto">
+                                <div class="row w-100 mx-0 px-0" id="bots">
+                                  <div class="col-6 col-lg-4 mb-3">
+                                    <div
+                                      class="
+                                        d-flex
+                                        align-items-center
+                                        justify-content-center
+                                        im-ex-icons
+                                      "
+                                      id="Project Destroyer"
+                                    >
+                                      <img
+                                        src="../assets/images/Cybersole-1.png"
+                                        alt=""
+                                      />
+                                    </div>
+                                  </div>
+                                  <div class="col-6 col-lg-4 mb-3">
+                                    <div
+                                      class="
+                                        d-flex
+                                        align-items-center
+                                        justify-content-center
+                                        im-ex-icons
+                                      "
+                                      id="Cybersole"
+                                    >
+                                      <img
+                                        src="../assets/images/Cybersole-2.png"
+                                        alt=""
+                                      />
+                                    </div>
+                                  </div>
+                                  <div class="col-6 col-lg-4 mb-3">
+                                    <div
+                                      class="
+                                        d-flex
+                                        align-items-center
+                                        justify-content-center
+                                        im-ex-icons
+                                      "
+                                      id="Dashe"
+                                    >
+                                      <img
+                                        src="../assets/images/Cybersole-3.png"
+                                        alt=""
+                                      />
+                                    </div>
+                                  </div>
+                                  <div class="col-6 col-lg-4 mb-3">
+                                    <div
+                                      class="
+                                        d-flex
+                                        align-items-center
+                                        justify-content-center
+                                        im-ex-icons
+                                      "
+                                      id="Kodai"
+                                    >
+                                      <img
+                                        src="../assets/images/Cybersole-4.png"
+                                        alt=""
+                                      />
+                                    </div>
+                                  </div>
+                                  <div class="col-6 col-lg-4 mb-3">
+                                    <div
+                                      class="
+                                        d-flex
+                                        align-items-center
+                                        justify-content-center
+                                        im-ex-icons
+                                      "
+                                      id="Phantom"
+                                    >
+                                      <img
+                                        src="../assets/images/Cybersole-5.png"
+                                        alt=""
+                                      />
+                                    </div>
+                                  </div>
+                                  <div class="col-6 col-lg-4 mb-3">
+                                    <div
+                                      class="
+                                        d-flex
+                                        align-items-center
+                                        justify-content-center
+                                        im-ex-icons
+                                      "
+                                      id="AYCD"
+                                    >
+                                      <img
+                                        class="bot-im"
+                                        src="../assets/images/aycdtoolbox.png"
+                                        alt=""
+                                      />
+                                    </div>
+                                  </div>
+                                  <div class="col-6 col-lg-4 mb-3">
+                                    <div
+                                      class="
+                                        d-flex
+                                        align-items-center
+                                        justify-content-center
+                                        im-ex-icons
+                                      "
+                                      id="Balkobot"
+                                    >
+                                      <img
+                                        class="bot-im"
+                                        src="../assets/images/balko.png"
+                                        alt=""
+                                      />
+                                    </div>
+                                  </div>
+                                  <div class="col-6 col-lg-4 mb-3">
+                                    <div
+                                      class="
+                                        d-flex
+                                        align-items-center
+                                        justify-content-center
+                                        im-ex-icons
+                                      "
+                                      id="CSV"
+                                    >
+                                      <img
+                                        class="bot-im"
+                                        src="../assets/images/csvlogo.png"
+                                        alt=""
+                                      />
+                                    </div>
+                                  </div>
+                                  <div class="col-6 col-lg-4 mb-3">
+                                    <div
+                                      class="
+                                        d-flex
+                                        align-items-center
+                                        justify-content-center
+                                        im-ex-icons
+                                      "
+                                      id="Ganesh"
+                                    >
+                                      <img
+                                        class="bot-im"
+                                        src="../assets/images/ganesh.png"
+                                        alt=""
+                                      />
+                                    </div>
+                                  </div>
+                                  <div class="col-6 col-lg-4 mb-3">
+                                    <div
+                                      class="
+                                        d-flex
+                                        align-items-center
+                                        justify-content-center
+                                        im-ex-icons
+                                      "
+                                      id="Kage"
+                                    >
+                                      <img
+                                        class="bot-im"
+                                        src="../assets/images/kage.png"
+                                        alt=""
+                                      />
+                                    </div>
+                                  </div>
+                                  <div class="col-6 col-lg-4 mb-3">
+                                    <div
+                                      class="
+                                        d-flex
+                                        align-items-center
+                                        justify-content-center
+                                        im-ex-icons
+                                      "
+                                      id="Nebula"
+                                    >
+                                      <img
+                                        class="bot-im"
+                                        src="../assets/images/nebula.png"
+                                        alt=""
+                                      />
+                                    </div>
+                                  </div>
+                                  <div class="col-6 col-lg-4 mb-3">
+                                    <div
+                                      class="
+                                        d-flex
+                                        align-items-center
+                                        justify-content-center
+                                        im-ex-icons
+                                      "
+                                      id="NSB"
+                                    >
+                                      <img
+                                        class="bot-im"
+                                        src="../assets/images/nsb.png"
+                                        alt=""
+                                      />
+                                    </div>
+                                  </div>
+                                  <div class="col-6 col-lg-4 mb-3">
+                                    <div
+                                      class="
+                                        d-flex
+                                        align-items-center
+                                        justify-content-center
+                                        im-ex-icons
+                                      "
+                                      id="Polaris"
+                                    >
+                                      <img
+                                        class="bot-im"
+                                        src="../assets/images/polaris.png"
+                                        alt=""
+                                      />
+                                    </div>
+                                  </div>
+                                  <div class="col-6 col-lg-4 mb-3">
+                                    <div
+                                      class="
+                                        d-flex
+                                        align-items-center
+                                        justify-content-center
+                                        im-ex-icons
+                                      "
+                                      id="Prism"
+                                    >
+                                      <img
+                                        class="bot-im"
+                                        src="../assets/images/prism.png"
+                                        alt=""
+                                      />
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="position-relative">
+                                <div class="select-file">
+                                  <div
+                                    class="
+                                      d-flex
+                                      align-items-center
+                                      justify-content-center
+                                      h-100
+                                      w-100
+                                    "
+                                  >
+                                    <img
+                                      src="../assets/images/import-file.png"
+                                      alt=""
+                                    />
+                                    <label
+                                      style="font-size: 16px"
+                                      class="my-0"
+                                      for=""
+                                      id="import-file-btn"
+                                      >Import Cybersole File</label
+                                    >
+                                  </div>
+                                </div>
+                                <button
+                                  id="file-input"
+                                  class="file-3aq"
+                                ></button>
+                              </div>
+                              <div class="form-dialog-btn">
+                                <button
+                                  class="cancel"
+                                  data-bs-dismiss="modal"
+                                  aria-label="Close"
+                                >
+                                  Cancel
+                                </button>
+                                <button
+                                  class="submit"
+                                  data-bs-dismiss="modal"
+                                  aria-label="Close"
+                                >
+                                  submit
+                                </button>
+                              </div>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="my-1">
+                    <button
+                      data-bs-toggle="modal"
+                      data-bs-target="#exampleModal"
+                      class="create-task-btn f-12"
+                    >
+                      <img
+                        style="height: 16.67px; width: 16.67px"
+                        src="../assets/images/plus-circle.svg"
+                        alt=""
+                      />
+                      Create Profile
+                    </button>
+                    <!-- Modal -->
+                    <div
+                      class="modal fade"
+                      id="exampleModal"
+                      tabindex="-1"
+                      aria-labelledby="exampleModalLabel"
+                      aria-hidden="true"
+                    >
+                      <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content bg-transparent">
+                          <div
+                            class="
+                              box-purb box-purb-res
+                              text-white
+                              pb-2
+                              d-flex
+                              align-items-center
+                              justify-content-between
+                            "
+                          >
+                            <div>
+                              <div>
+                                <span
+                                  class="dialog-title"
+                                  style="font-size: 20px; font-weight: bold"
+                                  >CREATE TASK</span
+                                >
+                              </div>
+                              <div class="swap-im f-12 mt-2">
+                                <span
+                                  id="btn-shp"
+                                  class="active me-2 d-inline-block"
+                                >
+                                  <span class="img-sw img-shp"></span>
+                                  <span>Shipping</span>
+                                </span>
+                                <span id="btn-bil" class="me-2 d-inline-block">
+                                  <span class="img-sw img-bil"></span>
+                                  <span>Billing</span>
+                                </span>
+                                <span id="btn-py" class="me-2 d-inline-block">
+                                  <span class="img-sw img-pay"></span>
+                                  <span>Payment</span>
+                                </span>
+                              </div>
+                            </div>
+                            <div>
+                              <button class="nav-btn prev-form disabled-color">
+                                <i class="fas fa-chevron-left"></i>
+                              </button>
+                              <button class="nav-btn next-form">
+                                <i class="fas fa-chevron-right"></i>
+                              </button>
+                            </div>
+                          </div>
+                          <div class="selected-form">
+                            <div class="main-dia-box btn-shp active">
+                              <form action="">
+                                <div class="row">
+                                  <div class="col-md-12">
+                                    <div
+                                      class="
+                                        form-group
+                                        d-flex
+                                        align-items-center
+                                        position-relative
+                                      "
+                                    >
+                                      <input
+                                        class="d-inline-block"
+                                        type="checkbox"
+                                        style="padding: 0; border-radius: 0"
+                                        id="same-bill"
+                                      />
+                                      <label style="margin: 5px" for=""
+                                        >Billing Address same like Shipping
+                                      </label>
+                                    </div>
+                                  </div>
+                                  <div class="col-md-6">
+                                    <div class="form-group">
+                                      <label
+                                        for=""
+                                        class="
+                                          d-flex
+                                          align-items-center
+                                          justify-content-between
+                                        "
+                                        ><span>First Name</span>
+                                      </label>
+                                      <input
+                                        type="text"
+                                        placeholder="Input first name"
+                                        id="fname-input"
+                                      />
+                                    </div>
+                                  </div>
+                                  <div class="col-md-6">
+                                    <div class="form-group">
+                                      <label
+                                        for=""
+                                        class="
+                                          d-flex
+                                          align-items-center
+                                          justify-content-between
+                                        "
+                                        ><span>Last Name</span>
+                                      </label>
+                                      <input
+                                        type="text"
+                                        placeholder="Input last name"
+                                        id="lname-input"
+                                      />
+                                    </div>
+                                  </div>
+                                  <div class="col-md-6">
+                                    <div class="form-group">
+                                      <label
+                                        for=""
+                                        class="
+                                          d-flex
+                                          align-items-center
+                                          justify-content-between
+                                        "
+                                        ><span>Shipping Address 1</span>
+                                      </label>
+                                      <input
+                                        type="text"
+                                        placeholder="Shipping First Address"
+                                        id="ship1-input"
+                                      />
+                                    </div>
+                                  </div>
+                                  <div class="col-md-6">
+                                    <div class="form-group">
+                                      <label
+                                        for=""
+                                        class="
+                                          d-flex
+                                          align-items-center
+                                          justify-content-between
+                                        "
+                                        ><span>Shipping Address 2</span>
+                                      </label>
+                                      <input
+                                        type="text"
+                                        placeholder="Shipping Second Address"
+                                        id="ship2-input"
+                                      />
+                                    </div>
+                                  </div>
+                                  <div class="col-md-6">
+                                    <div class="form-group">
+                                      <label for="country-input">Country</label>
+                                      <select
+                                        name="country-input"
+                                        id="country-input"
+                                      >
+                                        <option value="">Select Country</option>
+                                        <option
+                                          value="United States of America"
+                                        >
+                                          United States of America
+                                        </option>
+                                        <option value="United Kingdom">
+                                          United Kingdom
+                                        </option>
+                                        <option value="">---</option>
+                                        <option value="Australia">
+                                          Australia
+                                        </option>
+                                        <option value="Austria">Austria</option>
+                                        <option value="Azerbaijan">
+                                          Azerbaijan
+                                        </option>
+                                        <option value="Bahamas">Bahamas</option>
+                                        <option value="Belgium">Belgium</option>
+                                        <option value="Canada">Canada</option>
+                                        <option value="China">China</option>
+                                        <option value="Czech Republic">
+                                          Czech Republic
+                                        </option>
+                                        <option value="Denmark">Denmark</option>
+                                        <option value="Dominican Republic">
+                                          Dominican Republic
+                                        </option>
+                                        <option value="Finland">Finland</option>
+                                        <option value="France">France</option>
+                                        <option value="Germany">Germany</option>
+                                        <option value="Great Britain">
+                                          Great Britain
+                                        </option>
+                                        <option value="Hong Kong">
+                                          Hong Kong
+                                        </option>
+                                        <option value="Hungary">Hungary</option>
+                                        <option value="Iceland">Iceland</option>
+                                        <option value="Indonesia">
+                                          Indonesia
+                                        </option>
+                                        <option value="India">India</option>
+                                        <option value="Iran">Iran</option>
+                                        <option value="Iraq">Iraq</option>
+                                        <option value="Ireland">Ireland</option>
+                                        <option value="Israel">Israel</option>
+                                        <option value="Italy">Italy</option>
+                                        <option value="Japan">Japan</option>
+                                        <option value="South Korea">
+                                          South Korea
+                                        </option>
+                                        <option value="Mexico">Mexico</option>
+                                        <option value="New Zealand">
+                                          New Zealand
+                                        </option>
+                                        <option value="Norway">Norway</option>
+                                        <option value="Singapore">
+                                          Singapore
+                                        </option>
+                                        <option value="Spain">Spain</option>
+                                        <option value="Sweden">Sweden</option>
+                                        <option value="Switzerland">
+                                          Switzerland
+                                        </option>
+                                        <option value="United Arab Erimates">
+                                          United Arab Emirates
+                                        </option>
+                                        <option value="Virgin Islands (Brit)">
+                                          Virgin Islands (Brit)
+                                        </option>
+                                        <option value="Virgin Islands (USA)">
+                                          Virgin Islands (USA)
+                                        </option>
+                                      </select>
+                                    </div>
+                                  </div>
+                                  <div class="col-md-6">
+                                    <div class="form-group">
+                                      <label for="state-input">State</label>
+                                      <select name="state" id="state-input">
+                                        <option value="">Select State</option>
+                                        <option value="">---</option>
+                                        <option value="AL">Alabama</option>
+                                        <option value="AK">Alaska</option>
+                                        <option value="AZ">Arizona</option>
+                                        <option value="AR">Arkansas</option>
+                                        <option value="CA">California</option>
+                                        <option value="CO">Colorado</option>
+                                        <option value="CT">Connecticut</option>
+                                        <option value="DE">Delaware</option>
+                                        <option value="DC">
+                                          District Of Columbia
+                                        </option>
+                                        <option value="FL">Florida</option>
+                                        <option value="GA">Georgia</option>
+                                        <option value="HI">Hawaii</option>
+                                        <option value="ID">Idaho</option>
+                                        <option value="IL">Illinois</option>
+                                        <option value="IN">Indiana</option>
+                                        <option value="IA">Iowa</option>
+                                        <option value="KS">Kansas</option>
+                                        <option value="KY">Kentucky</option>
+                                        <option value="LA">Louisiana</option>
+                                        <option value="ME">Maine</option>
+                                        <option value="MD">Maryland</option>
+                                        <option value="MA">
+                                          Massachusetts
+                                        </option>
+                                        <option value="MI">Michigan</option>
+                                        <option value="MN">Minnesota</option>
+                                        <option value="MS">Mississippi</option>
+                                        <option value="MO">Missouri</option>
+                                        <option value="MT">Montana</option>
+                                        <option value="NE">Nebraska</option>
+                                        <option value="NV">Nevada</option>
+                                        <option value="NH">
+                                          New Hampshire
+                                        </option>
+                                        <option value="NJ">New Jersey</option>
+                                        <option value="NM">New Mexico</option>
+                                        <option value="NY">New York</option>
+                                        <option value="NC">
+                                          North Carolina
+                                        </option>
+                                        <option value="ND">North Dakota</option>
+                                        <option value="OH">Ohio</option>
+                                        <option value="OK">Oklahoma</option>
+                                        <option value="OR">Oregon</option>
+                                        <option value="PA">Pennsylvania</option>
+                                        <option value="RI">Rhode Island</option>
+                                        <option value="SC">
+                                          South Carolina
+                                        </option>
+                                        <option value="SD">South Dakota</option>
+                                        <option value="TN">Tennessee</option>
+                                        <option value="TX">Texas</option>
+                                        <option value="UT">Utah</option>
+                                        <option value="VT">Vermont</option>
+                                        <option value="VA">Virginia</option>
+                                        <option value="WA">Washington</option>
+                                        <option value="WV">
+                                          West Virginia
+                                        </option>
+                                        <option value="WI">Wisconsin</option>
+                                        <option value="WY">Wyoming</option>
+                                      </select>
+                                    </div>
+                                  </div>
+                                  <div class="col-md-8">
+                                    <div class="form-group">
+                                      <label
+                                        for=""
+                                        class="
+                                          d-flex
+                                          align-items-center
+                                          justify-content-between
+                                        "
+                                        ><span>City</span>
+                                      </label>
+                                      <input
+                                        type="text"
+                                        placeholder="Input city"
+                                        id="city-input"
+                                      />
+                                    </div>
+                                  </div>
+                                  <div class="col-md-4">
+                                    <div class="form-group">
+                                      <label
+                                        for=""
+                                        class="
+                                          d-flex
+                                          align-items-center
+                                          justify-content-between
+                                        "
+                                        ><span>zip</span>
+                                      </label>
+                                      <input
+                                        type="text"
+                                        placeholder="-"
+                                        id="zip-input"
+                                      />
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="form-dialog-btn">
+                                  <button
+                                    class="cancel"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Close"
+                                  >
+                                    Cancel
+                                  </button>
+                                  <button
+                                    class="submit"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Close"
+                                    id="new-profile-submit"
+                                  >
+                                    submit
+                                  </button>
+                                </div>
+                              </form>
+                            </div>
+                            <div class="main-dia-box btn-bil main-dia-box2">
+                              <form action="">
+                                <div class="row">
+                                  <div class="col-md-6">
+                                    <div class="form-group">
+                                      <label
+                                        for=""
+                                        class="
+                                          d-flex
+                                          align-items-center
+                                          justify-content-between
+                                        "
+                                        ><span>First Name</span>
+                                      </label>
+                                      <input
+                                        type="text"
+                                        placeholder="Input first name"
+                                        id="bill-fname-input"
+                                      />
+                                    </div>
+                                  </div>
+                                  <div class="col-md-6">
+                                    <div class="form-group">
+                                      <label
+                                        for=""
+                                        class="
+                                          d-flex
+                                          align-items-center
+                                          justify-content-between
+                                        "
+                                        ><span>Last Name</span>
+                                      </label>
+                                      <input
+                                        type="text"
+                                        placeholder="Input last name"
+                                        id="bill-lname-input"
+                                      />
+                                    </div>
+                                  </div>
+                                  <div class="col-md-6">
+                                    <div class="form-group">
+                                      <label
+                                        for=""
+                                        class="
+                                          d-flex
+                                          align-items-center
+                                          justify-content-between
+                                        "
+                                        ><span>Shipping Address 1</span>
+                                      </label>
+                                      <input
+                                        type="text"
+                                        placeholder="Shipping First Address"
+                                        id="bill-ship1-input"
+                                      />
+                                    </div>
+                                  </div>
+                                  <div class="col-md-6">
+                                    <div class="form-group">
+                                      <label
+                                        for=""
+                                        class="
+                                          d-flex
+                                          align-items-center
+                                          justify-content-between
+                                        "
+                                        ><span>Shipping Address 2</span>
+                                      </label>
+                                      <input
+                                        type="text"
+                                        placeholder="Shipping Second Address"
+                                        id="bill-ship2-input"
+                                      />
+                                    </div>
+                                  </div>
+                                  <div class="col-md-6">
+                                    <div class="form-group">
+                                      <label for="bill-country-input"
+                                        >Country</label
+                                      >
+                                      <select
+                                        name="bill-country-input"
+                                        id="bill-country-input"
+                                      >
+                                        <option value="">Select Country</option>
+                                        <option
+                                          value="United States of America"
+                                        >
+                                          United States of America
+                                        </option>
+                                        <option value="United Kingdom">
+                                          United Kingdom
+                                        </option>
+                                        <option value="">---</option>
+                                        <option value="Australia">
+                                          Australia
+                                        </option>
+                                        <option value="Austria">Austria</option>
+                                        <option value="Azerbaijan">
+                                          Azerbaijan
+                                        </option>
+                                        <option value="Bahamas">Bahamas</option>
+                                        <option value="Belgium">Belgium</option>
+                                        <option value="Canada">Canada</option>
+                                        <option value="China">China</option>
+                                        <option value="Czech Republic">
+                                          Czech Republic
+                                        </option>
+                                        <option value="Denmark">Denmark</option>
+                                        <option value="Dominican Republic">
+                                          Dominican Republic
+                                        </option>
+                                        <option value="Finland">Finland</option>
+                                        <option value="France">France</option>
+                                        <option value="Germany">Germany</option>
+                                        <option value="Great Britain">
+                                          Great Britain
+                                        </option>
+                                        <option value="Hong Kong">
+                                          Hong Kong
+                                        </option>
+                                        <option value="Hungary">Hungary</option>
+                                        <option value="Iceland">Iceland</option>
+                                        <option value="Indonesia">
+                                          Indonesia
+                                        </option>
+                                        <option value="India">India</option>
+                                        <option value="Iran">Iran</option>
+                                        <option value="Iraq">Iraq</option>
+                                        <option value="Ireland">Ireland</option>
+                                        <option value="Israel">Israel</option>
+                                        <option value="Italy">Italy</option>
+                                        <option value="Japan">Japan</option>
+                                        <option value="South Korea">
+                                          South Korea
+                                        </option>
+                                        <option value="Mexico">Mexico</option>
+                                        <option value="New Zealand">
+                                          New Zealand
+                                        </option>
+                                        <option value="Norway">Norway</option>
+                                        <option value="Singapore">
+                                          Singapore
+                                        </option>
+                                        <option value="Spain">Spain</option>
+                                        <option value="Sweden">Sweden</option>
+                                        <option value="Switzerland">
+                                          Switzerland
+                                        </option>
+                                        <option value="United Arab Erimates">
+                                          United Arab Emirates
+                                        </option>
+                                        <option value="Virgin Islands (Brit)">
+                                          Virgin Islands (Brit)
+                                        </option>
+                                        <option value="Virgin Islands (USA)">
+                                          Virgin Islands (USA)
+                                        </option>
+                                      </select>
+                                    </div>
+                                  </div>
+                                  <div class="col-md-6">
+                                    <div class="form-group">
+                                      <label for="bill-state-input"
+                                        >State</label
+                                      >
+                                      <select
+                                        name="bill-state-input"
+                                        id="bill-state-input"
+                                      >
+                                        <option value="">Select State</option>
+                                        <option value="">---</option>
+                                        <option value="AL">Alabama</option>
+                                        <option value="AK">Alaska</option>
+                                        <option value="AZ">Arizona</option>
+                                        <option value="AR">Arkansas</option>
+                                        <option value="CA">California</option>
+                                        <option value="CO">Colorado</option>
+                                        <option value="CT">Connecticut</option>
+                                        <option value="DE">Delaware</option>
+                                        <option value="DC">
+                                          District Of Columbia
+                                        </option>
+                                        <option value="FL">Florida</option>
+                                        <option value="GA">Georgia</option>
+                                        <option value="HI">Hawaii</option>
+                                        <option value="ID">Idaho</option>
+                                        <option value="IL">Illinois</option>
+                                        <option value="IN">Indiana</option>
+                                        <option value="IA">Iowa</option>
+                                        <option value="KS">Kansas</option>
+                                        <option value="KY">Kentucky</option>
+                                        <option value="LA">Louisiana</option>
+                                        <option value="ME">Maine</option>
+                                        <option value="MD">Maryland</option>
+                                        <option value="MA">
+                                          Massachusetts
+                                        </option>
+                                        <option value="MI">Michigan</option>
+                                        <option value="MN">Minnesota</option>
+                                        <option value="MS">Mississippi</option>
+                                        <option value="MO">Missouri</option>
+                                        <option value="MT">Montana</option>
+                                        <option value="NE">Nebraska</option>
+                                        <option value="NV">Nevada</option>
+                                        <option value="NH">
+                                          New Hampshire
+                                        </option>
+                                        <option value="NJ">New Jersey</option>
+                                        <option value="NM">New Mexico</option>
+                                        <option value="NY">New York</option>
+                                        <option value="NC">
+                                          North Carolina
+                                        </option>
+                                        <option value="ND">North Dakota</option>
+                                        <option value="OH">Ohio</option>
+                                        <option value="OK">Oklahoma</option>
+                                        <option value="OR">Oregon</option>
+                                        <option value="PA">Pennsylvania</option>
+                                        <option value="RI">Rhode Island</option>
+                                        <option value="SC">
+                                          South Carolina
+                                        </option>
+                                        <option value="SD">South Dakota</option>
+                                        <option value="TN">Tennessee</option>
+                                        <option value="TX">Texas</option>
+                                        <option value="UT">Utah</option>
+                                        <option value="VT">Vermont</option>
+                                        <option value="VA">Virginia</option>
+                                        <option value="WA">Washington</option>
+                                        <option value="WV">
+                                          West Virginia
+                                        </option>
+                                        <option value="WI">Wisconsin</option>
+                                        <option value="WY">Wyoming</option>
+                                      </select>
+                                    </div>
+                                  </div>
+                                  <div class="col-md-8">
+                                    <div class="form-group">
+                                      <label
+                                        for=""
+                                        class="
+                                          d-flex
+                                          align-items-center
+                                          justify-content-between
+                                        "
+                                        ><span>City</span>
+                                      </label>
+                                      <input
+                                        type="text"
+                                        placeholder="Input city"
+                                        id="bill-city-input"
+                                      />
+                                    </div>
+                                  </div>
+                                  <div class="col-md-4">
+                                    <div class="form-group">
+                                      <label
+                                        for=""
+                                        class="
+                                          d-flex
+                                          align-items-center
+                                          justify-content-between
+                                        "
+                                        ><span>zip</span>
+                                      </label>
+                                      <input
+                                        type="text"
+                                        placeholder="-"
+                                        id="bill-zip-input"
+                                      />
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="form-dialog-btn">
+                                  <button
+                                    class="cancel"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Close"
+                                  >
+                                    Cancel
+                                  </button>
+                                  <button
+                                    class="submit"
+                                    id="new-profile-submit-bill"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Close"
+                                  >
+                                    submit
+                                  </button>
+                                </div>
+                              </form>
+                            </div>
+                            <div class="main-dia-box btn-py main-dia-box3">
+                              <form action="">
+                                <div class="row">
+                                  <div class="col-md-12">
+                                    <div class="form-group">
+                                      <label for="">Card Type</label>
+                                      <select name="" id="card-type-input">
+                                        <option value="">
+                                          Select Card Type
+                                        </option>
+                                        <option value="MasterCard">
+                                          MasterCard
+                                        </option>
+                                        <option value="AmericanExpress">
+                                          AmericanExpress
+                                        </option>
+                                        <option value="Visa">Visa</option>
+                                        <option value="Discover">
+                                          Discover
+                                        </option>
+                                      </select>
+                                    </div>
+                                  </div>
+                                  <div class="col-md-12">
+                                    <div class="form-group">
+                                      <label
+                                        for=""
+                                        class="
+                                          d-flex
+                                          align-items-center
+                                          justify-content-between
+                                        "
+                                        ><span>Card Holder Name</span>
+                                      </label>
+                                      <input
+                                        type="text"
+                                        placeholder="Input card holder name"
+                                        id="pay-name-input"
+                                      />
+                                    </div>
+                                  </div>
+                                  <div class="col-md-12">
+                                    <div class="form-group">
+                                      <label
+                                        for=""
+                                        class="
+                                          d-flex
+                                          align-items-center
+                                          justify-content-between
+                                        "
+                                        ><span>Card Number</span>
+                                      </label>
+                                      <input
+                                        type="text"
+                                        placeholder="- - - -    - - - -    - - - -    - - - -"
+                                        id="pay-cnb-input"
+                                      />
+                                    </div>
+                                  </div>
+                                  <div class="col-md-4">
+                                    <div class="form-group">
+                                      <label
+                                        for=""
+                                        class="
+                                          d-flex
+                                          align-items-center
+                                          justify-content-between
+                                        "
+                                        ><span>Exp. Month</span>
+                                      </label>
+                                      <input
+                                        type="text"
+                                        placeholder="mm"
+                                        id="pay-expm-input"
+                                      />
+                                    </div>
+                                  </div>
+                                  <div class="col-md-4">
+                                    <div class="form-group">
+                                      <label
+                                        for=""
+                                        class="
+                                          d-flex
+                                          align-items-center
+                                          justify-content-between
+                                        "
+                                        ><span>Exp. Year</span>
+                                      </label>
+                                      <input
+                                        type="text"
+                                        placeholder="yy"
+                                        id="pay-expy-input"
+                                      />
+                                    </div>
+                                  </div>
+                                  <div class="col-md-4">
+                                    <div class="form-group">
+                                      <label
+                                        for=""
+                                        class="
+                                          d-flex
+                                          align-items-center
+                                          justify-content-between
+                                        "
+                                        ><span>CVV</span>
+                                      </label>
+                                      <input
+                                        type="text"
+                                        placeholder="- - -"
+                                        id="pay-cvv-input"
+                                      />
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="form-dialog-btn">
+                                  <button
+                                    class="cancel"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Close"
+                                  >
+                                    Cancel
+                                  </button>
+                                  <button
+                                    class="submit"
+                                    id="new-profile-submit-pay"
+                                    data-bs-dismiss="modal"
+                                    aria-label="Close"
+                                  >
+                                    submit
+                                  </button>
+                                </div>
+                              </form>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="d-flex align-items-center justify-content-between w-100"
+              >
+                <div
+                  class="
+                    list
+                    d-flex
+                    align-items-center
+                    justify-content-between
+                    w-100
+                    pb-3
+                  "
+                  style="padding-bottom: 5px"
+                >
+                  <ul class="list-unstyled px-0 mb-0">
+                    <li class="d-inline-block">
+                      <button class="bg-transparent border-0 active">
+                        All Profiles
+                        <span class="badge ms-1" id="profile-count">0</span>
+                      </button>
+                    </li>
+                    <li class="d-inline-block">
+                      <button class="bg-transparent border-0 active">
+                        Selected
+                        <span
+                          class="badge ms-1 selected-number"
+                          id="selected-num"
+                          >0</span
+                        >
+                      </button>
+                    </li>
+                  </ul>
+                  <div
+                    class="
+                      text-white
+                      d-flex
+                      align-items-center
+                      justify-content-between
+                    "
+                  >
+                    <span
+                      class="d-inline-flex align-items-center"
+                      style="font-size: 12px; margin-right: 15px"
+                      ><button class="text-white p-0 border-0 bg-transparent">
+                        <span
+                          style="background-size: 12px"
+                          class="copy-all icon-btn bg-transparent"
+                        ></span>
+                        Copy All
+                      </button>
+                    </span>
+                    <span
+                      class="d-inline-flex align-items-center"
+                      style="font-size: 12px"
+                      ><button class="text-white p-0 border-0 bg-transparent">
+                        <span
+                          class="delete-ic-r icon-btn bg-transparent"
+                        ></span>
+                        Delete All
+                      </button>
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="dashboard-table">
+                <div
+                  class="p-3"
+                  style="border: 1px solid #1d1926; border-radius: 8px"
+                >
+                  <div class="row" id="profile-add">
+                    <!-- Modal -->
+                    <div
+                      class="modal fade"
+                      id="editModal"
+                      tabindex="-1"
+                      aria-labelledby="exampleModalLabel"
+                      aria-hidden="true"
+                    >
+                      <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content bg-transparent">
+                          <div class="box-purb text-white">
+                            <div class="py-2">
+                              <span
+                                class="dialog-title"
+                                style="font-size: 20px; font-weight: bold"
+                                >Edit Profile Card</span
+                              >
+                            </div>
+                          </div>
+                          <div class="main-dia-box">
+                            <form action="">
+                              <div class="row">
+                                <div class="col-md-12">
+                                  <div class="form-group">
+                                    <label
+                                      for=""
+                                      class="
+                                        d-flex
+                                        align-items-center
+                                        justify-content-between
+                                      "
+                                      ><span>Name</span>
+                                    </label>
+                                    <input
+                                      type="text"
+                                      placeholder="Website"
+                                      value="David Hemilton"
+                                    />
+                                  </div>
+                                  <div class="form-group">
+                                    <label
+                                      for=""
+                                      class="
+                                        d-flex
+                                        align-items-center
+                                        justify-content-between
+                                      "
+                                      ><span>Card number</span>
+                                    </label>
+                                    <input
+                                      type="text"
+                                      placeholder="Website"
+                                      value="1234 5678 1234 4242"
+                                    />
+                                  </div>
+                                  <div class="form-group">
+                                    <label
+                                      for=""
+                                      class="
+                                        d-flex
+                                        align-items-center
+                                        justify-content-between
+                                      "
+                                      ><span>Email</span>
+                                    </label>
+                                    <input
+                                      type="text"
+                                      placeholder="Website"
+                                      value="davidhemilton@gmail.com"
+                                    />
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="form-dialog-btn">
+                                <button
+                                  class="cancel"
+                                  data-bs-dismiss="modal"
+                                  aria-label="Close"
+                                >
+                                  Cancel
+                                </button>
+                                <button
+                                  class="submit"
+                                  data-bs-dismiss="modal"
+                                  aria-label="Close"
+                                >
+                                  submit
+                                </button>
+                              </div>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- insert profiles here -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="../assets/js/jquery-3.3.1.min.js"></script>
+    <script src="../assets/js/popper.min.js"></script>
+    <script src="../assets/js/bootstrap.min.js"></script>
+    <script src="../assets/js/main.js"></script>
+    <script src="./profile.js"></script>
+  </body>
+</html>

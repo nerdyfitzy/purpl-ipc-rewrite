@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 38 38" width="38" height="38">
+	<defs>
+		<linearGradient id="grd1" gradientUnits="userSpaceOnUse"  x1="-1" y1="-1" x2="39" y2="39">
+			<stop offset="0" stop-color="#9862f5"  />
+			<stop offset="1" stop-color="#733fcc"  />
+		</linearGradient>
+		<linearGradient id="grd2" gradientUnits="userSpaceOnUse"  x1="19" y1="-1" x2="19" y2="39">
+			<stop offset="0" stop-color="#ffffff" stop-opacity="0.2" />
+			<stop offset="1" stop-color="#ffffff" stop-opacity="0" />
+		</linearGradient>
+	</defs>
+	<style>
+		tspan { white-space:pre }
+		.shp0 { fill: url(#grd1) } 
+		.shp1 { fill: none;stroke: url(#grd2) } 
+		.shp2 { fill: #ffffff } 
+	</style>
+	<g id="Layer">
+		<path id="Layer" class="shp0" d="M7 -1L31 -1C35.42 -1 39 2.58 39 7L39 31C39 35.42 35.42 39 31 39L7 39C2.58 39 -1 35.42 -1 31L-1 7C-1 2.58 2.58 -1 7 -1Z" />
+		<path id="Layer" class="shp1" d="M7 -0.5L31 -0.5C35.15 -0.5 38.5 2.85 38.5 7L38.5 31C38.5 35.15 35.15 38.5 31 38.5L7 38.5C2.85 38.5 -0.5 35.15 -0.5 31L-0.5 7C-0.5 2.85 2.85 -0.5 7 -0.5Z" />
+	</g>
+	<path id="Layer" class="shp2" d="M21.5 12.6L21.5 12.6L25.24 14.28L29 12.87L19 9.12L9 12.87L19 16.62L22.74 15.21L19 13.67L19 13.67L21.5 12.6Z" />
+	<path id="Layer" fill-rule="evenodd" class="shp2" d="M18.38 17.63L18.38 28.88L9 25.37L9 14.12L18.38 17.63ZM14 24.07L11.5 23.14L11.5 24.47L14 25.41L14 24.07Z" />
+	<path id="Layer" class="shp2" d="M25.25 15.52L25.25 18.65L22.75 19.59L22.75 16.46L19.63 17.63L19.63 28.88L29 25.37L29 14.12L25.25 15.52Z" />
+</svg>

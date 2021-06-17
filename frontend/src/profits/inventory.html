@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../assets/css/bootstrap.min.css" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="../../assets/css/profits.css" />
+    <link rel="stylesheet" href="../../assets/css/profits_responsive.css" />
+    <title>Purpl</title>
+  </head>
+
+  <body class="hidden-scroll">
+    <div class="w-100" style="height: 29px; background-color: #1c1923">
+      <div class="control-keys">
+        <span class="d-inline-block close" id="close-button"
+          ><i class="fas fa-times"></i
+        ></span>
+        <span class="d-inline-block minimize" id="minimize-button"
+          ><i class="fas fa-minus"></i
+        ></span>
+        <span class="d-inline-block expand"
+          ><i class="fas fa-expand-alt"></i
+        ></span>
+      </div>
+    </div>
+    <div class="desktop d-block">
+      <div class="w-100">
+        <div
+          class="user-nav d-flex align-items-center justify-content-between w-100"
+        >
+          <div>
+            <img
+              style="width: 120px"
+              src="../../assets/images/LOGO.svg"
+              alt=""
+            />
+          </div>
+          <div class="d-flex align-items-center justify-content-between">
+            <span class="notifications">
+              <img src="../../assets/images/Notification.png" alt="" />
+            </span>
+            <span>
+              <div class="dropdown">
+                <button
+                  class="btn user-drop dropdown-toggle"
+                  type="button"
+                  id="dropdownMenuButton"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  <span class="text-white user-arrow"
+                    ><i
+                      style="vertical-align: middle"
+                      class="fas fa-chevron-down"
+                    ></i
+                  ></span>
+                  <img src="../../assets/images/PERSON.png" alt="" />
+                </button>
+                <ul
+                  class="dropdown-menu"
+                  aria-labelledby="dropdownMenuButton"
+                  style="font-size: 12px"
+                >
+                  <li>
+                    <a
+                      class="dropdown-item text-white"
+                      style="padding: 10px 18px"
+                      href="#"
+                    >
+                      <img
+                        style="margin-right: 10px"
+                        src="../../assets/images/SETTINGS.png"
+                        alt=""
+                      />
+                      SETTINGS</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      class="dropdown-item"
+                      href="#"
+                      style="color: #ff6a6a; padding: 10px 18px"
+                      ><img
+                        style="margin-right: 10px"
+                        src="../../assets/images/LOGOUT.png"
+                        alt=""
+                      />
+                      LOGOUT</a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </span>
+          </div>
+        </div>
+        <div
+          class="links-nav d-flex align-items-center justify-content-arround w-100"
+        >
+          <nav
+            class="navbar navbar-expand-lg navbar-light bg-transparent w-100 p-0"
+          >
+            <div class="w-100">
+              <a class="navbar-brand" href="#">Navbar</a>
+              <button
+                class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+              >
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div
+                class="collapse navbar-collapse flex-wrap"
+                id="navbarSupportedContent"
+              >
+                <ul
+                  class="nav-dash-links list-unstyled px-0 mb-0 d-flex align-items-center justify-content-around flex-wrap w-100"
+                >
+                  <li class="d-inline-block">
+                    <a href="#" class="main-nav-link ui-disabled">
+                      <span class="link-attr">
+                        <span class="img-link dash"></span>
+                        <span>Dashboard</span>
+                      </span>
+                    </a>
+                  </li>
+                  <li class="d-inline-block">
+                    <a href="../dashboard.html" class="main-nav-link">
+                      <span class="link-attr">
+                        <span class="img-link task"></span>
+                        <span>Task</span>
+                      </span>
+                    </a>
+                  </li>
+                  <li class="d-inline-block">
+                    <a href="../profile.html" class="main-nav-link">
+                      <span class="link-attr">
+                        <span class="img-link profile"></span>
+                        <span>Profiles</span>
+                      </span>
+                    </a>
+                  </li>
+                  <li class="d-inline-block">
+                    <a href="../proxies.html" class="main-nav-link">
+                      <span class="link-attr">
+                        <span class="img-link proxies"></span>
+                        <span>Proxies</span>
+                      </span>
+                    </a>
+                  </li>
+                  <li class="d-inline-block">
+                    <a href="#" class="main-nav-link">
+                      <span class="link-attr active">
+                        <span class="img-link account"></span>
+                        <span>Profits</span>
+                      </span>
+                    </a>
+                  </li>
+                  <li class="d-inline-block">
+                    <a href="#" class="main-nav-link ui-disabled">
+                      <span class="link-attr">
+                        <span class="img-link settings"></span>
+                        <span>Settings</span>
+                      </span>
+                    </a>
+                  </li>
+                </ul>
+                <ul
+                  class="nav-dash-links list-unstyled px-0 mb-0 d-flex align-items-center justify-content-around flex-wrap w-100"
+                  style="background-color: #16131d"
+                >
+                  <li class="d-inline-block">
+                    <a href="./Analytic.html" class="main-nav-link">
+                      <span class="link-attr">
+                        <span class="img-link analytic"></span>
+                        <span>Analytics</span>
+                      </span>
+                    </a>
+                  </li>
+                  <li class="d-inline-block">
+                    <a href="#" class="main-nav-link">
+                      <span class="link-attr active">
+                        <span class="img-link inventory"></span>
+                        <span>Inventory</span>
+                      </span>
+                    </a>
+                  </li>
+                  <li class="d-inline-block">
+                    <a href="./sales.html" class="main-nav-link">
+                      <span class="link-attr">
+                        <span class="img-link sales"></span>
+                        <span>Sales</span>
+                      </span>
+                    </a>
+                  </li>
+                  <li class="d-inline-block">
+                    <a href="./expense.html" class="main-nav-link">
+                      <span class="link-attr">
+                        <span class="img-link expenses"></span>
+                        <span>Expenses</span>
+                      </span>
+                    </a>
+                  </li>
+                  <li class="d-inline-block">
+                    <a href="#" class="main-nav-link ui-disabled">
+                      <span class="link-attr">
+                        <span class="img-link market"></span>
+                        <span>Market</span>
+                      </span>
+                    </a>
+                  </li>
+                  <li class="d-inline-block">
+                    <a href="#" class="main-nav-link ui-disabled">
+                      <span class="link-attr">
+                        <span class="img-link vault"></span>
+                        <span>Vault</span>
+                      </span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </nav>
+        </div>
+      </div>
+
+      <div class="filter-search mx-4 mt-4 text-white zoomed">
+        <div class="d-flex flex-wrap align-items-end">
+          <div class="form-group mb-3">
+            <input
+              style="height: 40px; width: 300px"
+              class="search-input-d me-2 text-white"
+              type="text"
+              placeholder="search here"
+            />
+          </div>
+          <div class="d-flex align-items-center flex-wrap ms-3">
+            <div class="mb-3">
+              <img
+                style="width: 40px; height: 40px"
+                class="r-8"
+                src="../../assets/images/total_product.svg"
+                alt=""
+              />
+            </div>
+            <div class="ms-3 mb-3">
+              <h2 class="mb-1 w-5 f-9">Total Product</h2>
+              <h5 class="f-18 fw-bold mb-0" id="total-product">0</h5>
+            </div>
+          </div>
+          <div class="d-flex align-items-center ms-4">
+            <div class="mb-3">
+              <img
+                style="width: 40px; height: 40px"
+                class="r-8"
+                src="../../assets/images/total-profit.svg"
+                alt=""
+              />
+            </div>
+            <div class="ms-3 mb-3">
+              <h2 class="mb-1 w-5 f-9">Unrealized Profit</h2>
+              <h5 class="f-18 fw-bold mb-0" id="unreal-profit">$0</h5>
+            </div>
+          </div>
+        </div>
+        <div class="mt-2">
+          <button
+            style="
+              font-weight: 400;
+              background-color: #733fcc;
+              font-size: small;
+            "
+            class="btn-s-filter ms-2 mb-3"
+            id="login-stockx"
+          >
+            <img
+              class="me-2"
+              src="../../assets/images/w-plus.svg"
+              alt=""
+              style="font-size: small"
+            />
+            Login to Stockx
+          </button>
+          <button
+            style="font-weight: 400"
+            class="btn-s-filter ms-2 mb-3"
+            id="refresh"
+          >
+            <img class="me-2" src="../../assets/images/refresh.svg" alt="" />
+            Refresh
+          </button>
+          <button
+            data-bs-toggle="modal"
+            data-bs-target="#exampleModal"
+            style="font-weight: 400; background-color: #733fcc"
+            class="btn-s-filter ms-2 mb-3"
+          >
+            <img class="me-2" src="../../assets/images/w-plus.svg" alt="" /> Add
+            Item
+          </button>
+          <!-- Modal -->
+          <div
+            class="modal fade"
+            id="exampleModal"
+            tabindex="-1"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content bg-transparent">
+                <div class="box-purb text-white">
+                  <div>
+                    <span
+                      class="dialog-title"
+                      style="font-size: 20px; font-weight: bold"
+                      >ADD ITEMS</span
+                    >
+                  </div>
+                  <div>
+                    <span class="dialog-subtitle" style="font-size: 12px"
+                      ><span style="color: #ffffffb8">Add items to</span>
+                      Inventory</span
+                    >
+                  </div>
+                </div>
+                <div class="main-dia-box main-dia-box-selc">
+                  <form action="">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label
+                            for=""
+                            class="f-12 d-flex align-items-center justify-content-between"
+                            ><span>Search for Products</span>
+                          </label>
+                          <input
+                            type="text"
+                            placeholder="Enter here"
+                            id="item-name-input"
+                          />
+                          <div class="suggestions" id="suggestions"></div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="" class="f-12">SKU</label>
+                          <input
+                            type="text"
+                            placeholder="Input SKU"
+                            id="sku-input"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label
+                            for=""
+                            class="f-12 d-flex align-items-center justify-content-between"
+                            ><span>Purchase Price</span>
+                          </label>
+                          <input
+                            type="text"
+                            placeholder="Enter here"
+                            id="price-input"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="" class="f-12">Sizing</label>
+                          <select name="" id="sizing-input">
+                            <option value="">Search to bring up sizing</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label
+                            for=""
+                            class="f-12 d-flex align-items-center justify-content-between"
+                            ><span>Tax</span>
+                          </label>
+                          <input
+                            type="text"
+                            placeholder="Enter here"
+                            id="tax-input"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label
+                            for=""
+                            class="f-12 d-flex align-items-center justify-content-between"
+                            ><span>Shipping</span>
+                          </label>
+                          <input
+                            type="text"
+                            placeholder="Enter here"
+                            id="shipping-input"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label
+                            for=""
+                            class="f-12 d-flex align-items-center justify-content-between"
+                            ><span>Place of Purchase</span>
+                          </label>
+                          <input
+                            type="text"
+                            placeholder="Enter here"
+                            id="store-input"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label
+                            for=""
+                            class="f-12 d-flex align-items-center justify-content-between"
+                            ><span>Purchase Date</span>
+                          </label>
+                          <div class="position-relative">
+                            <input
+                              placeholder="mm/dd/yyyy"
+                              type="text"
+                              id="date-input"
+                            />
+                            <i
+                              style="
+                                position: absolute;
+                                top: 50%;
+                                right: 20px;
+                                transform: translateY(-50%);
+                              "
+                              class="fas fa-calendar"
+                            ></i>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label
+                            for=""
+                            class="f-12 d-flex align-items-center justify-content-between"
+                            ><span>Tags</span>
+                          </label>
+                          <input
+                            type="text"
+                            placeholder="Enter here"
+                            id="tags-input"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label
+                            for=""
+                            class="f-12 d-flex align-items-center justify-content-between"
+                            ><span>Order #</span>
+                          </label>
+                          <input
+                            type="text"
+                            placeholder="Enter here"
+                            id="order-input"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-dialog-btn">
+                      <button
+                        class="cancel"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        class="submit"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                        id="new-item-submit"
+                      >
+                        submit
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="mx-4 mt-4 text-white gl-bg r-8 p-2 mb-3">
+        <div class="gl-bg no-x-scroll">
+          <table
+            class="table text-white valt-table scroll no-x-scroll"
+            style="min-width: 1350px"
+          >
+            <thead>
+              <tr class="mb-3">
+                <th style="width: 50px" class="f-14">#</th>
+                <th style="width: 500px" class="f-14">Product Name</th>
+                <th style="width: 200px" class="f-14">
+                  Size <i class="ms-1 fas fa-caret-down"></i>
+                </th>
+                <th style="width: 200px" class="f-14">
+                  Colorway <i class="ms-1 fas fa-caret-down"></i>
+                </th>
+                <th style="width: 200px" class="f-14">
+                  Platform <i class="ms-1 fas fa-caret-down"></i>
+                </th>
+                <th style="width: 200px" class="f-14">
+                  Listing Status <i class="ms-1 fas fa-caret-down"></i>
+                </th>
+                <th style="width: 200px" class="f-14">
+                  Date Purchased <i class="ms-1 fas fa-caret-down"></i>
+                </th>
+                <th style="width: 200px" class="f-14">
+                  Price <i class="ms-1 fas fa-caret-down"></i>
+                </th>
+                <th style="width: 200px" class="f-14">
+                  Market Value <i class="ms-1 fas fa-caret-down"></i>
+                </th>
+                <th style="width: 200px" class="f-14">
+                  Unrealized Profit <i class="ms-1 fas fa-caret-down"></i>
+                </th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+
+          <div
+            class="mt-5 px-4 mb-2 d-flex flex-wrap w-100 alifnitems-center justify-content-between"
+          >
+            <div class="d-flex flex-wrap align-items-center mb-2">
+              <span class="f-14">Limit :</span>
+              <input type="text" value="8" class="px-2 ms-2 limit" />
+            </div>
+            <div class="mb-2">
+              <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-start flex-wrap">
+                  <li class="page-item mx-2 mb-2">
+                    <a
+                      style="background-color: #322e3e"
+                      class="page-link"
+                      href="#"
+                      tabindex="-1"
+                      aria-disabled="true"
+                      ><i class="fas fa-arrow-left"></i
+                    ></a>
+                  </li>
+                  <li class="page-item mx-2 mb-2">
+                    <a class="page-link" href="#">1</a>
+                  </li>
+                  <li class="page-item mx-2 mb-2">
+                    <a class="page-link" href="#">2</a>
+                  </li>
+                  <li class="page-item mx-2 mb-2">
+                    <a class="page-link" href="#">3</a>
+                  </li>
+                  <li class="page-item mx-2 mb-2" style="padding-top: 4px">
+                    <i
+                      style="vertical-align: middle"
+                      class="mt-2 fas fa-ellipsis-h"
+                    ></i>
+                  </li>
+                  <li class="page-item mx-0 mb-2">
+                    <a
+                      style="background-color: #322e3e"
+                      class="page-link mx-2"
+                      href="#"
+                      ><i class="fas fa-arrow-right"></i
+                    ></a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="../../assets/js/jquery-3.3.1.min.js"></script>
+    <script src="../../assets/js/popper.min.js"></script>
+    <script src="../../assets/js/bootstrap.min.js"></script>
+    <script src="../../assets/js/main.js"></script>
+    <script src="./inventory.js"></script>
+  </body>
+</html>

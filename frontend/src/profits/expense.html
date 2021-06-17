@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../../assets/css/bootstrap.min.css" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="../../assets/css/profits.css" />
+    <link rel="stylesheet" href="../../assets/css/profits_responsive.css" />
+    <title>Purpl</title>
+  </head>
+
+  <body class="hidden-scroll">
+    <div class="w-100" style="height: 29px; background-color: #1c1923">
+      <div class="control-keys">
+        <span class="d-inline-block close" id="close-button"
+          ><i class="fas fa-times"></i
+        ></span>
+        <span class="d-inline-block minimize" id="minimize-button"
+          ><i class="fas fa-minus"></i
+        ></span>
+        <span class="d-inline-block expand"
+          ><i class="fas fa-expand-alt"></i
+        ></span>
+      </div>
+    </div>
+    <div class="desktop d-block">
+      <div class="w-100">
+        <div
+          class="user-nav d-flex align-items-center justify-content-between w-100"
+        >
+          <div>
+            <img
+              style="width: 120px"
+              src="../../assets/images/LOGO.svg"
+              alt=""
+            />
+          </div>
+          <div class="d-flex align-items-center justify-content-between">
+            <span class="notifications">
+              <img src="../../assets/images/Notification.png" alt="" />
+            </span>
+            <span>
+              <div class="dropdown">
+                <button
+                  class="btn user-drop dropdown-toggle"
+                  type="button"
+                  id="dropdownMenuButton"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  <span class="text-white user-arrow"
+                    ><i
+                      style="vertical-align: middle"
+                      class="fas fa-chevron-down"
+                    ></i
+                  ></span>
+                  <img src="../../assets/images/PERSON.png" alt="" />
+                </button>
+                <ul
+                  class="dropdown-menu"
+                  aria-labelledby="dropdownMenuButton"
+                  style="font-size: 12px"
+                >
+                  <li>
+                    <a
+                      class="dropdown-item text-white"
+                      style="padding: 10px 18px"
+                      href="#"
+                    >
+                      <img
+                        style="margin-right: 10px"
+                        src="../../assets/images/SETTINGS.png"
+                        alt=""
+                      />
+                      SETTINGS</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      class="dropdown-item"
+                      href="#"
+                      style="color: #ff6a6a; padding: 10px 18px"
+                      ><img
+                        style="margin-right: 10px"
+                        src="../../assets/images/LOGOUT.png"
+                        alt=""
+                      />
+                      LOGOUT</a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </span>
+          </div>
+        </div>
+        <div
+          class="links-nav d-flex align-items-center justify-content-arround w-100"
+        >
+          <nav
+            class="navbar navbar-expand-lg navbar-light bg-transparent w-100 p-0"
+          >
+            <div class="w-100">
+              <a class="navbar-brand" href="#">Navbar</a>
+              <button
+                class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+              >
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div
+                class="collapse navbar-collapse flex-wrap"
+                id="navbarSupportedContent"
+              >
+                <ul
+                  class="nav-dash-links list-unstyled px-0 mb-0 d-flex align-items-center justify-content-around flex-wrap w-100"
+                >
+                  <li class="d-inline-block">
+                    <a href="#" class="main-nav-link ui-disabled">
+                      <span class="link-attr">
+                        <span class="img-link dash"></span>
+                        <span>Dashboard</span>
+                      </span>
+                    </a>
+                  </li>
+                  <li class="d-inline-block">
+                    <a href="../dashboard.html" class="main-nav-link">
+                      <span class="link-attr">
+                        <span class="img-link task"></span>
+                        <span>Task</span>
+                      </span>
+                    </a>
+                  </li>
+                  <li class="d-inline-block">
+                    <a href="../profile.html" class="main-nav-link">
+                      <span class="link-attr">
+                        <span class="img-link profile"></span>
+                        <span>Profiles</span>
+                      </span>
+                    </a>
+                  </li>
+                  <li class="d-inline-block">
+                    <a href="../proxies.html" class="main-nav-link">
+                      <span class="link-attr">
+                        <span class="img-link proxies"></span>
+                        <span>Proxies</span>
+                      </span>
+                    </a>
+                  </li>
+                  <li class="d-inline-block">
+                    <a href="#" class="main-nav-link">
+                      <span class="link-attr active">
+                        <span class="img-link account"></span>
+                        <span>Profits</span>
+                      </span>
+                    </a>
+                  </li>
+                  <li class="d-inline-block">
+                    <a href="#" class="main-nav-link ui-disabled">
+                      <span class="link-attr">
+                        <span class="img-link settings"></span>
+                        <span>Settings</span>
+                      </span>
+                    </a>
+                  </li>
+                </ul>
+                <ul
+                  class="nav-dash-links list-unstyled px-0 mb-0 d-flex align-items-center justify-content-around flex-wrap w-100"
+                  style="background-color: #16131d"
+                >
+                  <li class="d-inline-block">
+                    <a href="./Analytic.html" class="main-nav-link">
+                      <span class="link-attr">
+                        <span class="img-link analytic"></span>
+                        <span>Analytics</span>
+                      </span>
+                    </a>
+                  </li>
+                  <li class="d-inline-block">
+                    <a href="./inventory.html" class="main-nav-link">
+                      <span class="link-attr">
+                        <span class="img-link inventory"></span>
+                        <span>Inventory</span>
+                      </span>
+                    </a>
+                  </li>
+                  <li class="d-inline-block">
+                    <a href="./sales.html" class="main-nav-link">
+                      <span class="link-attr">
+                        <span class="img-link sales"></span>
+                        <span>Sales</span>
+                      </span>
+                    </a>
+                  </li>
+                  <li class="d-inline-block">
+                    <a href="./expense.html" class="main-nav-link">
+                      <span class="link-attr active">
+                        <span class="img-link expenses"></span>
+                        <span>Expenses</span>
+                      </span>
+                    </a>
+                  </li>
+                  <li class="d-inline-block">
+                    <a href="#" class="main-nav-link ui-disabled">
+                      <span class="link-attr">
+                        <span class="img-link market"></span>
+                        <span>Market</span>
+                      </span>
+                    </a>
+                  </li>
+                  <li class="d-inline-block">
+                    <a href="#" class="main-nav-link ui-disabled">
+                      <span class="link-attr">
+                        <span class="img-link vault"></span>
+                        <span>Vault</span>
+                      </span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </nav>
+        </div>
+      </div>
+
+      <div class="filter-search mx-4 mt-4 text-white">
+        <div class="d-flex flex-wrap align-items-end">
+          <div class="form-group mb-3">
+            <input
+              style="height: 40px; width: 300px"
+              class="search-input-d me-2 text-white"
+              type="text"
+              placeholder="search here"
+            />
+          </div>
+          <div class="d-flex align-items-center flex-wrap ms-3">
+            <div class="mb-3">
+              <img
+                style="width: 40px; height: 40px"
+                class="r-8"
+                src="../../assets/images/total_product.svg"
+                alt=""
+              />
+            </div>
+            <div class="ms-3 mb-3">
+              <h2 class="mb-1 w-5 f-9">Total Expenses</h2>
+              <h5 class="f-18 fw-bold mb-0" id="tot-expenses">0</h5>
+            </div>
+          </div>
+          <div class="d-flex align-items-center ms-4">
+            <div class="mb-3">
+              <img
+                style="width: 40px; height: 40px"
+                class="r-8"
+                src="../../assets/images/total-profit.svg"
+                alt=""
+              />
+            </div>
+            <div class="ms-3 mb-3">
+              <h2 class="mb-1 w-5 f-9">Total Spent</h2>
+              <h5 class="f-18 fw-bold mb-0" id="tot-spent">$0</h5>
+            </div>
+          </div>
+        </div>
+        <div class="mt-2">
+          <button
+            data-bs-toggle="modal"
+            data-bs-target="#exampleModal"
+            style="font-weight: 400; background-color: #733fcc"
+            class="btn-s-filter ms-2 mb-3"
+          >
+            <img class="me-2" src="../../assets/images/w-plus.svg" alt="" /> Add
+            Item
+          </button>
+          <!-- Modal -->
+          <div
+            class="modal fade"
+            id="exampleModal"
+            tabindex="-1"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content bg-transparent">
+                <div class="box-purb text-white">
+                  <div>
+                    <span
+                      class="dialog-title"
+                      style="font-size: 20px; font-weight: bold"
+                      >ADD ITEMS</span
+                    >
+                  </div>
+                  <div>
+                    <span class="dialog-subtitle" style="font-size: 12px"
+                      ><span style="color: #ffffffb8">Order Id</span>
+                      #13135246</span
+                    >
+                  </div>
+                </div>
+                <div class="main-dia-box main-dia-box-selc">
+                  <form action="">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label
+                            for="ex-name"
+                            class="f-12 d-flex align-items-center justify-content-between"
+                            ><span>Name</span>
+                          </label>
+                          <input
+                            type="text"
+                            placeholder="Enter here"
+                            id="ex-name"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="ex-type" class="f-12">Type</label>
+                          <select name="ex-type" id="ex-type">
+                            <option value="">Select Type</option>
+                            <option value="Proxies">Proxies</option>
+                            <option value="Gmails">Gmails</option>
+                            <option value="Servers">Servers</option>
+                            <option value="Shipping">Shipping Equipment</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label
+                            for="ex-price"
+                            class="f-12 d-flex align-items-center justify-content-between"
+                            ><span>Purchase Price</span>
+                          </label>
+                          <input
+                            type="number"
+                            placeholder="Enter here"
+                            id="ex-price"
+                            min="0"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="ex-qty" class="f-12">Quantity</label>
+                          <input
+                            type="number"
+                            id="ex-qty"
+                            placeholder="Quantity"
+                            min="0"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label
+                            for="tax-cost"
+                            class="f-12 d-flex align-items-center justify-content-between"
+                            ><span>Tax</span>
+                          </label>
+                          <input
+                            type="number"
+                            placeholder="Enter here"
+                            id="tax-cost"
+                            min="0"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label
+                            for="shipping-cost"
+                            class="f-12 d-flex align-items-center justify-content-between"
+                            ><span>Shipping</span>
+                          </label>
+                          <input
+                            type="number"
+                            placeholder="Enter here"
+                            id="shipping-cost"
+                            min="0"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label
+                            for="store-ex"
+                            class="f-12 d-flex align-items-center justify-content-between"
+                            ><span>Place of Purchase</span>
+                          </label>
+                          <input
+                            type="text"
+                            placeholder="Enter here"
+                            id="store-ex"
+                          />
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label
+                            for="date-input"
+                            class="f-12 d-flex align-items-center justify-content-between"
+                            ><span>Purchase Date</span>
+                          </label>
+                          <div class="position-relative">
+                            <input
+                              placeholder="mm/dd/yyyy"
+                              type="text"
+                              id="date-input"
+                            />
+                            <i
+                              style="
+                                position: absolute;
+                                top: 50%;
+                                right: 20px;
+                                transform: translateY(-50%);
+                              "
+                              class="fas fa-calendar"
+                            ></i>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label
+                            for="recurring-ex"
+                            class="f-12 d-flex align-items-center justify-content-between"
+                            ><span>Recurring Expense?</span>
+                            <select name="recurring-ex" id="recurring-ex">
+                              <option value="false">No</option>
+                              <option value="true">Yes</option>
+                            </select>
+                          </label>
+                        </div>
+                      </div>
+
+                      <div class="col-md-6 recurring">
+                        <div class="form-group">
+                          <label
+                            for="recur-date"
+                            class="f-12 d-flex align-items-center justify-content-between"
+                            ><span>First Renew Date</span>
+                          </label>
+                          <div class="position-relative">
+                            <input
+                              placeholder="mm/dd/yyyy"
+                              type="text"
+                              id="recur-date"
+                            />
+                            <i
+                              style="
+                                position: absolute;
+                                top: 50%;
+                                right: 20px;
+                                transform: translateY(-50%);
+                              "
+                              class="fas fa-calendar"
+                            ></i>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6 recurring">
+                        <div class="form-group">
+                          <label
+                            for="period-renew"
+                            class="f-12 d-flex align-items-center justify-content-between"
+                            ><span>Renewal Period</span>
+                            <input
+                              type="text"
+                              id="period-renew"
+                              placeholder="In days"
+                              style="font-size: small"
+                            />
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-dialog-btn">
+                      <button
+                        class="cancel"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                      >
+                        Cancel
+                      </button>
+                      <button
+                        class="submit"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                        id="ex-submit"
+                      >
+                        submit
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="mx-4 mt-4 text-white gl-bg r-8 p-2 mb-3">
+        <div class="gl-bg no-x-scroll">
+          <table
+            class="no-x-scroll table text-white valt-table"
+            style="min-width: 1350px"
+          >
+            <thead>
+              <tr class="mb-3">
+                <th style="width: 50px" class="f-14">#</th>
+                <th style="width: 500px" class="f-14">Expense Name</th>
+                <th style="width: 200px" class="f-14">
+                  Expense type <i class="ms-1 fas fa-caret-down"></i>
+                </th>
+                <th style="width: 200px" class="f-14">
+                  Quantity <i class="ms-1 fas fa-caret-down"></i>
+                </th>
+                <th style="width: 200px" class="f-14">
+                  Place of purchase <i class="ms-1 fas fa-caret-down"></i>
+                </th>
+                <th style="width: 200px" class="f-14">
+                  Date Added <i class="ms-1 fas fa-caret-down"></i>
+                </th>
+                <th style="width: 200px" class="f-14">
+                  Purchase price <i class="ms-1 fas fa-caret-down"></i>
+                </th>
+                <th style="width: 200px" class="f-14">
+                  Tax <i class="ms-1 fas fa-caret-down"></i>
+                </th>
+                <th style="width: 200px" class="f-14">
+                  Shipping <i class="ms-1 fas fa-caret-down"></i>
+                </th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+
+          <div
+            class="mt-5 px-4 mb-2 d-flex flex-wrap w-100 alifnitems-center justify-content-between"
+          >
+            <div class="d-flex flex-wrap align-items-center mb-2">
+              <span class="f-14">Limit :</span>
+              <input type="text" value="8" class="px-2 ms-2 limit" />
+            </div>
+            <div class="mb-2">
+              <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-start flex-wrap">
+                  <li class="page-item mx-2 mb-2">
+                    <a
+                      style="background-color: #322e3e"
+                      class="page-link"
+                      href="#"
+                      tabindex="-1"
+                      aria-disabled="true"
+                      ><i class="fas fa-arrow-left"></i
+                    ></a>
+                  </li>
+                  <li class="page-item mx-2 mb-2">
+                    <a class="page-link" href="#">1</a>
+                  </li>
+                  <li class="page-item mx-2 mb-2">
+                    <a class="page-link" href="#">2</a>
+                  </li>
+                  <li class="page-item mx-2 mb-2">
+                    <a class="page-link" href="#">3</a>
+                  </li>
+                  <li class="page-item mx-2 mb-2" style="padding-top: 4px">
+                    <i
+                      style="vertical-align: middle"
+                      class="mt-2 fas fa-ellipsis-h"
+                    ></i>
+                  </li>
+                  <li class="page-item mx-0 mb-2">
+                    <a
+                      style="background-color: #322e3e"
+                      class="page-link mx-2"
+                      href="#"
+                      ><i class="fas fa-arrow-right"></i
+                    ></a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="../../assets/js/jquery-3.3.1.min.js"></script>
+    <script src="../../assets/js/popper.min.js"></script>
+    <script src="../../assets/js/bootstrap.min.js"></script>
+    <script src="../../assets/js/main.js"></script>
+    <script src="./expenses.js"></script>
+  </body>
+</html>

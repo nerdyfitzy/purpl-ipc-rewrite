@@ -1,0 +1,407 @@
+/* // Extra small devices (portrait phones, less than 576px) */
+@media (max-width: 575.98px) {
+  .list li button {
+    font-size: 12px;
+  }
+  .list {
+    padding-bottom: 5px;
+    align-items: flex-start !important;
+    flex-direction: column;
+    justify-content: flex-start !important;
+    text-align: left !important;
+  }
+  .list ul {
+    margin-bottom: 9px !important;
+  }
+  .table {
+    font-size: 12px;
+    margin-top: 9px !important;
+  }
+  .link-attr {
+    font-size: 14px;
+  }
+  .task-group {
+    font-size: 17px;
+  }
+  .create-task-btn {
+    font-size: 12px;
+  }
+  body {
+    font-size: 14px;
+  }
+
+  .log-h1 {
+    font-weight: bold !important;
+    font-size: 29px !important;
+    margin-top: 60px !important;
+    margin-left: 0 !important;
+    line-height: 45px !important;
+  }
+  .solved {
+    border-bottom: 3px solid #fff;
+    line-height: 33px;
+  }
+  .login {
+    max-width: 345px;
+    height: 100%;
+    width: 100%;
+    max-height: 483px;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 287px;
+    position: absolute;
+    padding: 19px;
+  }
+  .welcome-p {
+    margin: 0px 0 0px;
+  }
+  .login-btn {
+    width: 160px;
+    height: 50px;
+    border-radius: 100px;
+    padding: 20px;
+    margin-top: 69px;
+  }
+  .outline-animation {
+    border: 1px solid #ffffff1a !important;
+    display: inline-block !important;
+    padding: 10px !important;
+    border-radius: 100px !important;
+    margin-top: 13px !important;
+    margin-left: auto !important;
+  }
+  .demo-txt {
+    font-size: 17px;
+  }
+  .demo-btn {
+    background-color: #14111b;
+    width: 170px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    border-radius: 100px;
+    padding: 14px;
+    transition: 0.2s all ease-in-out;
+  }
+  .right-login {
+    width: 100%;
+    min-height: 811px;
+    text-align: center;
+  }
+  .left-login {
+    width: 30%;
+    height: 300px;
+  }
+  .demo-btn img {
+    width: 34px;
+  }
+  .log-logo  img{
+    width: 100%;
+  }
+  .log-logo {
+    margin: 0 0 22px -11px;
+    width: 105px;
+}
+}
+
+/* // Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) and (max-width: 767.98px) {
+  .list li button {
+    font-size: 12px;
+  }
+  .right-login {
+      text-align: center;
+  }
+  .list {
+    padding-bottom: 5px;
+    align-items: flex-start !important;
+    flex-direction: column;
+    justify-content: flex-start !important;
+    text-align: left !important;
+  }
+  .list ul {
+    margin-bottom: 9px !important;
+  }
+  .table {
+    font-size: 12px;
+    margin-top: 9px !important;
+  }
+  .link-attr {
+    font-size: 14px;
+  }
+  .task-group {
+    font-size: 17px;
+  }
+  .create-task-btn {
+    font-size: 12px;
+  }
+  body {
+    font-size: 14px;
+  }
+
+  .log-h1 {
+    font-weight: bold;
+    font-size: 48px;
+    margin-top: 180px;
+    margin-left: auto !important;
+    line-height: 78px;
+  }
+  .login {
+    max-width: 480px;
+    height: 100%;
+    width: 100%;
+    max-height: 583px;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 324px;
+    position: absolute;
+  }
+  .welcome-p {
+    margin: 0px 0 0px;
+  }
+  .login-btn {
+    width: 160px;
+    height: 50px;
+    border-radius: 100px;
+    padding: 20px;
+    margin-top: 69px;
+  }
+  .outline-animation {
+    border: 1px solid #ffffff1a !important;
+    display: inline-block !important;
+    padding: 10px !important;
+    border-radius: 100px !important;
+    margin-top: 20px !important;
+    margin-left: 0 !important;
+  }
+  .demo-txt {
+    font-size: 17px;
+  }
+  .demo-btn {
+    background-color: #14111b;
+    width: 170px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    border-radius: 100px;
+    padding: 14px;
+    transition: 0.2s all ease-in-out;
+  }
+  .right-login {
+    width: 100%;
+    min-height: 950px;
+  }
+  .left-login {
+    width: 30%;
+    height: 300px;
+  }
+  .demo-btn img {
+    width: 34px;
+  }
+}
+@media (max-width: 767.98px) {
+  .right-login {
+    width: 100%;
+  }
+  .left-login {
+    display: none;
+  }
+  .log-h1 {
+    font-weight: bold;
+    font-size: 37px;
+    margin-top: 60px;
+    margin-left: auto;
+    line-height: 53px;
+  }
+  .outline-animation {
+    border: 1px solid #ffffff1a;
+    display: inline-block;
+    padding: 10px;
+    border-radius: 100px;
+    margin-top: 125px;
+    margin-left: auto;
+  }
+  .form-dialog-btn button.submit, .form-dialog-btn button.cancel {
+    width: 119px;
+    font-size: 14px;
+  }
+  .nav-btn {
+    width: 25px;
+    height: 25px;
+  }
+  .box-purb-res {
+    padding: 7px 13px;
+  }
+  .main-dia-box3::before {
+    left: 55%;
+  }
+  .main-dia-box2::before {
+    left: 33%;
+  }
+  .search-input {
+    max-width: 100%;
+  }
+}
+/* // Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) and (max-width: 991.98px) {
+  .log-h1 {
+    font-size: 34px;
+    margin-top: 180px;
+    margin-left: 40px;
+    line-height: 53px;
+  }
+  .solved {
+    border-bottom: 3px solid #fff;
+    line-height: 41px;
+  }
+  .login {
+    max-width: 351px;
+    height: 100%;
+    width: 100%;
+    max-height: 540px;
+    left: 51%;
+  }
+  .welcome-p {
+    margin: 0px 0 0px;
+  }
+  .login-btn {
+    width: 160px;
+    height: 50px;
+    border-radius: 100px;
+    padding: 20px;
+    margin-top: 69px;
+  }
+  .outline-animation {
+    border: 1px solid #ffffff1a;
+    display: inline-block;
+    padding: 10px;
+    border-radius: 100px;
+    margin-top: 125px;
+    margin-left: 40px;
+  }
+  .demo-txt {
+    font-size: 17px;
+  }
+  .demo-btn {
+    background-color: #14111b;
+    width: 170px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    border-radius: 100px;
+    padding: 14px;
+    transition: 0.2s all ease-in-out;
+  }
+  .demo-btn img {
+    width: 34px;
+  }
+}
+@media (max-width: 991.98px) {
+  .nav-dash-links {
+    flex-direction: column;
+    align-items: flex-start !important;
+    padding: 0 14px !important;
+  }
+  .link-attr {
+    justify-content: left;
+  }
+  .tasks-card {
+    overflow: auto;
+    max-height: 400px;
+  }
+  body {
+    font-size: 14px;
+  }
+  .dark-shadow {
+    box-shadow: none !important ;
+  }
+}
+/* // Large devices (desktops, 992px and up) */
+@media (min-width: 992px) and (max-width: 1199.98px) {
+    .desktop {
+        min-height: 686px;
+    }
+  .list li button {
+    font-size: 12px;
+  }
+  .list {
+    padding-bottom: 5px;
+    align-items: flex-start !important;
+    flex-direction: column;
+    justify-content: flex-start !important;
+    text-align: left !important;
+  }
+  .list ul {
+    margin-bottom: 9px !important;
+  }
+  .table {
+    font-size: 12px;
+    margin-top: 9px !important;
+  }
+  .link-attr {
+    font-size: 14px;
+  }
+  .task-group {
+    font-size: 17px;
+  }
+  .create-task-btn {
+    font-size: 12px;
+  }
+  body {
+    font-size: 14px;
+  }
+  .log-h1 {
+    font-weight: bold;
+    font-size: 53px;
+    margin-top: 180px;
+    margin-left: 60px;
+    line-height: 78px;
+  }
+  .login {
+    max-width: 380px;
+    height: 100%;
+    width: 100%;
+    max-height: 583px;
+  }
+  .welcome-p {
+    margin: 0px 0 0px;
+  }
+  .login-btn {
+    width: 160px;
+    height: 50px;
+    border-radius: 100px;
+    padding: 20px;
+    margin-top: 69px;
+  }
+  .outline-animation {
+    border: 1px solid #ffffff1a;
+    display: inline-block;
+    padding: 10px;
+    border-radius: 100px;
+    margin-top: 154px;
+    margin-left: 60px;
+  }
+  .demo-txt {
+    font-size: 17px;
+  }
+  .demo-btn {
+    background-color: #14111b;
+    width: 190px;
+    height: 61px;
+    display: flex;
+    align-items: center;
+    border-radius: 100px;
+    padding: 14px;
+    transition: 0.2s all ease-in-out;
+  }
+}
+
+/* // Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+  .left-dash {
+    max-width: 348px;
+  }
+  .desktop {
+    min-height: 850px ;
+}
+}
