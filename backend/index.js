@@ -146,7 +146,13 @@ const setup = async () => {
     fs.writeFileSync(
       path.join(process.env.APPDATA, "purpl", "local-data", "config.json"),
       JSON.stringify({
-        global: { webhook: "", activated: false, key: "" },
+        global: {
+          webhook: "",
+          activated: false,
+          key: "",
+          chromePath:
+            "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",
+        },
         gmailSettings: {
           maxRunning: 10,
           sleepinputlow: 300,

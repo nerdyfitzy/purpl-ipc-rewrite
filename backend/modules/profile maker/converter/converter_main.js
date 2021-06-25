@@ -91,7 +91,7 @@ const addProfile = (profile, group) => {
   });
 };
 
-const loadProfiles = (fromfile, group) => {
+const loadProfiles = (fromfile, group = false) => {
   if (fromfile) {
     if (
       !fs.existsSync(
@@ -106,6 +106,7 @@ const loadProfiles = (fromfile, group) => {
     let temp = fs.readFileSync(
       path.join(process.env.APPDATA, "purpl", "local-data", "profiles.json")
     );
+    console.log(temp);
     groups = JSON.parse(temp);
     return JSON.parse(temp);
   } else {
@@ -375,6 +376,8 @@ const deleteGroup = (group) => {
   delete groups[group];
   saveProfiles();
 };
+
+loadProfiles(true);
 
 module.exports = {
   loadProfiles: loadProfiles,
