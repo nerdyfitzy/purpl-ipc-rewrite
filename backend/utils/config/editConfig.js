@@ -2,6 +2,7 @@ const fs = require("fs");
 const path = require("path");
 
 const saveSettings = (webhook, chromePath, gmailToken, twoCaptcha, fivesim) => {
+  console.log("saving settings");
   const newSettings = {
     global: {
       webhook,
@@ -24,17 +25,13 @@ const saveSettings = (webhook, chromePath, gmailToken, twoCaptcha, fivesim) => {
     },
   };
   fs.writeFileSync(
-    path.join(
-      process.env.APPDATA,
-      "purpl",
-      "local-data",
-      "config.json",
-      JSON.stringify(newSettings)
-    )
+    path.join(process.env.APPDATA, "purpl", "local-data", "config.json"),
+    JSON.stringify(newSettings)
   );
 };
 
 const getSettings = () => {
+  console.log("getting settings");
   return JSON.parse(
     fs.readFileSync(
       path.join(process.env.APPDATA, "purpl", "local-data", "config.json")

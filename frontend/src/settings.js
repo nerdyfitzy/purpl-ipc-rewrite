@@ -10,7 +10,7 @@ $("#settings-submit").on("click", () => {
   });
 });
 
-$(document).on("ready", () => {
+$(document).ready(() => {
   const { global, misc } = ipcRenderer.sendSync("get-settings");
   $("#webhook").val(global.webhook);
   $("#chrome-path").val(global.chromePath);

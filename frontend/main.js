@@ -548,12 +548,12 @@ ipcMain.on("test-gmails", (event, { gmails, group, type }) => {
 
 ipcMain.on(
   "save-settings",
-  (event, { webhook, chrome, gmailToken, fivesim, twoCap }) => {
-    saveSettings(webhook, chrome, gmailToken, twoCap, fivesim);
+  (event, { webhook, chrome, gmailToken, fiveSim, twoCap }) => {
+    saveSettings(webhook, chrome, gmailToken, twoCap, fiveSim);
   }
 );
 
-ipcMain.on("get-settings", () => {
+ipcMain.on("get-settings", (event, arg) => {
   event.returnValue = getSettings();
 });
 
