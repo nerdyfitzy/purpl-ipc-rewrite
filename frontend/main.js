@@ -26,6 +26,10 @@ const {
 const { fstat } = require("fs");
 const { profile } = require("console");
 const test = require("../backend/modules/gmailfarming/utils/test");
+const {
+  saveSettings,
+  getSettings,
+} = require("../backend/utils/config/editConfig");
 
 function createWindow(page) {
   // Create the browser window.
@@ -540,6 +544,17 @@ ipcMain.on("test-gmails", (event, { gmails, group, type }) => {
       clearInterval(testInt);
     }
   });
+});
+
+ipcMain.on(
+  "save-settings",
+  (event, { webhook, chrome, gmailToken, fivesim, twoCap }) => {
+    saveSettings(webhook, chrome, gmailToken, twoCap, fivesim);
+  }
+);
+
+ipcMain.on("get-settings", () => {
+  event.returnValue = getSettings();
 });
 
 ipcMain.on("activate", (event, key) => {

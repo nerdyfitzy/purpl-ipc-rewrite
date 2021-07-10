@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="../assets/css/style.css" />
+    <link rel="stylesheet" href="../assets/css/settings.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css" />
+    <title>Purpl</title>
+  </head>
+
+  <body>
+    <div class="w-100" style="height: 29px; background-color: #1c1923">
+      <div class="drag">
+        <div class="control-keys">
+          <span class="d-inline-block close nodrag" id="close-button"
+            ><i class="fas fa-times"></i
+          ></span>
+          <span class="d-inline-block minimize nodrag" id="minimize-button"
+            ><i class="fas fa-minus"></i
+          ></span>
+          <span class="d-inline-block expand nodrag" id="maximize-button"
+            ><i class="fas fa-expand-alt"></i
+          ></span>
+        </div>
+      </div>
+    </div>
+    <div class="desktop">
+      <div class="w-100">
+        <div class="custom-cm">
+          <div class="custom-cm_item" id="start-sel">Start Selected</div>
+          <div class="custom-cm_item" id="stop-sel">Stop Selected</div>
+          <div class="custom-cm_item" id="copy-sub-sub">
+            Copy »
+            <div class="sub-sub">
+              <ul>
+                <li id="copy-email" class="sub-sub_item">Email</li>
+                <li id="copy-password" class="sub-sub_item">Password</li>
+                <li id="copy-proxy" class="sub-sub_item">Proxy</li>
+                <li id="copy-recovery" class="sub-sub_item">Recovery</li>
+                <li id="copy-security" class="sub-sub_item">Security</li>
+              </ul>
+            </div>
+          </div>
+          <div class="custom-cm_item" id="test-v2v-sel">Test v2 Visible</div>
+          <div class="custom-cm_item" id="test-v2i-sel">Test v2 Invisible</div>
+          <div class="custom-cm_item" id="test-v3-sel">Test v3</div>
+          <div class="custom-cm_item" id="manual-login">Manual Login</div>
+        </div>
+        <div class="health-menu">
+          <div class="health-menu-item" id="v3-score">v3 Score</div>
+          <div class="health-menu-item" id="v2i-score">v2 Invisible</div>
+          <div class="health-menu-item" id="v2v-score">v2 Visible</div>
+        </div>
+        <div
+          class="
+            user-nav
+            d-flex
+            align-items-center
+            justify-content-between
+            w-100
+          "
+        >
+          <div>
+            <img style="width: 120px" src="../assets/images/LOGO.svg" alt="" />
+          </div>
+          <div class="d-flex align-items-center justify-content-between">
+            <span class="notifications">
+              <img src="../assets/images/Notification.png" alt="" />
+            </span>
+            <span>
+              <div class="dropdown">
+                <button
+                  class="btn user-drop dropdown-toggle"
+                  type="button"
+                  id="dropdownMenuButton"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  <span class="text-white user-arrow"
+                    ><i
+                      style="vertical-align: middle"
+                      class="fas fa-chevron-down"
+                    ></i
+                  ></span>
+                  <img
+                    id="profile-picture"
+                    src="../assets/images/PERSON.png"
+                    alt=""
+                  />
+                </button>
+                <ul
+                  class="dropdown-menu"
+                  aria-labelledby="dropdownMenuButton"
+                  style="font-size: 12px"
+                >
+                  <li>
+                    <a
+                      class="dropdown-item text-white"
+                      style="padding: 10px 18px"
+                      href="#"
+                    >
+                      <img
+                        style="margin-right: 10px"
+                        src="../assets/images/SETTINGS.png"
+                        alt=""
+                      />
+                      SETTINGS</a
+                    >
+                  </li>
+                  <li>
+                    <a
+                      class="dropdown-item"
+                      href="#"
+                      style="color: #ff6a6a; padding: 10px 18px"
+                      ><img
+                        style="margin-right: 10px"
+                        src="../assets/images/LOGOUT.png"
+                        alt=""
+                      />
+                      LOGOUT</a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </span>
+          </div>
+        </div>
+        <div
+          class="
+            links-nav
+            d-flex
+            align-items-center
+            justify-content-arround
+            w-100
+          "
+        >
+          <nav
+            class="
+              navbar navbar-expand-lg navbar-light
+              bg-transparent
+              w-100
+              p-0
+            "
+          >
+            <div class="w-100">
+              <a class="navbar-brand" href="#">Navbar</a>
+              <button
+                class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent"
+                aria-expanded="false"
+                aria-label="Toggle navigation"
+              >
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul
+                  class="
+                    nav-dash-links
+                    list-unstyled
+                    px-0
+                    mb-0
+                    d-flex
+                    align-items-center
+                    justify-content-around
+                    flex-wrap
+                    w-100
+                  "
+                >
+                  <li class="d-inline-block">
+                    <a href="#" class="main-nav-link ui-disabled">
+                      <span class="link-attr">
+                        <span class="img-link dash"></span>
+                        <span>Dashboard</span>
+                      </span>
+                    </a>
+                  </li>
+                  <li class="d-inline-block">
+                    <a href="./dashboard.html" class="main-nav-link">
+                      <span class="link-attr">
+                        <span class="img-link task"></span>
+                        <span>Task</span>
+                      </span>
+                    </a>
+                  </li>
+                  <li class="d-inline-block">
+                    <a href="./profile.html" class="main-nav-link">
+                      <span class="link-attr">
+                        <span class="img-link profile"></span>
+                        <span>Profiles</span>
+                      </span>
+                    </a>
+                  </li>
+                  <li class="d-inline-block">
+                    <a href="./proxies.html" class="main-nav-link" id="proxies">
+                      <span class="link-attr">
+                        <span class="img-link proxies"></span>
+                        <span>Proxies</span>
+                      </span>
+                    </a>
+                  </li>
+                  <li class="d-inline-block">
+                    <a href="./profits/Analytic.html" class="main-nav-link">
+                      <span class="link-attr">
+                        <span class="img-link account"></span>
+                        <span>Profits</span>
+                      </span>
+                    </a>
+                  </li>
+                  <li class="d-inline-block">
+                    <a href="#" class="main-nav-link ui-disabled">
+                      <span class="link-attr active">
+                        <span class="img-link settings"></span>
+                        <span>Settings</span>
+                      </span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </nav>
+        </div>
+        <div class="w-100 row mx-0 px-0 container">
+            <div class="box">
+                <form action="#" id="new-group-form" class="container">
+                    <div class="form-group">
+                      <label for="webhook">Webhook</label>
+                      <input
+                        type="text"
+                        placeholder="Input your discord webhook"
+                        id="webhook"
+                        style="width: 350px;"
+                      />
+                    </div>
+                    <div class="form-group">
+                      <label for="chrome-path">Chrome Path</label>
+                      <input
+                        type="text"
+                        placeholder="Input your chrome path"
+                        id="chrome-path"
+                        value="C:\Program Files (x86)\Google\Chrome\Application\chrome.exe"
+                        style="width: 400px;"
+                      />
+                    </div>
+                    <div class="form-group">
+                        <label for="gmail-token">Gmail Token</label>
+                        <input
+                          type="text"
+                          placeholder="Input your gmail token for scanning"
+                          id="gmail-token"
+                          style="width: 300px;"
+                        />
+                      </div>
+                      <div class="form-group">
+                        <label for="2cap">2captcha Key</label>
+                        <input
+                          type="text"
+                          placeholder="Input your 2captcha API key"
+                          id="2cap"
+                          style="width: 300px;"
+                        />
+                      </div>
+                      <div class="form-group">
+                        <label for="5sim">5sim.net Key</label>
+                        <input
+                          type="text"
+                          placeholder="Input your 5sim.net API key"
+                          id="5sim"
+                          style="width: 300px;"
+                        />
+                      </div>
+                    <div class="form-dialog-btn">
+                      <button class="submit" id="settings-submit">
+                        Save
+                      </button>
+                    </div>
+                  </form>
+            </div>
+            
+      </div>
+    </div>
+
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="../assets/js/jquery-3.3.1.min.js"></script>
+    <script src="../assets/js/popper.min.js"></script>
+    <script src="../assets/js/bootstrap.min.js"></script>
+    <script src="../assets/js/main.js"></script>
+    <script src="./settings.js"></script>
+  </body>
+</html>

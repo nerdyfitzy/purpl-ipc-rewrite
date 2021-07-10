@@ -1,0 +1,51 @@
+.container {
+  padding-top: 50px;
+  padding-left: 110px;
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.box {
+  height: 100%;
+  width: 100%;
+}
+
+label {
+  font-size: 16px;
+  color: white;
+}
+
+.box input::placeholder {
+  color: rgba(255, 255, 255, 0.497);
+  font-size: 15px;
+}
+.box input,
+.box select,
+.box textarea {
+  background-color: #211f27;
+  border: 0;
+  border-color: #211f27;
+  border-radius: 8px;
+  height: 48px;
+  color: #fff;
+  max-width: 471px;
+  display: block;
+  padding: 10px 15px;
+  width: 100%;
+  resize: none;
+}
+
+.box label {
+  font-size: 12px;
+  margin-bottom: 7px;
+  margin-top: 20px;
+  margin-left: 10px;
+}
+
+.longer {
+  width: 200px;
+}

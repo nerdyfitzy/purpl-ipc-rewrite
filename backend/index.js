@@ -44,8 +44,9 @@ const sendKey = (key) => {
   );
 };
 
+var socket;
 const startSocket = () => {
-  const socket = io.connect("https://ancient-lake-42941.herokuapp.com/");
+  socket = io.connect("https://ancient-lake-42941.herokuapp.com/");
   socket.on("connect", async () => {
     console.log(
       `[${new Date().toLocaleTimeString()}] - Connected to API`,
@@ -160,10 +161,15 @@ const setup = async () => {
           runinputlow: 30,
           runinputhigh: 60,
         },
+
+        misc: {
+          gmailToken: "",
+          fivesim: "",
+          twoCaptcha: "",
+        },
       })
     );
   }
-
   const config_unparsed = fs.readFileSync(
     path.join(process.env.APPDATA, "purpl", "local-data", "config.json")
   );
