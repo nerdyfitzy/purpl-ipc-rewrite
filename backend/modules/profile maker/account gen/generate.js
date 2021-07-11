@@ -4,6 +4,7 @@ const TargetAccount = require("./scripts/target_catchall");
 const WalmartAccount = require("./scripts/walmart");
 const { loadProxies } = require("../../proxies/index");
 const path = require("path");
+const AmazonGenerator = require("./amazon/generator/amzGen");
 
 let next = 0;
 
@@ -12,10 +13,12 @@ const getNextUnusedProxy = () => {
 };
 
 class Controller {
-  constructor(site, catchall, proxyList, number) {
+  constructor(site, catchall, proxyList, number, smsKey = "", captchaKey = "") {
     this.site = site;
     this.catchall = catchall;
     this.proxyList = proxyList;
+    this.smsKey = smsKey;
+    this.captchaKey = captchaKey;
     this.number = number;
     this.CreatedAccounts = [];
     this.context;
@@ -97,7 +100,7 @@ class Controller {
     this.context.close();
   }
 
-  async startTasks() {
+  async startTasks(profileId = "", groupId = "") {
     switch (this.site) {
       case "Target": {
         for (let i = 0; i < this.number; i++) {
@@ -155,7 +158,7 @@ class Controller {
           const Success = await Account.generate();
           if (Success) {
             console.log("Successfully reported");
-            Account.getDetails().push(this.CreatedAccounts);
+            this.CreatedAccounts.push(Account.getDetails());
           } else {
             console.log("Failed");
             const outOfProxies = await this.rotateProxy();
@@ -163,6 +166,22 @@ class Controller {
           }
 
           await this.context.close();
+        }
+        break;
+      }
+      case "Amazon": {
+        for (let i = 0; i < this.number; i++) {
+          const Amazon = new AmazonGenerator(
+            this.catchall,
+            profileId,
+            groupId,
+            this.smsKey,
+            this.captchaKey
+          );
+          const acc = await Amazon.start();
+          if (acc) {
+            this.CreatedAccounts.push(acc);
+          }
         }
         break;
       }

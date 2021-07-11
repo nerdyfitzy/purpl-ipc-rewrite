@@ -166,6 +166,7 @@ const setup = async () => {
           gmailToken: "",
           fivesim: "",
           twoCaptcha: "",
+          authorizedToken: "",
         },
       })
     );

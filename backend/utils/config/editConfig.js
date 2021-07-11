@@ -1,14 +1,33 @@
 const fs = require("fs");
 const path = require("path");
+const GmailScanner = require("../gmail scanning/auth");
+const console = require("../../utils/logger");
 
-const saveSettings = (webhook, chromePath, gmailToken, twoCaptcha, fivesim) => {
+const saveSettings = async (
+  webhook = false,
+  chromePath = false,
+  gmailToken = false,
+  twoCaptcha = false,
+  fivesim = false,
+  authorizedToken = false
+) => {
   console.log("saving settings");
+  const oldSettings = JSON.parse(
+    fs.readFileSync(
+      path.join(process.env.APPDATA, "purpl", "local-data", "config")
+    )
+  );
+  if (gmailToken && oldSettings.misc.authorizedToken !== "") {
+    const scan = new GmailScanner();
+    await scan.getOauth2();
+    return 1;
+  }
   const newSettings = {
     global: {
-      webhook,
+      webhook: webhook ? webhook : oldSettings.global.webhook,
       activated: false,
       key: "",
-      chromePath,
+      chromePath: chromePath ? chromePath : oldSettings.global.chromePath,
     },
     gmailSettings: {
       maxRunning: 10,
@@ -19,9 +38,12 @@ const saveSettings = (webhook, chromePath, gmailToken, twoCaptcha, fivesim) => {
     },
 
     misc: {
-      gmailToken,
-      fivesim,
-      twoCaptcha,
+      gmailToken: gmailToken ? gmailToken : oldSettings.misc.gmailToken,
+      fivesim: fivesim ? fivesim : oldSettings.misc.fivesim,
+      twoCaptcha: twoCaptcha ? twoCaptcha : oldSettings.misc.twoCaptcha,
+      authorizedToken: authorizedToken
+        ? authorizedToken
+        : oldSettings.misc.authorizedToken,
     },
   };
   fs.writeFileSync(

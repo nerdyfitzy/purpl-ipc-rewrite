@@ -2,6 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const got = require("got");
 const { google } = require("googleapis");
+const { saveSettings } = require("../config/editConfig");
 
 class GmailScanner {
   gmailToken;
@@ -12,30 +13,50 @@ class GmailScanner {
         path.join(process.env.APPDATA, "purpl", "local-data", "config.json")
       )
     );
-    this.gmailToken =
-      "4/1AX4XfWiGGXLQ9xdxzUnXeDvwETNOQHHolACx8IWLSalyvH4YbYdEt8BOQpo";
+    this.gmailToken = misc.gmailToken;
     this.oauth2 = false;
   }
 
   async getOauth2() {
-    const res = await got.post("http://localhost:8080/oauth2", {
-      headers: {
-        "content-type": "application/json",
-      },
-      json: {
-        code: this.gmailToken,
-      },
-      responseType: "json",
-    });
-
-    console.log(res.body);
-    const { token, oAuth2Client } = res.body;
-    this.oauth2 = new google.auth.OAuth2(
-      oAuth2Client._clientId,
-      oAuth2Client._clientSecret,
-      oAuth2Client.redirectUri
+    const { misc } = JSON.parse(
+      fs.readFileSync(
+        path.join(process.env.APPDATA, "purpl", "local-data", "config.json")
+      )
     );
-    this.oauth2.setCredentials(token);
+    if (misc.authorizedToken === "") {
+      const res = await got.post("http://localhost:8080/oauth2", {
+        headers: {
+          "content-type": "application/json",
+        },
+        json: {
+          code: this.gmailToken,
+        },
+        responseType: "json",
+      });
+
+      console.log(res.body);
+      const { token, oAuth2Client } = res.body;
+      this.oauth2 = new google.auth.OAuth2(
+        oAuth2Client._clientId,
+        oAuth2Client._clientSecret,
+        oAuth2Client.redirectUri
+      );
+      this.oauth2.setCredentials(token);
+
+      saveSettings(false, false, false, false, false, token);
+    } else {
+      const res = await got.get("http://localhost:8080/preAuthorized", {
+        responseType: "json",
+      });
+      const { oAuth2Client } = res.body;
+      this.oauth2 = new google.auth.OAuth2(
+        oAuth2Client._clientId,
+        oAuth2Client._clientSecret,
+        oAuth2Client.redirectUri
+      );
+
+      this.oauth2.setCredentials(misc.authorizedToken);
+    }
 
     return 1;
   }

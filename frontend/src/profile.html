@@ -650,7 +650,10 @@
                             </div>
                           </div>
                           <form action="#">
-                            <div style="height: 420px; overflow: auto">
+                            <div
+                              style="height: 420px; overflow: visible"
+                              id="form-div"
+                            >
                               <div class="col-md-12">
                                 <label for="catchall-input"
                                   >Input Catchall</label
@@ -670,7 +673,9 @@
                                   id="qty-acc-input"
                                 />
                               </div>
-                              <div class="col-md-12">
+                              <div class="col-md-12" id="prof-group"></div>
+                              <div class="col-md-12" id="spec-prof"></div>
+                              <div class="col-md-12" id="proxies-input">
                                 <label for="proxies-acc-input"
                                   >Proxies To Use</label
                                 >

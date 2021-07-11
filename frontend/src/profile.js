@@ -641,8 +641,65 @@ ipcRenderer.on("vcc-actions-reply", (event, profiles) => {
 });
 
 $("#site-choose").on("change", () => {
-  console.log("cange");
+  console.log($("#proxies-acc-input"), "haha");
   $("#site-header").text(`on ${$("#site-choose").val()}`);
+
+  if ($("#site-choose").val() === "Amazon") {
+    $("#proxies-input").empty();
+    $("#prof-group").append(`<label for="profile-group-choose"
+        >Profile Group</label
+      >
+      <select
+        name="profile-group-choose"
+        id="profile-group-choose"
+      ></select>`);
+    $("#spec-prof").append(`<label for="spec-prof-choose"
+      >Specific Profile</label
+    >
+    <select
+      name="spec-prof-choose"
+      id="spec-prof-choose"
+    ></select>`);
+    $(".account-box").css("height", "610px");
+
+    const groups = ipcRenderer.sendSync("get-profiles", {
+      initial: true,
+      group: undefined,
+    });
+    Object.values(groups).forEach((group) => {
+      $("#profile-group-choose").append(
+        `<option value="${group.uuid}" id="${group.uuid}_accounts">${group.name}</option>`
+      );
+      $(`#${group.uuid}_accounts`).on("click", () => {
+        console.log("click");
+        $("#spec-prof-choose").empty();
+        Object.values(groups[group.uuid].profiles).forEach((profile) => {
+          console.log(profile);
+          $("#spec-prof-choose").append(
+            `<option value="${profile.uuid}" id="${profile.uuid}_accounts">${profile.profile_name}</option>`
+          );
+        });
+      });
+    });
+    Object.values(groups.default.profiles).forEach((profile) => {
+      $("#spec-prof-choose").append(
+        `<option value="${profile.uuid}" id="${profile.uuid}">${profile.profile_name}</option>`
+      );
+    });
+  } else if ($("#proxies-acc-input").length === 0) {
+    console.log("deleting");
+    $("#prof-group").empty();
+    $("#spec-prof").empty();
+    $("#proxies-input").append(`<label for="proxies-acc-input"
+        >Proxies To Use</label
+      >
+      <select
+        name="proxies-acc-input"
+        id="proxies-acc-input"
+      ></select>`);
+
+    $(".account-box").css("height", "500px");
+  }
 });
 
 $("#create-accs").on("click", () => {
@@ -651,6 +708,14 @@ $("#create-accs").on("click", () => {
     catchall: "@" + $("#catchall-input").val(),
     qty: parseInt($("#qty-acc-input").val()),
     proxyList: $("#proxies-acc-input").val(),
+    profileId:
+      $("#spec-prof-choose").length > 0
+        ? $("#spec-prof-choose").val()
+        : undefined,
+    groupId:
+      $("#profile-group-choose").length > 0
+        ? $("#profile-group-choose").val()
+        : undefined,
   });
 });
 
