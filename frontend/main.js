@@ -306,7 +306,6 @@ ipcMain.on("delete-profile", (event, { uuid, group }) => {
 ipcMain.on("get-profiles", async (event, { initial, group }) => {
   console.log(`[${new Date().toLocaleTimeString()}] - Getting profiles`);
   const profs = await profiles.loadProfiles(initial, group);
-  console.log("asdasdasd   " + JSON.stringify(profs));
   event.returnValue = profs;
   //sendsync
 });

@@ -13,12 +13,17 @@ const getNextUnusedProxy = () => {
 };
 
 class Controller {
-  constructor(site, catchall, proxyList, number, smsKey = "", captchaKey = "") {
+  constructor(site, catchall, proxyList, number) {
+    const { misc } = JSON.parse(
+      fs.readFileSync(
+        path.join(process.env.APPDATA, "purpl", "local-data", "config.json")
+      )
+    );
     this.site = site;
     this.catchall = catchall;
     this.proxyList = proxyList;
-    this.smsKey = smsKey;
-    this.captchaKey = captchaKey;
+    this.smsKey = misc.fivesim;
+    this.captchaKey = misc.twoCaptcha;
     this.number = number;
     this.CreatedAccounts = [];
     this.context;

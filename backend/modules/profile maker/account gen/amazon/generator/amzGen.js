@@ -37,7 +37,7 @@ class AmazonGenerator {
   newInfo() {
     this.fname = names({ first: true });
     this.lname = names({ last: true });
-    this.email = `${this.fname}${this.lname}@${this.catchall}`;
+    this.email = `${this.fname}${this.lname}${this.catchall}`;
     this.password =
       this.fname +
       this.lname +

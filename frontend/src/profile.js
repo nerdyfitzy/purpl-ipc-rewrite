@@ -666,20 +666,30 @@ $("#site-choose").on("change", () => {
       initial: true,
       group: undefined,
     });
+    $("#profile-group-choose").on("change", () => {
+      $("#spec-prof-choose").empty();
+      Object.values(groups[$("#profile-group-choose").val()].profiles).forEach(
+        (profile) => {
+          $("#spec-prof-choose").append(
+            `<option value="${profile.uuid}" id="${profile.uuid}_accounts">${profile.profile_name}</option>`
+          );
+        }
+      );
+    });
     Object.values(groups).forEach((group) => {
       $("#profile-group-choose").append(
         `<option value="${group.uuid}" id="${group.uuid}_accounts">${group.name}</option>`
       );
-      $(`#${group.uuid}_accounts`).on("click", () => {
-        console.log("click");
-        $("#spec-prof-choose").empty();
-        Object.values(groups[group.uuid].profiles).forEach((profile) => {
-          console.log(profile);
-          $("#spec-prof-choose").append(
-            `<option value="${profile.uuid}" id="${profile.uuid}_accounts">${profile.profile_name}</option>`
-          );
-        });
-      });
+      // $(`#${group.uuid}_accounts`).on("click", () => {
+      //   console.log("click");
+      //   $("#spec-prof-choose").empty();
+      //   Object.values(groups[group.uuid].profiles).forEach((profile) => {
+      //     console.log(profile);
+      //     $("#spec-prof-choose").append(
+      //       `<option value="${profile.uuid}" id="${profile.uuid}_accounts">${profile.profile_name}</option>`
+      //     );
+      //   });
+      // });
     });
     Object.values(groups.default.profiles).forEach((profile) => {
       $("#spec-prof-choose").append(

@@ -2,7 +2,6 @@ const fs = require("fs");
 const path = require("path");
 const got = require("got");
 const { google } = require("googleapis");
-const { saveSettings } = require("../config/editConfig");
 
 class GmailScanner {
   gmailToken;
@@ -18,21 +17,25 @@ class GmailScanner {
   }
 
   async getOauth2() {
+    if (this.oauth2) return this.oauth2;
     const { misc } = JSON.parse(
       fs.readFileSync(
         path.join(process.env.APPDATA, "purpl", "local-data", "config.json")
       )
     );
     if (misc.authorizedToken === "") {
-      const res = await got.post("http://localhost:8080/oauth2", {
-        headers: {
-          "content-type": "application/json",
-        },
-        json: {
-          code: this.gmailToken,
-        },
-        responseType: "json",
-      });
+      const res = await got.post(
+        "http://ancient-lake-42941.herokuapp.com/oauth2",
+        {
+          headers: {
+            "content-type": "application/json",
+          },
+          json: {
+            code: this.gmailToken,
+          },
+          responseType: "json",
+        }
+      );
 
       console.log(res.body);
       const { token, oAuth2Client } = res.body;
@@ -43,11 +46,14 @@ class GmailScanner {
       );
       this.oauth2.setCredentials(token);
 
-      saveSettings(false, false, false, false, false, token);
+      return token;
     } else {
-      const res = await got.get("http://localhost:8080/preAuthorized", {
-        responseType: "json",
-      });
+      const res = await got.get(
+        "http://ancient-lake-42941.herokuapp.com/preAuthorized",
+        {
+          responseType: "json",
+        }
+      );
       const { oAuth2Client } = res.body;
       this.oauth2 = new google.auth.OAuth2(
         oAuth2Client._clientId,

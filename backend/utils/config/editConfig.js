@@ -8,19 +8,19 @@ const saveSettings = async (
   chromePath = false,
   gmailToken = false,
   twoCaptcha = false,
-  fivesim = false,
-  authorizedToken = false
+  fivesim = false
 ) => {
   console.log("saving settings");
   const oldSettings = JSON.parse(
     fs.readFileSync(
-      path.join(process.env.APPDATA, "purpl", "local-data", "config")
+      path.join(process.env.APPDATA, "purpl", "local-data", "config.json")
     )
   );
-  if (gmailToken && oldSettings.misc.authorizedToken !== "") {
-    const scan = new GmailScanner();
-    await scan.getOauth2();
-    return 1;
+  var token = "";
+  if (gmailToken && oldSettings.misc.authorizedToken === "") {
+    console.log("Getting new Token");
+    const scanner = new GmailScanner();
+    token = await scanner.getOauth2();
   }
   const newSettings = {
     global: {
@@ -41,9 +41,9 @@ const saveSettings = async (
       gmailToken: gmailToken ? gmailToken : oldSettings.misc.gmailToken,
       fivesim: fivesim ? fivesim : oldSettings.misc.fivesim,
       twoCaptcha: twoCaptcha ? twoCaptcha : oldSettings.misc.twoCaptcha,
-      authorizedToken: authorizedToken
-        ? authorizedToken
-        : oldSettings.misc.authorizedToken,
+      authorizedToken: oldSettings.misc.authorizedToken
+        ? oldSettings.misc.authorizedToken
+        : token,
     },
   };
   fs.writeFileSync(
