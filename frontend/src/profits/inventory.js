@@ -155,9 +155,6 @@ $("#refresh").on("click", async () => {
 });
 
 $("#close-button").on("click", async function () {
-  sock.close();
-  noReplySock.close();
-  statusSock.close();
   const win = remote.getCurrentWindow();
   win.close();
 });

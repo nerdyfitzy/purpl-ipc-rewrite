@@ -7,29 +7,26 @@ const {
   ipcRenderer,
 } = require("electron");
 const path = require("path");
-const url = require("url");
 
-const console = require("../backend/utils/logger");
+const console = require("./backend/utils/logger");
 
-const gmailFarmer = require("../backend/modules/gmailfarming/index");
-const proxy = require("../backend/modules/proxies/index");
-const profiles = require("../backend/modules/profile maker/index");
-const profits = require("../backend/modules/profit tracker/index");
-const stockx = require("../backend/modules/profit tracker/stockx/stockx");
-const engine = require("../backend/index");
+const gmailFarmer = require("./backend/modules/gmailfarming/index");
+const proxy = require("./backend/modules/proxies/index");
+const profiles = require("./backend/modules/profile maker/index");
+const profits = require("./backend/modules/profit tracker/index");
+const stockx = require("./backend/modules/profit tracker/stockx/stockx");
+const engine = require("./backend/index");
 
-const VCC_Controller = require("../backend/modules/profile maker/card gen/vcc_index");
+const VCC_Controller = require("./backend/modules/profile maker/card gen/vcc_index");
 const {
   Controller,
-} = require("../backend/modules/profile maker/account gen/generate");
+} = require("./backend/modules/profile maker/account gen/generate");
 
-const { fstat } = require("fs");
-const { profile } = require("console");
-const test = require("../backend/modules/gmailfarming/utils/test");
+const test = require("./backend/modules/gmailfarming/utils/test");
 const {
   saveSettings,
   getSettings,
-} = require("../backend/utils/config/editConfig");
+} = require("./backend/utils/config/editConfig");
 
 function createWindow(page) {
   // Create the browser window.
@@ -49,7 +46,7 @@ function createWindow(page) {
 
     // and load the index.html of the app.
     win.setMenuBarVisibility(false);
-    win.loadFile(path.join(__dirname, `./src/index.html`));
+    win.loadFile(path.join(__dirname, `./frontend/src/index.html`));
 
     // win.on("closed", async () => {
     //     await sock.send(JSON.stringify({
@@ -72,7 +69,7 @@ function createWindow(page) {
       resizable: false,
     });
     gmailPage.setMenuBarVisibility(false);
-    gmailPage.loadFile(path.join(__dirname, "./src/dashboard.html"));
+    gmailPage.loadFile(path.join(__dirname, "./frontend/src/dashboard.html"));
     gmailPage.on("close", async () => {
       console.log("closing");
       await gmailFarmer.saveGmails();
@@ -97,11 +94,11 @@ function createWindow(page) {
     });
     win.close();
     gmailPage.setMenuBarVisibility(false);
-    gmailPage.loadFile(path.join(__dirname, "./src/dashboard.html"));
+    gmailPage.loadFile(path.join(__dirname, "./frontend/src/dashboard.html"));
 
     ipcMain.on("to-proxy-page", function (event) {
       console.log("loading proxies", "info");
-      gmailPage.loadFile(path.join(__dirname, "./src/proxies.html"));
+      gmailPage.loadFile(path.join(__dirname, "./frontend/src/proxies.html"));
     });
 
     gmailPage.on("close", async () => {
@@ -556,6 +553,7 @@ ipcMain.on("get-settings", (event, arg) => {
   event.returnValue = getSettings();
 });
 
-ipcMain.on("activate", (event, key) => {
-  engine.sendKey(key);
+ipcMain.on("activate", async (event, key) => {
+  const res = await engine.sendKey(key);
+  event.returnValue = res;
 });

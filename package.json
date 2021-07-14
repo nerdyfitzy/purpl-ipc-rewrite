@@ -1,21 +1,26 @@
 {
-  "name": "purpl-ipc",
+  "name": "purpl",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "electron ./frontend/main.js"
+    "start": "electron index.js",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
   },
   "author": "fitzy",
   "license": "ISC",
   "devDependencies": {
-    "browserify": "^17.0.0",
+    "electron": "^13.1.1",
+    "electron-builder": "^22.11.7"
+  },
+  "dependencies": {
+    "googleapis": "^81.0.0",
     "clipboardy": "^2.3.0",
     "csv-parser": "^3.0.0",
     "discord-rpc": "^3.2.0",
     "dotenv": "^10.0.0",
-    "electron": "^13.1.1",
     "form-data": "^4.0.0",
     "got": "^11.8.2",
     "jquery": "^3.6.0",
@@ -33,7 +38,11 @@
     "uuid": "^8.3.2",
     "winston": "^3.3.3"
   },
-  "dependencies": {
-    "googleapis": "^81.0.0"
+  "build": {
+    "appId": "com.electron.purpl",
+    "productName": "purpl",
+    "mac": {
+      "category": "public.app-category.developer-tools"
+    }
   }
 }

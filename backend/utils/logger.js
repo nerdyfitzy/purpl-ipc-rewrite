@@ -1,6 +1,5 @@
 const winston = require("winston");
 const { v4 } = require("uuid");
-require("dotenv").config();
 const path = require("path");
 
 const logger = winston.createLogger({
@@ -27,8 +26,6 @@ if (process.env.NODE_ENV === "development") {
     })
   );
 }
-
-console.log(process.env.NODE_ENV);
 
 const log = (message, level = "info") => {
   logger.log({

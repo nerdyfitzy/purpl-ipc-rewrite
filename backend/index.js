@@ -4,7 +4,8 @@ const clientId = "785264365963182121";
 const fs = require("fs");
 const path = require("path");
 const dotenv = require("dotenv");
-const console = require("../backend/utils/logger");
+const console = require("./utils/logger");
+const { ipcRenderer } = require("electron");
 dotenv.config();
 
 const { machineId } = require("node-machine-id");
@@ -35,16 +36,59 @@ const presence = () => {
   });
 };
 
+var socket;
+
 const sendKey = (key) => {
-  socket.send(
-    JSON.stringify({
-      op: 1,
-      key,
-    })
-  );
+  return new Promise(async (resolve, reject) => {
+    socket.on("message", (message) => {
+      const wsParsed = JSON.parse(message);
+      console.log(`Received msg from server, ${wsParsed}`, "debug");
+      switch (wsParsed.op) {
+        case 1:
+          if (wsParsed.hwId === myHwid) {
+            console.log(
+              `[${new Date().toLocaleTimeString()}] - Key found in config, skipping key page`,
+              "info"
+            );
+
+            activated = true;
+            globalInfo.startTime = Date.now();
+          } else {
+            console.log(
+              `[${new Date().toLocaleTimeString()}] - No key in config. Must input`,
+              "info"
+            );
+          }
+          break;
+        case 2:
+          if (wsParsed.success === 1) {
+            console.log(
+              `[${new Date().toLocaleTimeString()}] - Successfully Activated!`,
+              "info"
+            );
+            resolve({ success: 1 });
+            activated = true;
+            let startTime = Date.now();
+          } else {
+            console.log(
+              `[${new Date().toLocaleTimeString()}] - Error activating.`,
+              "error"
+            );
+            resolve({ success: 0, reason: wsParsed.error });
+          }
+
+          break;
+      }
+    });
+    socket.send(
+      JSON.stringify({
+        op: 1,
+        key,
+      })
+    );
+  });
 };
 
-var socket;
 const startSocket = () => {
   socket = io.connect("https://ancient-lake-42941.herokuapp.com/");
   socket.on("connect", async () => {
@@ -54,64 +98,8 @@ const startSocket = () => {
     );
     presence();
   });
-  socket.on("message", (message) => {
-    const wsParsed = JSON.parse(message);
-    console.log(`Received msg from server, ${wsParsed}`, "debug");
-    switch (wsParsed.op) {
-      case 1:
-        if (wsParsed.hwId === myHwid) {
-          console.log(
-            `[${new Date().toLocaleTimeString()}] - Key found in config, skipping key page`,
-            "info"
-          );
-          sock.send(
-            JSON.stringify({
-              skipKey: true,
-            })
-          );
-          activated = true;
-          globalInfo.startTime = Date.now();
-        } else {
-          console.log(
-            `[${new Date().toLocaleTimeString()}] - No key in config. Must input`,
-            "info"
-          );
-          sock.send(
-            JSON.stringify({
-              skipKey: false,
-            })
-          );
-        }
-        break;
-      case 2:
-        if (wsParsed.success === 1) {
-          console.log(
-            `[${new Date().toLocaleTimeString()}] - Successfully Activated!`,
-            "info"
-          );
-          sock.send(
-            JSON.stringify({
-              success: 1,
-            })
-          );
-          activated = true;
-          let startTime = Date.now();
-        } else {
-          console.log(
-            `[${new Date().toLocaleTimeString()}] - Error activating.`,
-            "error"
-          );
-          sock.send(
-            JSON.stringify({
-              success: 0,
-              reason: wsParsed.error,
-            })
-          );
-        }
 
-        break;
-    }
-  });
+  return 1;
 };
 
 const setup = async () => {

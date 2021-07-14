@@ -1210,13 +1210,6 @@ const addGrouptoList = (name, tags, uuid, num) => {
   $(`#${uuid}_point9s`).on("click", async function (event) {
     //test-gmails
     //MARKER : FIGURE OUT WHAT EXACTLY THIS DOES
-    await sock.send(
-      JSON.stringify({
-        module: "captcha",
-        action: 8,
-        groupID: currentgroup,
-      })
-    );
   });
 };
 

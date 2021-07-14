@@ -69,9 +69,6 @@ const addItemToTable = async (item) => {
 };
 
 $("#close-button").on("click", async function () {
-  sock.close();
-  noReplySock.close();
-  statusSock.close();
   const win = remote.getCurrentWindow();
   win.close();
 });
