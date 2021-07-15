@@ -133,8 +133,10 @@ const addProfile = (profile) => {
       group: currentgroup,
     });
     let ct = parseInt($("#profile-count").text());
-    $("#profile-count").text(--ct);
-    $(`#${event.target.getAttribute("id")}`).remove();
+    ct--;
+    $("#profile-count").text(ct);
+    $(`#${currentgroup}-num`).text(ct + " Profiles");
+    $(`#${event.target.getAttribute("id").split("_")[0]}`).remove();
   });
 
   $(`#${profile.uuid}`).on("contextmenu", (event) => {
@@ -316,26 +318,11 @@ const addGroupToList = (group) => {
     console.log(event);
     if (event.target.getAttribute("id").includes("edit")) {
       console.log("edit");
-      // jQuery('#groupEditModal').modal('show');
-      // $('#edited-group-name').value = name
-      // $('#edited-group-tags').value = tags
-      // $('#edit-group-submit').on('click', async () => {
-      //     await noReplySock.send(JSON.stringify({
-      //         "module": 'captcha',
-      //         "action": 9,
-      //         "data": {
-      //             "name": document.getElementById('edited-group-name').value,
-      //             "tags": document.getElementById('select-tags-edit').value,
-      //             "uuid": event.target.getAttribute('id').split('_')[0]
-      //         }
-      //     }))
-      //     $(`#${event.target.getAttribute('id').substring(0, event.target.getAttribute('id').length - 5)}_name`).html(document.getElementById('edited-group-name').value)
-      //     $(`#${event.target.getAttribute('id').substring(0, event.target.getAttribute('id').length - 5)}_tags`).html(document.getElementById('select-tags-edit').value)
-      //     jQuery('#groupEditModal').modal('hide')
-      //     $('#edit-group-submit').off('click')
-      // })
     } else if (event.target.getAttribute("id").includes("delete")) {
-      console.log("delete da group");
+      console.log(
+        "delete da group",
+        event.target.getAttribute("id").split("_")[0]
+      );
       ipcRenderer.send("delete-profile-group", {
         group: event.target.getAttribute("id").split("_")[0],
       });
@@ -358,7 +345,9 @@ const addGroupToList = (group) => {
         initial: false,
       });
       $("#profile-add").empty();
-      console.log(parsed);
+      console.log("parsed");
+      $("#profile-count").text(0);
+      $("#selected-num").text(0);
       Object.values(parsed.profiles).forEach((profile) => {
         addProfile(profile);
       });
@@ -366,8 +355,17 @@ const addGroupToList = (group) => {
   });
 
   $(`#${group.uuid}_delete`).on("click", async () => {
+    console.log("del", group.uuid);
     ipcRenderer.send("delete-profile-group", group.uuid);
     $(`#${group.uuid}`).remove();
+  });
+
+  $(`#${group.uuid}_edit`).on("click", () => {
+    jQuery("#groupEditModal").modal("show");
+    ipcRenderer.send("edit-profile-group", {
+      uuid: group.uuid,
+      name: $("#group-name-edit").val(),
+    });
   });
 };
 
@@ -526,8 +524,9 @@ $("#export-button").on("click", async () => {
       console.log($(el).parent());
     }
   }
+  console.log(sel, "sel");
   ipcRenderer.send("export-profiles", {
-    profiles: sel.length === 0 ? null : sel, //array of uuids selected
+    profs: sel.length === 0 ? null : sel, //array of uuids selected
     group: currentgroup,
     bot: export_bot,
   });
@@ -552,6 +551,8 @@ $("#default").on("click", async (event) => {
   if (currentgroup !== "default") {
     console.log(currentgroup);
     $("#default").css("border", "1px solid #733fcc");
+    $("#profile-count").text(0);
+    $("#selected-num").text(0);
     $(`#${currentgroup}`).css("border", "");
     currentgroup = "default";
     const parsed = ipcRenderer.sendSync("get-profiles", {

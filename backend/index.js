@@ -80,10 +80,12 @@ const sendKey = (key) => {
           break;
       }
     });
+    const hwid = await machineId();
     socket.send(
       JSON.stringify({
         op: 1,
         key,
+        hwid,
       })
     );
   });
@@ -104,9 +106,14 @@ const startSocket = () => {
 
 const setup = async () => {
   startSocket();
-  if (!fs.existsSync(path.join(process.env.APPDATA, "purpl", "local-data"))) {
-    console.log("files dont exist, making", "debug");
-    fs.mkdirSync(path.join(process.env.APPDATA, "purpl", "local-data"));
+  if (
+    !fs.existsSync(path.join(process.env.APPDATA, "purpl", "local-data")) ||
+    !fs.existsSync(
+      path.join(process.env.APPDATA, "purpl", "local-data", "config.json")
+    )
+  ) {
+    console.log("files dont exist, making");
+    // fs.mkdirSync(path.join(process.env.APPDATA, "purpl", "local-data"));
     fs.mkdirSync(
       path.join(process.env.APPDATA, "purpl", "local-data", "exports")
     );

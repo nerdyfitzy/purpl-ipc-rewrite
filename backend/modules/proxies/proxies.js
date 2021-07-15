@@ -37,7 +37,12 @@ const loadProxies = async (fromfile, group) => {
       return groups;
     }
   } else {
-    if (!loaded) {
+    if (
+      !loaded &&
+      fs.existsSync(
+        path.join(process.env.APPDATA, "purpl", "local-data", "proxies.json")
+      )
+    ) {
       let temp = fs.readFileSync(
         path.join(process.env.APPDATA, "purpl", "local-data", "proxies.json"),
         "utf8"
@@ -53,7 +58,6 @@ const loadProxies = async (fromfile, group) => {
   }
 };
 
-loadProxies(false, "default");
 //proxies are an array of objects, give each a specific uuid and add to the group in question
 const addProxies = (proxies, group) => {
   var newProxies = {};

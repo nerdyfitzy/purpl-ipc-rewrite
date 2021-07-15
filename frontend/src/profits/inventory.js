@@ -187,8 +187,10 @@ const start = async () => {
 start();
 
 ipcRenderer.on("stockx-search-reply", (event, parsed) => {
-  parsed.filter((hit) => hit.name.toLowerCase().includes(input.toLowerCase()));
-
+  console.log("got", parsed);
+  parsed.filter((hit) =>
+    hit.name.toLowerCase().includes($("#item-name-input").val().toLowerCase())
+  );
   parsed.forEach((item) => {
     $("#suggestions").append(
       `<div style="height: 75px" id="${item.sku}"><img src="${item.img}"></img>${item.name}</div>`

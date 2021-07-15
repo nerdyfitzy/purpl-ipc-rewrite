@@ -14,6 +14,7 @@ const {
   deleteAll,
   getProfile,
   jigProfiles,
+  editGroup,
 } = require("./converter/converter_main");
 
 module.exports = {
@@ -32,5 +33,6 @@ module.exports = {
   moveProfiles,
   deleteAll,
   deleteGroup,
+  editGroup,
   jigProfiles,
 };

@@ -960,7 +960,6 @@ ipcRenderer.on("import-gmails-path-reply", (event, arg) => {
       );
     }
   });
-  $("#gmail-filters").empty();
   $("#selectAll").prop("checked", false);
   $(`#${currentgroup}`).css("border", "");
   $("#default").css("border", "1px solid #733fcc");
@@ -1073,7 +1072,6 @@ $("#default").on("click", async function (event) {
   } else {
     console.log("default clicked");
     if (currentgroup !== "default") {
-      $("#gmail-filters").empty();
       $("#selectAll").prop("checked", false);
       $(`#${currentgroup}`).css("border", "");
       $("#default").css("border", "1px solid #733fcc");
@@ -1118,46 +1116,7 @@ const addGrouptoList = (name, tags, uuid, num) => {
   $(`#${uuid}`).on("click", async function (event) {
     console.log("user clicked on group", event.target.getAttribute("id"));
     if (event.target.getAttribute("id").includes("edit")) {
-      console.log("edit");
-      jQuery("#groupEditModal").modal("show");
-      $("#edited-group-name").value = name;
-      $("#edited-group-tags").value = tags;
-      $("#edit-group-submit").on("click", async () => {
-        //edit-group
-        ipcRenderer.send("edit-group", {
-          name: document.getElementById("edited-group-name").value,
-          tags: document.getElementById("select-tags-edit").value,
-          uuid: event.target.getAttribute("id").split("_")[0],
-        });
-        $(
-          `#${event.target
-            .getAttribute("id")
-            .substring(0, event.target.getAttribute("id").length - 5)}_name`
-        ).html(document.getElementById("edited-group-name").value);
-        $(
-          `#${event.target
-            .getAttribute("id")
-            .substring(0, event.target.getAttribute("id").length - 5)}_tags`
-        ).html(document.getElementById("select-tags-edit").value);
-        jQuery("#groupEditModal").modal("hide");
-        $("#edit-group-submit").off("click");
-      });
-    } else if (event.target.getAttribute("id").includes("delete")) {
-      console.log("delete da group");
-      //delete-group
-      ipcRenderer.send(
-        "delete-group",
-        event.target
-          .getAttribute("id")
-          .substring(0, event.target.getAttribute("id").length - 7)
-      );
-      $(
-        `#${event.target
-          .getAttribute("id")
-          .substring(0, event.target.getAttribute("id").length - 7)}`
-      ).remove();
     } else if (event.target.getAttribute("id") !== currentgroup) {
-      $("#gmail-filters").empty();
       $("#selectAll").prop("checked", false);
       $(`#${currentgroup}`).css("border", "");
       $(`#${event.target.getAttribute("id")}`).css(
@@ -1167,12 +1126,13 @@ const addGrouptoList = (name, tags, uuid, num) => {
 
       currentgroup = event.target.getAttribute("id");
       //gets gmails in a certain group from backend
+      var parsed;
       if (
         event.target.getAttribute("id").includes("name") ||
         event.target.getAttribute("id").includes("tags")
       ) {
         //load-gmails
-        ipcRenderer.send("load-gmails", {
+        parsed = ipcRenderer.sendSync("load-gmails", {
           groupID: event.target
             .getAttribute("id")
             .substring(0, event.target.getAttribute("id").length - 5),
@@ -1180,7 +1140,7 @@ const addGrouptoList = (name, tags, uuid, num) => {
         });
       } else {
         //load-gmails
-        ipcRenderer.send("load-gmails", {
+        parsed = ipcRenderer.sendSync("load-gmails", {
           groupID: event.target.getAttribute("id"),
           initial: false,
         });
@@ -1190,6 +1150,43 @@ const addGrouptoList = (name, tags, uuid, num) => {
       console.log(parsed);
       addGmailstoTable(parsed);
     }
+  });
+
+  $(`#${uuid}_edit`).on("click", async function (event) {
+    console.log("edit");
+    jQuery("#groupEditModal").modal("show");
+    $("#edited-group-name").value = name;
+    $("#edited-group-tags").value = tags;
+    $("#edit-group-submit").on("click", async () => {
+      //edit-group
+      ipcRenderer.send("edit-group", {
+        name: document.getElementById("edited-group-name").value,
+        tags: document.getElementById("select-tags-edit").value,
+        uuid: event.target.getAttribute("id").split("_")[0],
+      });
+      $(
+        `#${event.target
+          .getAttribute("id")
+          .substring(0, event.target.getAttribute("id").length - 5)}_name`
+      ).html(document.getElementById("edited-group-name").value);
+      $(
+        `#${event.target
+          .getAttribute("id")
+          .substring(0, event.target.getAttribute("id").length - 5)}_tags`
+      ).html(document.getElementById("select-tags-edit").value);
+      jQuery("#groupEditModal").modal("hide");
+      $("#edit-group-submit").off("click");
+    });
+  });
+
+  $(`#${uuid}_delete`).on("click", async function (event) {
+    console.log("delete da group");
+    //delete-group
+    ipcRenderer.send(
+      "delete-group",
+      event.target.getAttribute("id").split("_")[0]
+    );
+    $(`#${event.target.getAttribute("id").split("_")[0]}`).remove();
   });
 
   $(`#${uuid}_startall`).on("click", async function (event) {

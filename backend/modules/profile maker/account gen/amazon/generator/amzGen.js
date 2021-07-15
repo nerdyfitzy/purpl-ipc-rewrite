@@ -10,7 +10,6 @@ const FunCaptcha = require("../../../../../utils/captcha/2captcha/types/funcaptc
 const AmazonScanner = require("../../../../../utils/gmail scanning/site specific/amazonScanner");
 const FiveSim = require("../../../../../utils/phone/5sim/5sim");
 const Webhook = require("../../../../../utils/webhook");
-const webhook = new Webhook();
 const numbers = "1234567890";
 const { getProfile } = require("../../../index");
 
@@ -22,6 +21,7 @@ class AmazonGenerator {
     this.password;
     // this.profile = getProfile(profileId, groupID);
     this.catchall = catchall;
+    this.webhook = new Webhook();
 
     this.browser;
     this.page;
@@ -62,7 +62,7 @@ class AmazonGenerator {
   }
 
   sendWebhook() {
-    webhook.send({
+    this.webhook.send({
       content: null,
       embeds: [
         {

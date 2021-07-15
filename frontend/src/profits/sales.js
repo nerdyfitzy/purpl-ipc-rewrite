@@ -78,6 +78,34 @@ $("#minimize-button").on("click", async function () {
   win.minimize();
 });
 
+var asd = setInterval(() => {
+  if (!$("#exampleModal").is(":visible")) {
+    console.log("empything");
+    $("#inventory").empty();
+  }
+}, 3000);
+
+$("#sale-submit").on("click", () => {
+  $("#inventory").empty();
+  const item = ipcRenderer.sendSync("new-sale", {
+    item: $("#inventory").val(),
+    price: parseInt($("#sale-price").val()),
+    shipping: parseInt($("#shipping").val()),
+    platform: $("#platform").val(),
+    date: $("#date-input").val(),
+  });
+  addItemToTable(item);
+});
+
+$("#mark-sold-modal").on("click", () => {
+  const inventory = ipcRenderer.sendSync("load-inventory", false);
+  for (const item in inventory) {
+    $("#inventory").append(
+      `<option value="${item}" id="${item}">${inventory[item].name} // ${inventory[item].color}</option>`
+    );
+  }
+});
+
 const start = async () => {
   const parsed = ipcRenderer.sendSync("load-sales", true);
   $("#sales-profit").text(
@@ -90,3 +118,5 @@ const start = async () => {
     addItemToTable(item);
   });
 };
+
+start();

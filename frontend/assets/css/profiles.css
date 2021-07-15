@@ -769,6 +769,10 @@ tr {
   border: 1px solid #1f2230;
   overflow: hidden;
 }
+.im-ex-icons img {
+  width: 75%;
+  height: 75%;
+}
 .im-ex-icons:hover {
   background-color: #2c2f40;
   border: 1px solid #733fcc;

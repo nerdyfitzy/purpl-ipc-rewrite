@@ -13,8 +13,6 @@ const {
 
 const {} = require("./analytics");
 
-const {} = require("./sales");
-
 const { getFilteredGraphs } = require("./graphs");
 
 const { loadExpenses, addExpense } = require("./expenses");
@@ -24,6 +22,7 @@ const {
   getSoldSpend,
   getGross,
   getRealProfit,
+  markAsSold,
   getSalesGraph,
   loadSales,
 } = require("./sales");
@@ -35,6 +34,7 @@ module.exports = {
   loadInventory,
   addItem,
   refreshPrices,
+  markAsSold,
   getInventoryItem,
   deleteInventoryItem,
   getPortfolioGraph,

@@ -182,4 +182,5 @@ module.exports = {
   getRealProfit,
   getSalesGraph,
   loadSales,
+  markAsSold,
 };

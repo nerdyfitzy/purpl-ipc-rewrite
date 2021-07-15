@@ -28,6 +28,8 @@ const {
   getSettings,
 } = require("./backend/utils/config/editConfig");
 
+require("dotenv").config();
+
 function createWindow(page) {
   // Create the browser window.
   if (page === "index.html") {
@@ -352,7 +354,7 @@ ipcMain.on("delete-sel-profiles", (event, { uuids, group }) => {
   profiles.deleteSelected(uuids, group);
 });
 
-ipcMain.on("delete-profile-group", (event, { group }) => {
+ipcMain.on("delete-profile-group", (event, group) => {
   console.log(`[${new Date().toLocaleTimeString()}] - Deleting group`);
   profiles.deleteGroup(group);
 });
@@ -374,7 +376,9 @@ ipcMain.on("new-profile-group", async (event, arg) => {
 });
 
 ipcMain.on("export-profiles", (event, { profs, group, bot }) => {
-  console.log(`[${new Date().toLocaleTimeString()}] - Exporting profiles`);
+  console.log(
+    `[${new Date().toLocaleTimeString()}] - Exporting profiles ${profs}`
+  );
   profiles.exportProfiles(profs, group, bot);
 });
 
@@ -389,6 +393,11 @@ ipcMain.on("import-profiles", (event, { path, bot }) => {
 ipcMain.on("edit-proxy-group", (event, { name, uuid }) => {
   console.log(`[${new Date().toLocaleTimeString()}] - Editing proxy group`);
   proxy.editGroup(name, uuid);
+});
+
+ipcMain.on("edit-profile-group", (event, { uuid, name }) => {
+  console.log(`[${new Date().toLocaleTimeString()}] - Editing profile group`);
+  profiles.editGroup(uuid, name);
 });
 
 ipcMain.on("delete-proxy-group", (event, group) => {
@@ -466,11 +475,10 @@ ipcMain.on("get-expenses", async (event, initial) => {
 
 ipcMain.on("stockx-search", async (event, query) => {
   console.log(
-    `[${new Date().toLocaleTimeString()}] - Searching for ${
-      parsed.query
-    } on StockX`
+    `[${new Date().toLocaleTimeString()}] - Searching for ${query} on StockX`
   );
   const hits = await stockx.search(query);
+  console.log(hits);
   event.reply("stockx-search-reply", hits);
 });
 
@@ -489,7 +497,7 @@ ipcMain.on(
     if (!Array.isArray(tags)) {
       newTags = tags.includes(" ") ? tags.split(" ") : [tags];
     }
-    const item = await inventory.addItem(
+    const item = await profits.addItem(
       sku,
       size,
       price,
@@ -516,6 +524,20 @@ ipcMain.on("load-sales", async (event, arg) => {
   const sales = await profits.loadSales(arg);
   event.returnValue = sales;
 });
+
+ipcMain.on(
+  "new-sale",
+  async (event, { item, price, shipping, platform, date }) => {
+    const item = await profits.markAsSold(
+      item,
+      price,
+      shipping,
+      platform,
+      date
+    );
+    event.returnValue = item;
+  }
+);
 
 ipcMain.on("request-gmail-statuses", async (event, arg) => {
   event.reply("new-statuses", await gmailFarmer.sendStatuses());

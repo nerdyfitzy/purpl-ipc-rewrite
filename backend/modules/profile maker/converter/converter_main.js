@@ -55,6 +55,8 @@ const exportFuncs = {
   Rush: ex.rush,
   Wrath: ex.wrath,
   Torpedo: ex.torpedo,
+  Linear: ex.linear,
+  Trickle: ex.trickle,
 };
 
 const saveProfiles = async () => {
@@ -106,7 +108,6 @@ const loadProfiles = (fromfile, group = false) => {
     let temp = fs.readFileSync(
       path.join(process.env.APPDATA, "purpl", "local-data", "profiles.json")
     );
-    console.log(temp);
     groups = JSON.parse(temp);
     return JSON.parse(temp);
   } else {
@@ -135,7 +136,6 @@ const importProfiles = async (file, bot, fn) => {
     });
   } else {
     const profiles = await imports[bot](file);
-    console.log(JSON.stringify(profiles));
     for (const profile of Object.values(profiles)) {
       await addProfile(profile, importGroup.uuid);
     }
@@ -298,7 +298,7 @@ const jigProfiles = (profiles, options) => {
 
 const deleteSelected = (uuids, currentgroup) => {
   for (const uuid of uuids) {
-    delete group[currentgroup].profiles[uuid];
+    delete groups[currentgroup].profiles[uuid];
   }
   saveProfiles();
 };
@@ -315,32 +315,29 @@ const exportProfiles = async (profs, group, bot) => {
     }
   }
   const converted = await exportFuncs[bot](exports);
-  let dir = path.join(process.env.APPDATA, "exports", "profiles", bot);
+  let dir = path.join(
+    process.env.APPDATA,
+    "purpl",
+    "local-data",
+    "exports",
+    "profiles",
+    bot
+  );
   let now = Date.now().toString();
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir);
   }
   fs.mkdirSync(path.join(dir, now));
   fs.writeFileSync(
-    path.join(
-      process.env.APPDATA,
-      "exports",
-      "profiles",
-      bot,
-      now,
-      `${bot}.json`
-    ),
+    path.join(dir, now, `${bot}.json`),
     JSON.stringify(converted)
   );
-  require("child_process").exec(
-    `start "" "${path.join(
-      process.env.APPDATA,
-      "exports",
-      "profiles",
-      bot,
-      now
-    )}"`
-  );
+  require("child_process").exec(`start "" "${path.join(dir, now)}"`);
+};
+
+const editGroup = (uuid, name) => {
+  groups[group].name = name;
+  saveProfiles();
 };
 
 const copyProfiles = async (profiles, group) => {
@@ -396,4 +393,5 @@ module.exports = {
   deleteGroup: deleteGroup,
   jigProfiles: jigProfiles,
   getProfile: getProfile,
+  editGroup: editGroup,
 };

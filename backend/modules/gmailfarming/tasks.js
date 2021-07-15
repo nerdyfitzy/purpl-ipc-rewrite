@@ -65,17 +65,19 @@ const addGroup = (name, tags) => {
     tags: tags,
     gmails: {},
   };
-
+  saveGmails();
   return groups[groupuuid];
 };
 
 const editGroup = (newName, newTags, id) => {
   groups[id].name = newName;
   groups[id].tags = newTags;
+  saveGmails();
 };
 
 const deleteGroup = (id) => {
   delete groups[id];
+  saveGmails();
 };
 
 const newGmail = async (email1, pass, proxy, recovery, security, group) => {
@@ -279,6 +281,8 @@ const editGmail = (uuid, group, newGmail, newPass, newRecov, newSecurity) => {
   groups[group].gmails[uuid].password = newPass;
   groups[group].gmails[uuid].recovery = newRecov;
   groups[group].gmails[uuid].security = newSecurity;
+
+  saveGmails();
 };
 
 const deleteGmail = (groupID, gmailID) => {
@@ -286,6 +290,7 @@ const deleteGmail = (groupID, gmailID) => {
     actionSpecific(gmailID, groupID);
   }
   delete groups[groupID].gmails[gmailID];
+  saveGmails();
 };
 
 const getScores = (group, gmail) => {
@@ -304,6 +309,8 @@ const startAll = async (groupID) => {
         await actionSpecific(gmail, groupID);
       }
     }
+
+    saveGmails();
   }
 };
 
@@ -314,6 +321,8 @@ const stopAll = async (groupID) => {
         await actionSpecific(gmail, groupID);
       }
     }
+
+    saveGmails();
   }
 };
 
@@ -326,6 +335,7 @@ const sendStatuses = async () => {
 
 const saveCookies = (cookies, gmail, group) => {
   groups[group].gmails[gmail].cookies = cookies;
+  saveGmails();
 };
 
 const actionSpecific = async (specificUuid, groupID) => {
@@ -427,7 +437,7 @@ const actionSpecific = async (specificUuid, groupID) => {
           "info"
         );
       });
-
+      saveGmails();
       return true;
     }
   } else {
@@ -443,6 +453,7 @@ const actionSpecific = async (specificUuid, groupID) => {
         uuid: specificUuid,
       });
     }
+    saveGmails();
     return false;
   }
 };
@@ -529,6 +540,8 @@ const manualLogin = async (uuid, group) => {
       );
     });
   }
+
+  saveGmails();
 };
 
 const testGmail = async (uuid, group, type) => {
@@ -553,6 +566,7 @@ const testGmail = async (uuid, group, type) => {
       groups[group].gmails[uuid].score.v3 = parsedResult.score;
     }
 
+    saveGmails();
     return result;
   });
 };
