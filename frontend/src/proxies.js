@@ -551,19 +551,45 @@ ipcRenderer.on("add-proxies-reply", (event, proxies) => {
   });
 });
 
+var cycle = 0;
 $("#test-all-currentgroup").on("click", () => {
-  ipcRenderer.send("test-all-proxies", currentgroup);
+  console.log("testing");
+  ipcRenderer.send("test-all-proxies", {
+    group: currentgroup,
+    site: $("#site").val(),
+  });
+  const inter = setInterval(() => {
+    if (cycle >= 15) clearInterval(inter);
+    cycle++;
+    ipcRenderer.send("request-speeds");
+  }, 2000);
 });
 
-ipcRenderer.on("proxy-speed", (event, { uuid, speed }) => {
-  $(`#${uuid}-speed`).html(speed);
-  if (speed < 500) {
-    $(`#${uuid}_speedcir`).addClass("green");
-  } else if (speed < 1000) {
-    $(`#${uuid}_speedcir`).addClass("orange");
-  } else {
-    $(`#${uuid}_speedcir`).addClass("lite-red");
+$("#copy-sel").on("click", () => {
+  const checked = $("input:checkbox:checked");
+  console.log(checked);
+  let sel = [];
+  for (const box of checked) {
+    if (box.getAttribute("id") !== "selectAll") {
+      sel.push(box.getAttribute("id").split("_")[0]);
+    }
   }
+
+  ipcRenderer.send("copy-proxies", { sel, group: currentgroup });
+});
+
+ipcRenderer.on("got-speeds", (event, speeds) => {
+  cycle = 0;
+  speeds.forEach(({ proxy, speed }) => {
+    $(`#${proxy}-speed`).html(speed);
+    if (speed < 500) {
+      $(`#${proxy}_speedcir`).addClass("green");
+    } else if (speed < 1000) {
+      $(`#${proxy}_speedcir`).addClass("orange");
+    } else {
+      $(`#${proxy}_speedcir`).addClass("lite-red");
+    }
+  });
 });
 
 start();

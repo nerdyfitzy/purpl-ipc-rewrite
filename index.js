@@ -31,6 +31,7 @@ const Tester = require("./backend/modules/proxies/tester/test_main");
 
 require("dotenv").config();
 
+var gmailPage;
 function createWindow(page) {
   // Create the browser window.
   if (page === "index.html") {
@@ -50,14 +51,6 @@ function createWindow(page) {
     // and load the index.html of the app.
     win.setMenuBarVisibility(false);
     win.loadFile(path.join(__dirname, `./frontend/src/index.html`));
-
-    // win.on("closed", async () => {
-    //     await sock.send(JSON.stringify({
-    //         "action": 100,
-    //         "page": "key"
-    //     }))
-    //     await sock.receive();
-    // })
   } else if (page === "dashboard.html") {
     var gmailPage = new BrowserWindow({
       width: 1400,
@@ -81,9 +74,8 @@ function createWindow(page) {
       app.quit();
     });
   }
-
   ipcMain.on("to-dashboard-page", function (event, arg) {
-    var gmailPage = new BrowserWindow({
+    gmailPage = new BrowserWindow({
       width: 1400,
       height: 879,
       webPreferences: {
@@ -295,6 +287,10 @@ ipcMain.on("get-proxies", async (event, { initial, group }) => {
   event.returnValue = await proxy.loadProxies(initial, group);
 });
 
+ipcMain.on("copy-proxies", (event, { sel, group }) => {
+  proxy.copyProxies(sel, group);
+});
+
 ipcMain.on("delete-all-profiles", (event, arg) => {
   console.log(
     `[${new Date().toLocaleTimeString()}] - Deleting profiles from`,
@@ -426,9 +422,12 @@ ipcMain.on("add-proxies", async (event, { proxies, group }) => {
   event.reply("add-proxies-reply", await proxy.addProxies(proxies, group));
 });
 
-ipcMain.on("test-all-proxies", (event, group) => {
-  const prox = proxy.loadProxies(false, group);
-  const T = new Tester(prox, "https://www.google.com/", group);
+ipcMain.on("test-all-proxies", async (event, { group, site }) => {
+  console.log(
+    `[${new Date().toLocaleTimeString()}] - Testing group ${group} on site ${site}`
+  );
+  const prox = await proxy.loadProxies(false, group);
+  const T = new Tester(prox, site, group);
   T.run();
 });
 
@@ -592,3 +591,11 @@ ipcMain.on("activate", async (event, key) => {
   const res = await engine.sendKey(key);
   event.returnValue = res;
 });
+
+const sendSpeedsToFrontend = (uuid, speed) => {
+  gmailPage.webContents.send("proxy-speed", { uuid, speed });
+};
+
+module.exports = {
+  sendSpeedsToFrontend: sendSpeedsToFrontend,
+};

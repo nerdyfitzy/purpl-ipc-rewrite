@@ -658,6 +658,19 @@ tr {
   width: 100%;
   resize: none;
 }
+.site-select {
+  background-color: #211f27;
+  border: 0;
+  border-color: #211f27;
+  border-radius: 8px;
+  height: 48px;
+  color: #fff;
+  max-width: 471px;
+  display: block;
+  padding: 10px 15px;
+  width: 150px;
+  resize: none;
+}
 .main-dia-box textarea:focus {
   outline: 0;
   outline-color: transparent;

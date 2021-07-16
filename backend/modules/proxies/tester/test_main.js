@@ -1,8 +1,10 @@
 const fs = require("fs");
 const got = require("got");
+const console = require("../../../utils/logger");
 const { HttpsProxyAgent } = require("hpagent");
 const { ipcMain } = require("electron");
 const { setSpeed } = require("../proxies");
+const { sendSpeedsToFrontend } = require("../../../../index");
 
 let chunks = [];
 let completed = 0;
@@ -35,7 +37,6 @@ class Tester {
     if (p.user) proxy = `${p.user}:${p.pass}@${proxy}`;
     proxy = `http://${proxy}`;
     const start = new Date().getTime();
-    console.log("Testing", p);
     try {
       const res = await got.get(site, {
         headers: {
@@ -54,20 +55,20 @@ class Tester {
         },
       });
       const end = new Date().getTime();
-
-      console.log(Object.values(p).join(":"), " --- ", end - start);
-      ipcMain.send("proxy-speed", {
-        uuid: this.proxyToUuidMap[p],
-        speed: end - start,
-      });
-
-      setSpeed(this.proxyToUuidMap[p], this.proxyGroup, end - start);
+      setSpeed(
+        this.proxyToUuidMap[Object.values(p).join(":")],
+        this.proxyGroup,
+        end - start
+      );
+      console.log(
+        `Set speed ${end - start} for proxy ${p.ip}:${p.port}:${p.user}:${
+          p.pass
+        }`,
+        "info"
+      );
       return 1;
     } catch (e) {
-      ipcMain.send("proxy-speed", {
-        uuid: this.proxyToUuidMap[p],
-        speed: "Dead",
-      });
+      console.log(e);
       setSpeed(this.proxyToUuidMap[p], this.proxyGroup, "Dead");
       return 0;
     }

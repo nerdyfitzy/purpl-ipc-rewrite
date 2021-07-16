@@ -8,6 +8,7 @@ const {
   saveProxies,
   deleteGroup,
   deleteProxy,
+  copyProxies,
   setSpeed,
 } = require("./proxies");
 
@@ -20,6 +21,7 @@ module.exports = {
   deleteAll,
   getAll,
   saveProxies,
+  copyProxies,
   deleteGroup,
   setSpeed,
 };

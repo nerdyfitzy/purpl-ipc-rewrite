@@ -2,6 +2,8 @@ const fs = require("fs");
 const { v4 } = require("uuid");
 const path = require("path");
 const console = require("../../utils/logger");
+const { ipcMain } = require("electron");
+const clipboardy = require("clipboardy");
 //proxy example
 let proxyExample = {
   uuid: "this is a specific uuid for each proxy",
@@ -58,11 +60,17 @@ const loadProxies = async (fromfile, group) => {
   }
 };
 
+var SpeedArr = [];
 const setSpeed = (proxy, group, speed) => {
   groups[group].proxies[proxy].speed = speed;
-
+  SpeedArr.push({ proxy, speed });
   saveProxies();
 };
+
+ipcMain.on("request-speeds", (event) => {
+  event.reply("got-speeds", SpeedArr);
+  SpeedArr = [];
+});
 
 //proxies are an array of objects, give each a specific uuid and add to the group in question
 const addProxies = (proxies, group) => {
@@ -128,6 +136,15 @@ const saveProxies = async () => {
   return;
 };
 
+const copyProxies = (sel, group) => {
+  let copy = "";
+  for (const id of sel) {
+    copy += groups[group].proxies[id].proxy + "\n";
+  }
+
+  clipboardy.writeSync(copy);
+};
+
 module.exports = {
   addGroup: addGroup,
   editGroup: editGroup,
@@ -139,4 +156,5 @@ module.exports = {
   saveProxies: saveProxies,
   deleteGroup,
   setSpeed,
+  copyProxies,
 };
