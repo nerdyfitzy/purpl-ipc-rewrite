@@ -27,6 +27,7 @@ const {
   saveSettings,
   getSettings,
 } = require("./backend/utils/config/editConfig");
+const Tester = require("./backend/modules/proxies/tester/test_main");
 
 require("dotenv").config();
 
@@ -167,7 +168,7 @@ app.on("activate", () => {
 ipcMain.on("action-specific", async (event, { gmail, group }) => {
   console.log(`[${new Date().toLocaleTimeString()}] - Start/Stop specific`);
   const started = await gmailFarmer.actionSpecific(gmail, group);
-  event.reply("action-specific-reply", started);
+  event.reply("action-specific-reply", { gmail, started, group });
 });
 
 ipcMain.on("copy-data", (event, { group, uuid, data }) => {
@@ -206,15 +207,21 @@ ipcMain.on("get-gmail", async (event, { gmailID, groupID }) => {
 
 ipcMain.on(
   "edit-gmail",
-  (event, { uuid, group, newGmail, newPass, newRecov, newSecurity }) => {
-    console.log(`[${new Date().toLocaleTimeString()}] - Edit gmail ` + uuid);
+  (
+    event,
+    { uuid, group, newGmail, newPass, newRecov, newSecurity, newProxy }
+  ) => {
+    console.log(
+      `[${new Date().toLocaleTimeString()}] - Edit gmail ${newProxy} ` + uuid
+    );
     gmailFarmer.editGmail(
       uuid,
       group,
       newGmail,
       newPass,
       newRecov,
-      newSecurity
+      newSecurity,
+      newProxy
     );
   }
 );
@@ -225,7 +232,6 @@ ipcMain.on("delete-gmail", (event, { groupID, gmailID }) => {
 });
 
 ipcMain.on("get-scores", async (event, { group, gmail, pos }) => {
-  console.log(`[${new Date().toLocaleTimeString()}] - Getting scores`);
   const scores = await gmailFarmer.getScores(group, gmail);
 
   event.reply("get-scores-reply", {
@@ -420,6 +426,12 @@ ipcMain.on("add-proxies", async (event, { proxies, group }) => {
   event.reply("add-proxies-reply", await proxy.addProxies(proxies, group));
 });
 
+ipcMain.on("test-all-proxies", (event, group) => {
+  const prox = proxy.loadProxies(false, group);
+  const T = new Tester(prox, "https://www.google.com/", group);
+  T.run();
+});
+
 ipcMain.on("delete-all-proxies", (event, group) => {
   console.log(`[${new Date().toLocaleTimeString()}] - Deleting all proxies`);
   proxy.deleteAll(group);
@@ -528,19 +540,20 @@ ipcMain.on("load-sales", async (event, arg) => {
 ipcMain.on(
   "new-sale",
   async (event, { item, price, shipping, platform, date }) => {
-    const item = await profits.markAsSold(
+    const item1 = await profits.markAsSold(
       item,
       price,
       shipping,
       platform,
       date
     );
-    event.returnValue = item;
+    event.returnValue = item1;
   }
 );
 
 ipcMain.on("request-gmail-statuses", async (event, arg) => {
-  event.reply("new-statuses", await gmailFarmer.sendStatuses());
+  const statuses = await gmailFarmer.sendStatuses();
+  event.reply("new-statuses", statuses);
 });
 
 ipcMain.on("test-gmails", (event, { gmails, group, type }) => {

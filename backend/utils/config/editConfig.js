@@ -8,7 +8,8 @@ const saveSettings = async (
   chromePath = false,
   gmailToken = false,
   twoCaptcha = false,
-  fivesim = false
+  fivesim = false,
+  key = false
 ) => {
   console.log("saving settings");
   const oldSettings = JSON.parse(
@@ -26,7 +27,7 @@ const saveSettings = async (
     global: {
       webhook: webhook ? webhook : oldSettings.global.webhook,
       activated: false,
-      key: "",
+      key: key ? key : oldSettings.global.key,
       chromePath: chromePath ? chromePath : oldSettings.global.chromePath,
     },
     gmailSettings: {

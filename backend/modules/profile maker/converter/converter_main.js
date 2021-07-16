@@ -127,6 +127,10 @@ const deleteProfile = (prof, group) => {
 
 const importProfiles = async (file, bot, fn) => {
   const importGroup = await newGroup(`${bot} Import`);
+  if (typeof file === "undefined" || typeof bot === "undefined") {
+    fn(undefined);
+    return;
+  }
   if (bot.substring(bot.length - 3).toLowerCase() === "csv") {
     imports[bot](file, async function (res) {
       for (const prof in res) {

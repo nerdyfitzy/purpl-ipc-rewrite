@@ -535,8 +535,9 @@ $("#export-button").on("click", async () => {
 ipcRenderer.on("profiles-import", async (event, path, bot) => {
   const imported = ipcRenderer.sendSync("import-profiles", { path, bot });
   console.log(imported);
-
-  addGroupToList(imported);
+  if (typeof imported !== "undefined") {
+    addGroupToList(imported);
+  }
 });
 
 $("#file-input").on("click", async function () {

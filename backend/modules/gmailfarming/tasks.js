@@ -256,7 +256,6 @@ const loadGmails = (fromfile, groupID) => {
       path.join(process.env.APPDATA, "purpl", "local-data", "gmails.json"),
       "utf8"
     );
-    console.log(temp, "info");
     groups = temp !== "" ? JSON.parse(temp) : groups;
     return temp !== "" ? JSON.parse(temp) : undefined;
   } else {
@@ -272,7 +271,15 @@ const getGmail = (gmail, group) => {
   return groups[group].gmails[gmail];
 };
 
-const editGmail = (uuid, group, newGmail, newPass, newRecov, newSecurity) => {
+const editGmail = (
+  uuid,
+  group,
+  newGmail,
+  newPass,
+  newRecov,
+  newSecurity,
+  newProxy
+) => {
   console.log(
     `[${new Date().toLocaleTimeString()}] - Editing gmail ${uuid}`,
     "info"
@@ -281,6 +288,9 @@ const editGmail = (uuid, group, newGmail, newPass, newRecov, newSecurity) => {
   groups[group].gmails[uuid].password = newPass;
   groups[group].gmails[uuid].recovery = newRecov;
   groups[group].gmails[uuid].security = newSecurity;
+  groups[group].gmails[uuid].proxy = newProxy;
+
+  console.log(groups[group].gmails[uuid]);
 
   saveGmails();
 };
@@ -389,8 +399,9 @@ const actionSpecific = async (specificUuid, groupID) => {
       threads.add(worker);
       worker.on("message", (message) => {
         console.log(
-          `[${new Date().toLocaleTimeString()}] - Received message ${message}`,
-          "debug"
+          `[${new Date().toLocaleTimeString()}] - Received message ${JSON.stringify(
+            message
+          )}`
         );
         if (message.message.substring(0, 5) === "sleep") {
           sleepBrowser(worker.workerData.gmail.uuid);
@@ -413,10 +424,9 @@ const actionSpecific = async (specificUuid, groupID) => {
           statuses.push({
             uuid: message.id,
             status: message.message,
+            errors: message.errors,
           });
-          if (!statint) {
-            statusInterval();
-          }
+
           //FOR THE TASK STATUSES ON UI
         }
       });
@@ -516,9 +526,7 @@ const manualLogin = async (uuid, group) => {
           uuid: message.id,
           status: message.message,
         });
-        if (!statint) {
-          statusInterval();
-        }
+
         //FOR THE TASK STATUSES ON UI
       }
     });

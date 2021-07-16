@@ -16,6 +16,7 @@ const logger = winston.createLogger({
         "logs",
         v4()
       ),
+      level: "silly",
     }),
   ],
 });

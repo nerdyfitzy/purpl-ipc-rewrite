@@ -58,6 +58,12 @@ const loadProxies = async (fromfile, group) => {
   }
 };
 
+const setSpeed = (proxy, group, speed) => {
+  groups[group].proxies[proxy].speed = speed;
+
+  saveProxies();
+};
+
 //proxies are an array of objects, give each a specific uuid and add to the group in question
 const addProxies = (proxies, group) => {
   var newProxies = {};
@@ -132,4 +138,5 @@ module.exports = {
   getAll: getAll,
   saveProxies: saveProxies,
   deleteGroup,
+  setSpeed,
 };

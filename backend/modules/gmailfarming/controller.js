@@ -59,7 +59,9 @@ const humanTyping = async (element, word, page) => {
 };
 
 const loggedIn = async (page) => {
+  console.log("Checking If logged in");
   if (page.url().includes("https://myaccount.google.com/")) {
+    console.log("Logged In");
     return true;
   } else {
     await page.waitForNavigation();
@@ -336,7 +338,17 @@ const login = async (browser, proxy) => {
       errors: null,
       message: "Logging in...",
     });
-    await page.goto("https://accounts.google.com/");
+    try {
+      await page.goto("https://accounts.google.com/");
+    } catch (e) {
+      if (e.includes("PROXY_CONNECTION_FAILED"))
+        parentPort.postMessage({
+          id: workerData.gmail.uuid,
+          group: workerData.gmail.groupID,
+          errors: "Proxy Error",
+          message: "Proxy Error",
+        });
+    }
 
     await navigationPromise;
 
@@ -572,7 +584,6 @@ if (isMainThread) {
             executablePath:
               "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",
             args: [
-              `--user-data-dir=${userDataDir}`,
               `--proxy-server=${proxy.split(":")[0]}:${proxy.split(":")[1]}`,
             ],
           });
@@ -633,7 +644,6 @@ if (isMainThread) {
         message: "Starting Task",
       });
     } catch (err) {
-      console.log("Manual Login Required", err);
       if (browser) {
         browser.close();
       }
@@ -641,7 +651,9 @@ if (isMainThread) {
         id: workerData.gmail.uuid,
         group: workerData.gmail.groupID,
         errors: null,
-        message: "Manual Login Required!",
+        message: err.includes("PROXY_CONNECTION_FAILED")
+          ? "Proxy Error"
+          : "Manual Login Required!",
       });
     }
   })();

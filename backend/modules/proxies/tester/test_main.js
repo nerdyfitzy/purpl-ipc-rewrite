@@ -1,78 +1,89 @@
-const fs = require('fs');
-const request = require('request')
-const got = require('got')
-const tunnel = require('tunnel')
-
+const fs = require("fs");
+const got = require("got");
+const { HttpsProxyAgent } = require("hpagent");
+const { ipcMain } = require("electron");
+const { setSpeed } = require("../proxies");
 
 let chunks = [];
 let completed = 0;
 let chunksCompleted = 0;
 const times = {};
 
-const breakProxies = () => {
-    const fullChunks = Math.floor(proxies.length / limit);
-    const lastChunk = proxies.length % limit;
-
-    for (let i = 0; i < fullChunks; i += 1) {
-      chunks.push(proxies.slice(i * limit, i * limit + limit));
+class Tester {
+  constructor(proxyList, site, group) {
+    this.unFormatted = proxyList;
+    this.proxyGroup = group;
+    this.proxyToUuidMap = {};
+    this.formattedProxies = [];
+    this.site = site;
+    const uuids = Object.keys(proxyList);
+    this.proxies = Object.values(proxyList).map((p) => p.proxy);
+    for (let i = 0; i < uuids.length; i++) {
+      this.proxyToUuidMap[this.proxies[i]] = uuids[i];
     }
+  }
 
-    chunks.push(proxies.slice(fullChunks * limit, fullChunks * limit + lastChunk));
-};
+  formatProxies() {
+    this.proxies.forEach((proxy) => {
+      const [ip, port, user, pass] = proxy.split(":");
+      this.formattedProxies.push({ ip, port, user, pass });
+    });
+  }
 
-const test = async (ip, site) => {
-    const headers = {
-        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0 Safari/605.1.15',
-    };
+  async test(p, site) {
+    let proxy = `${p.ip}:${p.port}`;
+    if (p.user) proxy = `${p.user}:${p.pass}@${proxy}`;
+    proxy = `http://${proxy}`;
+    const start = new Date().getTime();
+    console.log("Testing", p);
+    try {
+      const res = await got.get(site, {
+        headers: {
+          "user-agent":
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
+        },
+        agent: {
+          https: new HttpsProxyAgent({
+            keepAlive: true,
+            keepAliveMsecs: 1000,
+            maxSockets: 256,
+            maxFreeSockets: 256,
+            scheduling: "lifo",
+            proxy,
+          }),
+        },
+      });
+      const end = new Date().getTime();
 
-    const start = new Date().getTime()
-    if(ip.indexOf(':') !== ip.lastIndexOf(':')) {
-        var response = await got.get('https://www.footlocker.com/', {
-            agent: {
-                https: tunnel.httpOverHttp({
-                    proxy: {
-                        host: ip.split(':')[0],
-                        port: ip.split(':')[1],
-                        proxyAuth: ip.split(':')[2] + ':' + ip.split(':')[3]
-                    }
-                })
-            },
-            headers: {
-                'Cache-Control': 'no-cache',
-                Pragma: 'no-cache',
-                Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-                'Accept-Language': 'en-US',
-                'Accept-Encoding': 'br, gzip, deflate',
-                Connection: 'keep-alive',
-                'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0 Safari/605.1.15'
-            }
-        })
-        var end = new Date().getTime()
-    }else {
-        var response = await got.get(site, {
-            agent: {
-                https: tunnel.httpOverHttp({
-                    proxy: {
-                        host: ip.split(':')[0],
-                        port: ip.split(':')[1],
-                    }
-                }),
-                
-            },
-            headers: {
-                'Cache-Control': 'no-cache',
-                Pragma: 'no-cache',
-                Accept: 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-                'Accept-Language': 'en-US',
-                'Accept-Encoding': 'br, gzip, deflate',
-                Connection: 'keep-alive',
-                'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.0 Safari/605.1.15'
-            }
-        })
-        var end = new Date().getTime()
+      console.log(Object.values(p).join(":"), " --- ", end - start);
+      ipcMain.send("proxy-speed", {
+        uuid: this.proxyToUuidMap[p],
+        speed: end - start,
+      });
+
+      setSpeed(this.proxyToUuidMap[p], this.proxyGroup, end - start);
+      return 1;
+    } catch (e) {
+      ipcMain.send("proxy-speed", {
+        uuid: this.proxyToUuidMap[p],
+        speed: "Dead",
+      });
+      setSpeed(this.proxyToUuidMap[p], this.proxyGroup, "Dead");
+      return 0;
     }
-    
-    console.log(response, end - start)
+  }
+
+  async run() {
+    this.formatProxies();
+    for (let i = 0; i < this.formattedProxies.length; i += 100) {
+      const promises = this.formattedProxies
+        .map((proxy) => this.test(proxy, this.site))
+        .slice(i, i + 100);
+      setTimeout(async () => {
+        await Promise.all(promises);
+      }, 500);
+    }
+  }
 }
 
-test('207.228.3.250:2105:butr3251:yieNoo1u', 'https://www.yeezysupply.com/');
+module.exports = Tester;

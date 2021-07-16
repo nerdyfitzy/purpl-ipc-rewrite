@@ -9,6 +9,7 @@ const { ipcRenderer } = require("electron");
 dotenv.config();
 
 const { machineId } = require("node-machine-id");
+const { saveSettings } = require("./utils/config/editConfig");
 let authenticated = false;
 
 const setActivity = (rpc) => {
@@ -66,6 +67,7 @@ const sendKey = (key) => {
               `[${new Date().toLocaleTimeString()}] - Successfully Activated!`,
               "info"
             );
+            saveSettings(false, false, false, false, false, key);
             resolve({ success: 1 });
             activated = true;
             let startTime = Date.now();
@@ -178,10 +180,12 @@ const setup = async () => {
       }), sending to server`,
       "info"
     );
+    const hwid = await machineId();
     socket.send(
       JSON.stringify({
         op: 1,
         key: config.global.key,
+        hwid,
       })
     );
     return 1;

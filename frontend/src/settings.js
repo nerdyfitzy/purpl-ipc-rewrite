@@ -18,3 +18,13 @@ $(document).ready(() => {
   $("#2cap").val(misc.twoCaptcha);
   $("#5sim").val(misc.fivesim);
 });
+
+$("#close-button").on("click", async function () {
+  const win = remote.getCurrentWindow();
+  win.close();
+});
+
+$("#minimize-button").on("click", async function () {
+  const win = remote.getCurrentWindow();
+  win.minimize();
+});

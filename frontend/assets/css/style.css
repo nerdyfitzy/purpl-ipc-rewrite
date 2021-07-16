@@ -348,6 +348,9 @@ input::placeholder {
 .img-link.task {
   background-image: url("../images/task-p.png");
 }
+.img-link.taskW {
+  background-image: url("../images/task.png");
+}
 .img-link.profile {
   background-image: url("../images/profile.png");
 }

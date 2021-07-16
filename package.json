@@ -16,13 +16,14 @@
     "electron-builder": "^22.11.7"
   },
   "dependencies": {
-    "googleapis": "^81.0.0",
     "clipboardy": "^2.3.0",
     "csv-parser": "^3.0.0",
     "discord-rpc": "^3.2.0",
     "dotenv": "^10.0.0",
     "form-data": "^4.0.0",
+    "googleapis": "^81.0.0",
     "got": "^11.8.2",
+    "hpagent": "^0.1.2",
     "jquery": "^3.6.0",
     "mousetrap": "^1.6.5",
     "node-machine-id": "^1.1.12",

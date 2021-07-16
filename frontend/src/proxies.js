@@ -13,6 +13,16 @@ console.log("doc ready");
 //
 ////////////////////////////////////////
 ////////////////////////////////////////
+const Mousetrap = require("mousetrap");
+
+Mousetrap.bind("ctrl+a", () => {
+  $("input:checkbox").not($("#selectAll")).prop("checked", true);
+});
+
+Mousetrap.bind("ctrl+q", () => {
+  $("input:checkbox").not($("#selectAll")).prop("checked", false);
+});
+
 $("#selectAll").on("click", function () {
   $("input:checkbox").not(this).prop("checked", this.checked);
 });
@@ -481,7 +491,7 @@ ipcRenderer.on("add-proxies-reply", (event, proxies) => {
     $("#proxy-tbody").append(`<tr id="${proxy.uuid}">
                     <th style="text-align: center;border: 1px solid #1D1926;width: 50px;" scope="row"><input  type="checkbox" id="${proxy.uuid}_checkbox"></th>
                     <td id="${proxy.uuid}-ip">${proxy.proxy}</td>
-                    <td id="${proxy.uuid}-speed-col"><i style="font-size: 10px;margin-right: 5px;" class="fas fa-circle"></i> <span class="health" id="${proxy.uuid}-speed"> ${proxy.speed}</span></td>
+                    <td id="${proxy.uuid}-speed-col"><i style="font-size: 10px;margin-right: 5px;" class="fas fa-circle" id="${proxy.uuid}_speedcir"></i> <span class="health" id="${proxy.uuid}-speed"> ${proxy.speed}</span></td>
                     <td id="proxy-site">   </td>
                     <td><div class="text-white d-flex align-items-center justify-content-end ">
                         <span class="d-inline-flex align-items-center" style="font-size: 12px;margin-right: 5px;"><button class=" text-white p-0 border-0  bg-transparent" id="${proxy.uuid}-start"><span class="run icon-btn d-inline-block" id="${proxy.uuid}-run-span"></span>  </button> </span>
@@ -539,6 +549,21 @@ ipcRenderer.on("add-proxies-reply", (event, proxies) => {
       $("#allTask-text").text(--ct);
     });
   });
+});
+
+$("#test-all-currentgroup").on("click", () => {
+  ipcRenderer.send("test-all-proxies", currentgroup);
+});
+
+ipcRenderer.on("proxy-speed", (event, { uuid, speed }) => {
+  $(`#${uuid}-speed`).html(speed);
+  if (speed < 500) {
+    $(`#${uuid}_speedcir`).addClass("green");
+  } else if (speed < 1000) {
+    $(`#${uuid}_speedcir`).addClass("orange");
+  } else {
+    $(`#${uuid}_speedcir`).addClass("lite-red");
+  }
 });
 
 start();

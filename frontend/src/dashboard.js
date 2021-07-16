@@ -3,6 +3,15 @@ const $ = require("jquery");
 const tableBody = $("table tbody");
 let cmOpen = false;
 let currentgroup = "default";
+const Mousetrap = require("mousetrap");
+
+Mousetrap.bind("ctrl+a", () => {
+  $("input:checkbox").not($("#selectAll")).prop("checked", true);
+});
+
+Mousetrap.bind("ctrl+q", () => {
+  $("input:checkbox").not($("#selectAll")).prop("checked", false);
+});
 
 $("#selectAll").on("click", function () {
   $("input:checkbox").not(this).prop("checked", this.checked);
@@ -10,7 +19,6 @@ $("#selectAll").on("click", function () {
 
 var asd = setInterval(() => {
   if (!$("#exampleModal").is(":visible")) {
-    console.log("empything");
     $("#proxy-group-input").empty();
     $("#spec-proxy-input").empty();
   }
@@ -52,7 +60,6 @@ function showCM(show) {
     cmOpen = true;
     $(".custom-cm").css("display", "block");
   } else {
-    console.log("closing");
     cmOpen = false;
     $(".custom-cm").css("display", "none");
   }
@@ -473,13 +480,8 @@ const addGmailstoTable = (groupGmails, filter = false) => {
     $(`#${gmail.uuid}`).on("click", async function (event) {
       if (event.target.getAttribute("id") !== `${gmail.uuid}_checkbox`) {
         const checked = $("input:checkbox:checked");
-        for (const box of checked) {
-          if (box.getAttribute("id") !== event.target.getAttribute("id")) {
-            $(`#${box.getAttribute("id")}`).prop("checked", false);
-          }
-        }
+
         const ischecked = $(`#${gmail.uuid}_checkbox`).is(":checked");
-        console.log(ischecked, "not", !ischecked);
         $(`#${gmail.uuid}_checkbox`).prop("checked", !ischecked);
       }
     });
@@ -494,76 +496,81 @@ const addGmailstoTable = (groupGmails, filter = false) => {
       });
 
       //EDIT THE GMAIL
-      $(`#${gmail.uuid}-edit`).on("click", async function () {
-        console.log("editing gmail", gmail.uuid, currentgroup);
-        //get-gmail
-        const parsedgmail = ipcRenderer.sendSync("get-gmail", {
-          gmailID: gmail.uuid,
-          groupID: currentgroup,
-        });
-        jQuery("#gmailEditModal").modal("show");
-        document.getElementById("edit-email").value = parsedgmail.email;
-        document.getElementById("edit-password").value = parsedgmail.password;
-        document.getElementById("edit-recov").value = parsedgmail.recovery;
-        document.getElementById("edit-security").value = parsedgmail.security;
-        $("#cancel-edit").on("click", () =>
-          $("#edit-gmail-submit").off("click")
-        );
-        $("#edit-gmail-submit").on("click", async function () {
-          //edit-gmail
-          ipcRenderer.send("edit-gmail", {
-            uuid: gmail.uuid,
-            group: currentgroup,
-            newGmail: document.getElementById("edit-email").value,
-            newPass: document.getElementById("edit-password").value,
-            newRecov: document.getElementById("edit-recov").value,
-            newSecurity: document.getElementById("edit-security").value,
-          });
-          $(`#${gmail.uuid}-name`).html(
-            document.getElementById("edit-email").value
-          );
-          //$(`#${gmail.uuid}-proxy`).html('newproxygohere')
+    });
+    $(`#${gmail.uuid}-edit`).on("click", async function () {
+      console.log("editing gmail", gmail.uuid, currentgroup);
+      //get-gmail
 
-          $("#edit-gmail-submit").off("click");
-          $("#cancel-edit").off("click");
-        });
+      const parsedgmail = ipcRenderer.sendSync("get-gmail", {
+        gmailID: gmail.uuid,
+        groupID: currentgroup,
       });
-
-      //DELETE THE GMAIL
-      $(`#${gmail.uuid}-delete`).on("click", async function () {
-        console.log("deleting gmail", gmail.uuid);
-        //delete-gmail
-        ipcRenderer.send("delete-gmail", {
-          groupID: currentgroup,
-          gmailID: gmail.uuid,
-        });
-        if ($(`#${gmail.uuid}-status`).text() === "Idle") {
-          changeStopNum(currentgroup, false);
-        } else {
-          changeStartNum(currentgroup, false);
-        }
-        $(`#${gmail.uuid}`).remove();
-      });
-
-      $(`#${gmail.uuid}_health1`).on("mouseover", async function (event) {
-        console.log("hover", gmail.uuid);
-        //get-scores
-
-        ipcRenderer.send("get-scores", {
+      console.log(parsedgmail.proxy);
+      jQuery("#gmailEditModal").modal("show");
+      document.getElementById("edit-email").value = parsedgmail.email;
+      document.getElementById("edit-password").value = parsedgmail.password;
+      document.getElementById("edit-recov").value = parsedgmail.recovery;
+      document.getElementById("edit-security").value = parsedgmail.security;
+      document.getElementById("edit-proxy").value = parsedgmail.proxy;
+      $("#cancel-edit").on("click", () => $("#edit-gmail-submit").off("click"));
+      $("#edit-gmail-submit").on("click", async function () {
+        //edit-gmail
+        ipcRenderer.send("edit-gmail", {
+          uuid: gmail.uuid,
           group: currentgroup,
-          gmail: gmail.uuid,
-          pos: {
-            x: event.pageX,
-            y: event.pageY,
-          },
+          newGmail: document.getElementById("edit-email").value,
+          newPass: document.getElementById("edit-password").value,
+          newRecov: document.getElementById("edit-recov").value,
+          newSecurity: document.getElementById("edit-security").value,
+          newProxy: document.getElementById("edit-proxy").value,
         });
+        $(`#${gmail.uuid}-name`).html(
+          document.getElementById("edit-email").value
+        );
+
+        $(`#${gmail.uuid}-proxy`).html(
+          document.getElementById("edit-proxy").value
+        );
+
+        $("#edit-gmail-submit").off("click");
+        $("#cancel-edit").off("click");
       });
-      $(`#${gmail.uuid}_health1`).on("mouseleave", async function (event) {
-        console.log("leave", gmail.uuid);
-        $(".health-menu").css("display", "none");
-        // $('.health-menu').css("top", event.pageY)
-        // $('.health-menu').css("left", event.pageX)
+    });
+
+    //DELETE THE GMAIL
+    $(`#${gmail.uuid}-delete`).on("click", async function () {
+      console.log("deleting gmail", gmail.uuid);
+      //delete-gmail
+      ipcRenderer.send("delete-gmail", {
+        groupID: currentgroup,
+        gmailID: gmail.uuid,
       });
+      let alltask = parseInt($("#allTask-text").text());
+      $("#allTask-text").text(--alltask);
+      if ($(`#${gmail.uuid}-status`).text() === "Idle") {
+        changeStopNum(currentgroup, false);
+      } else {
+        changeStartNum(currentgroup, false);
+      }
+      $(`#${gmail.uuid}`).remove();
+    });
+
+    $(`#${gmail.uuid}_health1`).on("mouseover", async function (event) {
+      //get-scores
+
+      ipcRenderer.send("get-scores", {
+        group: currentgroup,
+        gmail: gmail.uuid,
+        pos: {
+          x: event.pageX,
+          y: event.pageY,
+        },
+      });
+    });
+    $(`#${gmail.uuid}_health1`).on("mouseleave", async function (event) {
+      $(".health-menu").css("display", "none");
+      // $('.health-menu').css("top", event.pageY)
+      // $('.health-menu').css("left", event.pageX)
     });
 
     $("#point9-filter").html(`${point9}`);
@@ -679,7 +686,6 @@ $("#new-gmail-submit").on("click", async function () {
         }
       }
       const ischecked = $(`#${gmail.uuid}_checkbox`).is(":checked");
-      console.log(ischecked, "not", !ischecked);
       $(`#${gmail.uuid}_checkbox`).prop("checked", !ischecked);
     }
   });
@@ -711,10 +717,12 @@ $("#new-gmail-submit").on("click", async function () {
       groupID: currentgroup,
     });
     jQuery("#gmailEditModal").modal("show");
+    console.log(parsedgmail);
     document.getElementById("edit-email").value = parsedgmail.email;
     document.getElementById("edit-password").value = parsedgmail.password;
     document.getElementById("edit-recov").value = parsedgmail.recovery;
     document.getElementById("edit-security").value = parsedgmail.security;
+    document.getElementById("edit-proxy").value = parsedgmail.proxy;
     $("#cancel-edit").on("click", () => $("#edit-gmail-submit").off("click"));
     $("#edit-gmail-submit").on("click", async function () {
       //edit-gmail
@@ -726,11 +734,14 @@ $("#new-gmail-submit").on("click", async function () {
         newPass: document.getElementById("edit-password").value,
         newRecov: document.getElementById("edit-recov").value,
         newSecurity: document.getElementById("edit-security").value,
+        newProxy: document.getElementById("edit-proxy").value,
       });
       $(`#${gmail.uuid}-name`).html(
         document.getElementById("edit-email").value
       );
-      //$(`#${gmail.uuid}-proxy`).html('newproxygohere')
+      $(`#${gmail.uuid}-proxy`).html(
+        document.getElementById("edit-proxy").value
+      );
 
       $("#edit-gmail-submit").off("click");
       $("#cancel-edit").off("click");
@@ -863,27 +874,23 @@ ipcRenderer.on("import-gmails", async function (event, path) {
   ipcRenderer.send("import-gmails-path", path);
 });
 //IPC RENDERER REPLIES
-ipcRenderer.on("action-specific-reply", (event, arg) => {
-  if (arg.started === "qd") {
+ipcRenderer.on("action-specific-reply", (event, { gmail, started, group }) => {
+  if (started === "qd") {
     //queued
-    $(`#${box.getAttribute("id").split("_")[0]}-status`).text("Queued");
-  } else if (arg.started) {
+    $(`#${gmail}-status`).text("Queued");
+  } else if (started) {
     //started
-    $(`#${box.getAttribute("id").split("_")[0]}-run-span`)
-      .toggleClass("run")
-      .toggleClass("stop");
-    changeStartNum(currentgroup, true);
+    $(`#${gmail}-run-span`).toggleClass("run").toggleClass("stop");
+    changeStartNum(group, true);
 
-    changeStopNum(currentgroup, false);
+    changeStopNum(group, false);
   } else {
     //stoped
-    $(`#${box.getAttribute("id").split("_")[0]}-status`).html("Idle");
-    $(`#${box.getAttribute("id").split("_")[0]}-run-span`)
-      .toggleClass("run")
-      .toggleClass("stop");
-    changeStartNum(currentgroup, false);
+    $(`#${gmail}-status`).html("Idle");
+    $(`#${gmail}-run-span`).toggleClass("run").toggleClass("stop");
+    changeStartNum(group, false);
 
-    changeStopNum(currentgroup, true);
+    changeStopNum(group, true);
   }
 });
 
@@ -938,12 +945,15 @@ ipcRenderer.on("get-scores-reply", (event, arg) => {
 });
 
 ipcRenderer.on("new-statuses", (event, parsedStatus) => {
-  if (
-    typeof parsedStatus.statuses !== "undefined" &&
-    parsedStatus.statuses.length > 0
-  ) {
-    parsedStatus.statuses.forEach((status) => {
+  if (parsedStatus.length > 0) {
+    parsedStatus.forEach((status) => {
       $(`#${status.uuid}-status`).html(status.status);
+      if (status.errors !== null) {
+        $(`#${status.uuid}-run-span`).toggleClass("run").toggleClass("stop");
+        changeStartNum(currentgroup, false);
+
+        changeStopNum(currentgroup, true);
+      }
     });
   }
 });
