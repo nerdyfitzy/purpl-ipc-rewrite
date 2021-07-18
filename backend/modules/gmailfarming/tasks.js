@@ -27,7 +27,7 @@ const { gmailSettings } = fs.existsSync(
     };
 //gmails loaded into the bot
 
-let groups = {
+var groups = {
   default: {
     uuid: "default",
     name: "default",
@@ -48,7 +48,7 @@ const runinputlow = gmailSettings.runinputhigh;
 const runinputhigh = gmailSettings.runinputlow;
 
 //queued gmails
-let queued = new Array();
+let queued = [];
 const threads = new Set();
 const interests = ["gaming", "cooking", "tech", "fashion", "shoes"];
 

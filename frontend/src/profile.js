@@ -369,10 +369,18 @@ const addGroupToList = (group) => {
   });
 };
 
+$("#default-edit").on("click", () => {
+  jQuery("#groupEditModal").modal("show");
+  ipcRenderer.send("edit-profile-group", {
+    uuid: "default",
+    name: $("#group-name-edit").val(),
+  });
+});
+
 const newProf = async () => {
   console.log("new profile submit");
   let cur = parseInt($(`#${currentgroup}-num`).text());
-  $(`#${currentgroup}-num`).text(++cur);
+  $(`#${currentgroup}-num`).text(`${++cur} Profiles`);
   var profile = {
     profile_name: document.getElementById("profname-input").value,
     email: document.getElementById("email-input").value,

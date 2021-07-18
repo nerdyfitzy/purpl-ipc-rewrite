@@ -1023,6 +1023,34 @@ const wrath = (profs) => {
   return wraf;
 };
 
+const hayha = (profs) => {
+  let hayhaArr = [];
+  for (const profile of profs) {
+    let newH = {
+      profilename: profile.profile_name,
+      FirstName: profile.shipping.name.split(" ")[0],
+      LastName: profile.shipping.name.split(" ")[1],
+      AddressLine1: profile.shipping.addy1,
+      AddressLine2: profile.shipping.addy2,
+      City: profile.shipping.city,
+      Zipcode: profile.shipping.zip,
+      StateEntry: abbrv[profile.shipping.state],
+      Country: profile.shipping.country,
+      Email: profile.email,
+      Phone: profile.shipping.phone,
+      SNKRSEnabled: true,
+      CreditCardNumber: profile.payment.cnb,
+      CreditCardMonth: profile.payment.month,
+      CreditCardYear: `20${profile.payment.year}`,
+      CVV: profile.payment.cvv,
+    };
+
+    hayhaArr.push(newH);
+  }
+
+  return hayhaArr;
+};
+
 const kodai = (profs) => {
   let ko = {};
   for (const profile of profs) {
@@ -1165,6 +1193,298 @@ const trickle = (profs) => {
   return base;
 };
 
+const ksr = (profs) => {
+  let ksrArr = [];
+  let counter = 0;
+  let ksrCards = {
+    MasterCard: "Mastercard",
+    Visa: "Visa",
+    "American Express": "Amex",
+    Discover: "Discover",
+  };
+  for (const profile of profs) {
+    let newp = {
+      Id: count,
+      Name: profile.profile_name,
+      LineOne: profile.shipping.addy1,
+      LineTwo: profile.shipping.addy2,
+      HouseNum: "",
+      City: profile.shipping.city,
+      State: abbrv[profile.shipping.state],
+      Zip: profile.shipping.zip,
+      IsUsedForRaffles: false,
+      Email: profile.email,
+      NameOnCard: profile.payment.name,
+      ShippingName: profile.shipping.name,
+      CardType: ksrCards[profile.payment.type],
+      PhoneNumber: profile.shipping.phone,
+      CcNumber: profile.payment.cnb,
+      CcCvv: profile.payment.cvv,
+      CcExpMonth: profile.payment.month,
+      CcExpYear: `20${profile.payment.year}`,
+    };
+    count++;
+  }
+
+  return ksrArr;
+};
+
+const noble = (profs) => {
+  let nobleArr = [];
+  for (const profile of profs) {
+    let newp = {
+      name: profile.profile_name,
+      size: "",
+      profileGroup: "",
+      billingAddress: {
+        name: profile.billing.name,
+        email: profile.billing.email,
+        phone: profile.billing.phone,
+        line1: profile.billing.addy1,
+        line2: profile.billing.addy2,
+        line3: profile.billing.addy3,
+        postCode: profile.billing.zip,
+        city: profile.billing.city,
+        country: profile.billing.country,
+        state: profile.billing.state,
+      },
+      shippingAddress: {
+        name: profile.shipping.name,
+        email: profile.shipping.email,
+        phone: profile.shipping.phone,
+        line1: profile.shipping.addy1,
+        line2: profile.shipping.addy2,
+        line3: profile.shipping.addy3,
+        postCode: profile.shipping.zip,
+        city: profile.shipping.city,
+        country: profile.shipping.country,
+        state: profile.shipping.state,
+      },
+      paymentDetails: {
+        nameOnCard: profile.payment.name,
+        cardType: profile.payment.type,
+        cardNumber: profile.payment.cnb,
+        cardExpMonth: profile.payment.month,
+        cardExpYear: `20${profile.payment.year}`,
+        cardCvv: profile.payment.cvv,
+      },
+      sameBillingAndShippingAddress: profile.sameBilling,
+      onlyCheckoutOnce: profile.one_checkout,
+      matchNameOnCardAndAddress: false,
+    };
+
+    nobleArr.push(newp);
+  }
+
+  return nobleArr;
+};
+
+const ominous = (profs) => {
+  let ominousArr = [];
+  for (const profile of profs) {
+    let newp = {
+      name: profile.profile_name,
+      size: "",
+      profileGroup: "",
+      billingAddress: {
+        name: profile.billing.name,
+        email: profile.billing.email,
+        phone: profile.billing.phone,
+        line1: profile.billing.addy1,
+        line2: profile.billing.addy2,
+        line3: profile.billing.addy3,
+        postCode: profile.billing.zip,
+        city: profile.billing.city,
+        country: profile.billing.country,
+        state: profile.billing.state,
+      },
+      shippingAddress: {
+        name: profile.shipping.name,
+        email: profile.shipping.email,
+        phone: profile.shipping.phone,
+        line1: profile.shipping.addy1,
+        line2: profile.shipping.addy2,
+        line3: profile.shipping.addy3,
+        postCode: profile.shipping.zip,
+        city: profile.shipping.city,
+        country: profile.shipping.country,
+        state: profile.shipping.state,
+      },
+      paymentDetails: {
+        nameOnCard: profile.payment.name,
+        cardType: profile.payment.type,
+        cardNumber: profile.payment.cnb,
+        cardExpMonth: profile.payment.month,
+        cardExpYear: `20${profile.payment.year}`,
+        cardCvv: profile.payment.cvv,
+      },
+      sameBillingAndShippingAddress: profile.sameBilling,
+      onlyCheckoutOnce: profile.one_checkout,
+      matchNameOnCardAndAddress: false,
+    };
+
+    ominousArr.push(newp);
+  }
+
+  return ominousArr;
+};
+
+const kylin = (profs) => {
+  let kylinEx = {
+    version: "1.1.35",
+    profileList: [],
+  };
+
+  for (const profile of profs) {
+    let houseNumS;
+    let houseNumB;
+    let spaced = profile.payment.cnb.match(/.{1,4}/g);
+    console.log(spaced.join(" "));
+
+    for (const part of profile.shipping.addy1.split(" ")) {
+      if (typeof parseInt(part) === "number") houseNumS = part;
+    }
+    for (const part of profile.billing.addy1.split(" ")) {
+      if (typeof parseInt(part) === "number") houseNumB = part;
+    }
+    let newp = {
+      profile_id: profile.uuid,
+      profile_name: profile.profile_name,
+      group: "purpl-import",
+      delivery_fname: profile.shipping.name.split(" ")[0],
+      delivery_lname: profile.shipping.name.split(" ")[1],
+      delivery_email: profile.email,
+      delivery_phone: profile.shipping.phone,
+      delivery_address1: profile.shipping.addy1,
+      delivery_address2: profile.shipping.addy2,
+      delivery_house_number: houseNumS,
+      delivery_city: profile.shipping.city,
+      delivery_state: abbrv[profile.shipping.state],
+      delivery_country: countries[profile.shipping.country],
+      delivery_zip: profile.shipping.zip,
+      billing_fname: profile.billing.name.split(" ")[0],
+      billing_lname: profile.billing.name.split(" ")[1],
+      billing_email: profile.email,
+      billing_phone: profile.billing.phone,
+      billing_address1: profile.billing.addy1,
+      billing_address2: profile.billing.addy2,
+      billing_house_number: houseNumB,
+      billing_city: profile.billing.city,
+      billing_state: abbrv[profile.billing.state],
+      billing_country: countries[profile.billing.country],
+      billing_zip: profile.billing.zip,
+      card_type: profile.payment.type,
+      card_number: spaced,
+      card_name: profile.payment.name,
+      card_exp: `${profile.payment.month}/${profile.payment.year}`,
+      card_csc: profile.payment.cvv,
+      delivery_info_as_billing_info: profile.sameBilling,
+      template: false,
+      billing_name: profile.billing.name,
+      card_expiry_month: profile.payment.month,
+      card_expiry_year: profile.payment.year,
+      card_expiry_full_year: `20${profile.payment.year}`,
+      delivery_name: profile.shipping.name,
+    };
+
+    kylinEx.profileList.push(newp);
+  }
+
+  return kylinEx;
+};
+
+const tsb = (profs) => {
+  let tsbArr = [];
+  for (const profile of profs) {
+    let spaced = profile.payment.cnb.match(/.{1,4}/g);
+    console.log(spaced.join(" "));
+    let newp = {
+      cc: {
+        profileName: profile.profile_name,
+        email: profile.email,
+        phone: profile.shipping.phone,
+        cardName: profile.payment.name,
+        ccNumber: spaced,
+        ccExpiry: `${profile.payment.month} / 20${profile.payment.year}`,
+        ccCvc: profile.payment.cvv,
+      },
+      shipping: {
+        address: profile.shipping.addy1,
+        address2: profile.shipping.addy2,
+        zip: profile.shipping.zip,
+        city: profile.shipping.city,
+        country: profile.shipping.country,
+        state: abbrv[profile.shipping.state],
+        firstName: profile.shipping.name.split(" ")[0],
+        lastName: profile.shipping.name.split(" ")[1],
+      },
+      billing: {
+        address: profile.billing.addy1,
+        address2: profile.billing.addy2,
+        zip: profile.billing.zip,
+        city: profile.billing.city,
+        country: profile.billing.country,
+        state: abbrv[profile.billing.state],
+        firstName: profile.billing.name.split(" ")[0],
+        lastName: profile.billing.name.split(" ")[1],
+      },
+      isJapaneseAddress: false,
+      isRussianAddress: false,
+      isMexicanAddress: false,
+      id: new Date().getTime(),
+      date: new Date().getTime(),
+    };
+
+    tsbArr.push(newp);
+  }
+
+  return tsbArr;
+};
+
+const stellar = (profs) => {
+  let stelArr = [];
+  for (const profile of profs) {
+    let newp = {
+      profileName: profile.profile_name,
+      email: profile.email,
+      phone: profile.shipping.phone,
+      shipping: {
+        firstName: profile.shipping.name.split(" ")[0],
+        lastName: profile.shipping.name.split(" ")[1],
+        country: countries[profile.shipping.country],
+        address: profile.shipping.addy1,
+        address2: profile.shipping.addy2,
+        state: abbrv[profile.shipping.state],
+        city: profile.shipping.city,
+        zipcode: profile.shipping.zip,
+      },
+      billingAsShipping: profile.sameBilling,
+      billing: {
+        firstName: profile.billing.name.split(" ")[0],
+        lastName: profile.billing.name.split(" ")[1],
+        country: countries[profile.billing.country],
+        address: profile.billing.addy1,
+        address2: profile.billing.addy2,
+        state: abbrv[profile.billing.state],
+        city: profile.billing.city,
+        zipcode: profile.billing.zip,
+      },
+      payment: {
+        cardName: profile.payment.name,
+        cardType: profile.payment.type,
+        cardNumber: profile.payment.cnb,
+        cardMonth: profile.payment.month,
+        cardYear: profile.payment.year,
+        cardCvv: profile.payment.cvv,
+      },
+    };
+
+    stelArr.push(newp);
+  }
+
+  return stelArr;
+};
+
 module.exports = {
   cyber: cyber,
   dashe: dashe,
@@ -1187,4 +1507,11 @@ module.exports = {
   torpedo: torpedo,
   linear: linear,
   trickle: trickle,
+  hayha,
+  ksr,
+  noble,
+  ominous,
+  kylin,
+  tsb,
+  stellar,
 };

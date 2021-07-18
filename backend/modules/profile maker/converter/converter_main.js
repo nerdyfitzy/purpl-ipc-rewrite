@@ -34,6 +34,7 @@ const imports = {
   Polaris: im.polaris,
   Prism: im.prism,
   Nebula: im.nebula,
+  Wrath: im.wrath,
 };
 
 const exportFuncs = {
@@ -57,6 +58,44 @@ const exportFuncs = {
   Torpedo: ex.torpedo,
   Linear: ex.linear,
   Trickle: ex.trickle,
+  Kodai: ex.kodai,
+  Hayha: ex.hayha,
+  KSR: ex.ksr,
+  Noble: ex.noble,
+  Ominous: ex.ominous,
+  Kylin: ex.kylin,
+  TSB: ex.tsb,
+  Stellar: ex.stellar,
+};
+
+const fileExtensions = {
+  Cybersole: "json",
+  Dashe: "json",
+  Ganesh: "csv",
+  Nebula: "json",
+  Balkobot: "json",
+  Hawk: "csv",
+  Kage: "csv",
+  Lex: "json",
+  NSB: "json",
+  Polaris: "json",
+  Prism: "json",
+  MEKAIO: "json",
+  Splashforce: "json",
+  "RE AIO": "csv",
+  Estock: "json",
+  Rush: "csv",
+  Wrath: "json",
+  Torpedo: "json",
+  Linear: "json",
+  Trickle: "csv",
+  Kodai: "txt",
+  KSR: "json",
+  Noble: "json",
+  Ominous: "json",
+  Kylin: "json",
+  Stellar: "json",
+  TSB: "json",
 };
 
 const saveProfiles = async () => {
@@ -139,11 +178,15 @@ const importProfiles = async (file, bot, fn) => {
       fn(groups[importGroup.uuid]);
     });
   } else {
-    const profiles = await imports[bot](file);
-    for (const profile of Object.values(profiles)) {
-      await addProfile(profile, importGroup.uuid);
+    try {
+      const profiles = await imports[bot](file);
+      for (const profile of Object.values(profiles)) {
+        await addProfile(profile, importGroup.uuid);
+      }
+      fn(groups[importGroup.uuid]);
+    } catch (e) {
+      console.log(e, "error");
     }
-    fn(groups[importGroup.uuid]);
   }
 };
 
@@ -308,6 +351,7 @@ const deleteSelected = (uuids, currentgroup) => {
 };
 
 const exportProfiles = async (profs, group, bot) => {
+  console.log(bot, "info");
   let exports = new Array();
   if (profs === null) {
     for (const profile in groups[group].profiles) {
@@ -332,15 +376,23 @@ const exportProfiles = async (profs, group, bot) => {
     fs.mkdirSync(dir);
   }
   fs.mkdirSync(path.join(dir, now));
-  fs.writeFileSync(
-    path.join(dir, now, `${bot}.json`),
-    JSON.stringify(converted)
-  );
+  if (bot === "Hayha") {
+    fs.mkdirSync(path.join(dir, now, "Hayha"));
+    for (const prof of converted) {
+      fs.writeFileSync(path.join(dir, now, "Hayha"), prof);
+    }
+  } else {
+    fs.writeFileSync(
+      path.join(dir, now, `${bot}.${fileExtensions[bot]}`),
+      JSON.stringify(converted)
+    );
+  }
+
   require("child_process").exec(`start "" "${path.join(dir, now)}"`);
 };
 
 const editGroup = (uuid, name) => {
-  groups[group].name = name;
+  groups[uuid].name = name;
   saveProfiles();
 };
 

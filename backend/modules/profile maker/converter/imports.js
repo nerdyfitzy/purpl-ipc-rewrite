@@ -568,6 +568,62 @@ const cyber = (path) => {
   return group;
 };
 
+const wrath = (path) => {
+  const group = {};
+  let parsed = JSON.parse(fs.readFileSync(path));
+
+  for (const profile of parsed) {
+    const u = v4();
+    group[u] = {
+      profile_name: profile.name,
+      uuid: u,
+      email: profile.shippingAddress.email,
+      one_checkout: profile.onlyCheckoutOnce,
+      shipping: {
+        name: profile.shippingAddress.name,
+        phone: profile.shippingAddress.phone,
+        addy1: profile.shippingAddress.line1,
+        addy2: profile.shippingAddress.line2,
+        addy3: profile.shippingAddress.line3,
+        zip: profile.shippingAddress.postCode,
+        city: profile.shippingAddress.city,
+        state: abbrv[profile.shippingAddress.state],
+        country: profile.shippingAddress.country,
+      },
+      sameBilling: profile.sameBillingAndShippingAddress,
+      billing: {
+        name: profile.billingAddress.name,
+        phone: profile.billingAddress.phone,
+        addy1: profile.billingAddress.line1,
+        addy2: profile.billingAddress.line2,
+        addy3: profile.billingAddress.line3,
+        zip: profile.billingAddress.postCode,
+        city: profile.billingAddress.city,
+        state: abbrv[profile.billingAddress.state],
+        country: profile.billingAddress.country,
+      },
+      payment: {
+        name: profile.paymentDetails.nameOnCard,
+        cnb: profile.paymentDetails.cardNumber,
+        month: profile.paymentDetails.cardExpMonth,
+        year: profile.paymentDetails.cardExpYear,
+        cvv: profile.paymentDetails.cardCvv,
+        type: profile.paymentDetails.cardType,
+      },
+    };
+
+    if (group[u].payment.cnb.charAt(0) === "4") {
+      group[u].payment.type = "Visa";
+    } else if (group[u].payment.cnb.charAt(0) === "5") {
+      group[u].payment.type = "MasterCard";
+    } else if (group[u].payment.cvv.length === 4) {
+      group[u].payment.type = "American Express";
+    } else {
+      group[u].payment.type = "Discover";
+    }
+  }
+};
+
 const dashe = (path) => {
   const group = {};
   let temp = fs.readFileSync(path);
@@ -1193,12 +1249,6 @@ const tohru = () => {
   let parsed = JSON.parse(temp);
 };
 
-const wrath = () => {
-  const group = {};
-  let temp = fs.readFileSync(path);
-  let parsed = JSON.parse(temp);
-};
-
 module.exports = {
   pd: pd,
   cyber: cyber,
@@ -1215,4 +1265,5 @@ module.exports = {
   polaris: polaris,
   prism: prism,
   nebula: nebula,
+  wrath,
 };

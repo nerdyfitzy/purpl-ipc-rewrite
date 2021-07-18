@@ -10,6 +10,7 @@ dotenv.config();
 
 const { machineId } = require("node-machine-id");
 const { saveSettings } = require("./utils/config/editConfig");
+const { resolve } = require("path");
 let authenticated = false;
 
 const setActivity = (rpc) => {
@@ -106,92 +107,129 @@ const startSocket = () => {
   return 1;
 };
 
-const setup = async () => {
-  startSocket();
-  if (
-    !fs.existsSync(path.join(process.env.APPDATA, "purpl", "local-data")) ||
-    !fs.existsSync(
+const setup = () => {
+  return new Promise(async (resolve, reject) => {
+    startSocket();
+    if (
+      !fs.existsSync(path.join(process.env.APPDATA, "purpl", "local-data")) ||
+      !fs.existsSync(
+        path.join(process.env.APPDATA, "purpl", "local-data", "config.json")
+      )
+    ) {
+      console.log("files dont exist, making");
+      // fs.mkdirSync(path.join(process.env.APPDATA, "purpl", "local-data"));
+      fs.mkdirSync(
+        path.join(process.env.APPDATA, "purpl", "local-data", "exports")
+      );
+      fs.mkdirSync(
+        path.join(
+          process.env.APPDATA,
+          "purpl",
+          "local-data",
+          "exports",
+          "accounts"
+        )
+      );
+      fs.mkdirSync(
+        path.join(
+          process.env.APPDATA,
+          "purpl",
+          "local-data",
+          "exports",
+          "profiles"
+        )
+      );
+      fs.mkdirSync(
+        path.join(
+          process.env.APPDATA,
+          "purpl",
+          "local-data",
+          "exports",
+          "gmails"
+        )
+      );
+
+      fs.writeFileSync(
+        path.join(process.env.APPDATA, "purpl", "local-data", "config.json"),
+        JSON.stringify({
+          global: {
+            webhook: "",
+            activated: false,
+            key: "",
+            chromePath:
+              "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",
+          },
+          gmailSettings: {
+            maxRunning: 10,
+            sleepinputlow: 300,
+            sleepinputhigh: 480,
+            runinputlow: 30,
+            runinputhigh: 60,
+          },
+
+          misc: {
+            gmailToken: "",
+            fivesim: "",
+            twoCaptcha: "",
+            authorizedToken: "",
+          },
+        })
+      );
+    }
+    const config_unparsed = fs.readFileSync(
       path.join(process.env.APPDATA, "purpl", "local-data", "config.json")
-    )
-  ) {
-    console.log("files dont exist, making");
-    // fs.mkdirSync(path.join(process.env.APPDATA, "purpl", "local-data"));
-    fs.mkdirSync(
-      path.join(process.env.APPDATA, "purpl", "local-data", "exports")
     );
-    fs.mkdirSync(
-      path.join(
-        process.env.APPDATA,
-        "purpl",
-        "local-data",
-        "exports",
-        "accounts"
-      )
-    );
-    fs.mkdirSync(
-      path.join(
-        process.env.APPDATA,
-        "purpl",
-        "local-data",
-        "exports",
-        "profiles"
-      )
-    );
-    fs.mkdirSync(
-      path.join(process.env.APPDATA, "purpl", "local-data", "exports", "gmails")
-    );
+    const config = JSON.parse(config_unparsed);
 
-    fs.writeFileSync(
-      path.join(process.env.APPDATA, "purpl", "local-data", "config.json"),
-      JSON.stringify({
-        global: {
-          webhook: "",
-          activated: false,
-          key: "",
-          chromePath:
-            "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",
-        },
-        gmailSettings: {
-          maxRunning: 10,
-          sleepinputlow: 300,
-          sleepinputhigh: 480,
-          runinputlow: 30,
-          runinputhigh: 60,
-        },
+    if (config.global.key !== "") {
+      console.log(
+        `[${new Date().toLocaleTimeString()}] - Key found in config (${
+          config.global.key
+        }), sending to server`,
+        "info"
+      );
+      const hwid = await machineId();
+      socket.send(
+        JSON.stringify({
+          op: 1,
+          key: config.global.key,
+          hwid,
+        })
+      );
+      socket.on("message", (message) => {
+        const wsParsed = JSON.parse(message);
+        console.log(
+          `Received msg from server, ${JSON.stringify(wsParsed)}`,
+          "debug"
+        );
+        switch (wsParsed.op) {
+          case 2:
+            if (wsParsed.success === 1) {
+              console.log(
+                `[${new Date().toLocaleTimeString()}] - Successfully Activated!`,
+                "info"
+              );
+              resolve(1);
+              activated = true;
+            } else {
+              console.log(
+                `[${new Date().toLocaleTimeString()}] - Error activating.`,
+                "error"
+              );
+              resolve(0);
+            }
 
-        misc: {
-          gmailToken: "",
-          fivesim: "",
-          twoCaptcha: "",
-          authorizedToken: "",
-        },
-      })
-    );
-  }
-  const config_unparsed = fs.readFileSync(
-    path.join(process.env.APPDATA, "purpl", "local-data", "config.json")
-  );
-  const config = JSON.parse(config_unparsed);
-
-  if (config.global.key !== "") {
-    console.log(
-      `[${new Date().toLocaleTimeString()}] - Key found in config (${
-        config.global.key
-      }), sending to server`,
-      "info"
-    );
-    const hwid = await machineId();
-    socket.send(
-      JSON.stringify({
-        op: 1,
-        key: config.global.key,
-        hwid,
-      })
-    );
-    return 1;
-  }
-  console.log(`[${new Date().toLocaleTimeString()}] - No key found`, "info");
-  return 0;
+            break;
+        }
+      });
+    } else {
+      console.log(
+        `[${new Date().toLocaleTimeString()}] - No key found`,
+        "info"
+      );
+      resolve(0);
+    }
+  });
 };
 
 module.exports = {

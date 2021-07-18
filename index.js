@@ -10,7 +10,7 @@ const path = require("path");
 
 const console = require("./backend/utils/logger");
 
-const gmailFarmer = require("./backend/modules/gmailfarming/index");
+const gmailFarmer = require("./backend/modules/gmailfarming/tasks");
 const proxy = require("./backend/modules/proxies/index");
 const profiles = require("./backend/modules/profile maker/index");
 const profits = require("./backend/modules/profit tracker/index");
@@ -128,6 +128,7 @@ app.whenReady().then(async () => {
   globalShortcut.register("CommandOrControl+R", () => {
     return;
   });
+  console.log(code);
   if (code === 1 || process.env.NODE_ENV == "development") {
     console.log("skipping");
     createWindow("dashboard.html");
