@@ -67,6 +67,8 @@ const exportFuncs = {
   TSB: ex.tsb,
   Stellar: ex.stellar,
   Valor: ex.valor,
+  Velox: ex.velox,
+  Whatbot: ex.whatbot,
 };
 
 const fileExtensions = {
@@ -98,6 +100,8 @@ const fileExtensions = {
   Stellar: "json",
   TSB: "json",
   Valor: "json",
+  Velox: "json",
+  Whatbot: "csv",
 };
 
 const saveProfiles = async () => {
