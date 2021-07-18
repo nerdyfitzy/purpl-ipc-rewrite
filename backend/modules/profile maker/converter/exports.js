@@ -1485,6 +1485,61 @@ const stellar = (profs) => {
   return stelArr;
 };
 
+const valor = (profs) => {
+  let valorEx = {};
+
+  for (const profile of profs) {
+    let formattedPhone = `${profile.shipping.phone.substring(
+      0,
+      3
+    )}-${profile.shipping.phone.substring(
+      3,
+      6
+    )}-${profile.shipping.phone.substring(6)}`;
+    let spaced = profile.payment.cnb.match(/.{1,4}/g);
+    valorEx[profile.uuid] = {
+      addressSameAsBilling: profile.sameBilling,
+      profileName: profile.profile_name,
+      emailAddress: profile.email,
+      phoneNumber: formattedPhone,
+      shippingFirstName: profile.shipping.name.split(" ")[0],
+      shippingLastName: profile.shipping.name.split(" ")[1],
+      shippingAddress1: profile.shipping.addy1,
+      shippingAddress2: profile.shipping.addy2,
+      shippingCountry:
+        countries[profile.shipping.country] === "US"
+          ? "USA"
+          : countries[profile.shipping.country],
+      shippingState: abbrv[profile.shipping.state],
+      shippingCity: profile.shipping.city,
+      shippingZipcode: profile.shipping.zip,
+      billingFirstName: profile.billing.name.split(" ")[0],
+      billingLastName: profile.billing.name.split(" ")[1],
+      billingAddress1: profile.billing.addy1,
+      billingAddress2: profile.billing.addy2,
+      billingCountry:
+        countries[profile.billing.country] === "US"
+          ? "USA"
+          : countries[profile.billing.country],
+      billingState: abbrv[profile.billing.state],
+      billingCity: profile.billing.city,
+      billingZipcode: profile.billing.zip,
+      cardHolderName: profile.payment.name,
+      cardNumber: spaced,
+      cardCVV: profile.payment.cvv,
+      cardExp: `${profile.payment.month}/${profile.payment.year}`,
+      cardType: {
+        YeezySupply: profile.payment.type.replace(" ", "").toUpperCase(),
+        Supreme: profile.payment.type.replace(" ", "").toUpperCase(),
+        Finishline: profile.payment.type.replace(" ", "").toUpperCase(),
+      },
+      id: profile.uuid,
+    };
+  }
+
+  return valorEx;
+};
+
 module.exports = {
   cyber: cyber,
   dashe: dashe,
@@ -1514,4 +1569,5 @@ module.exports = {
   kylin,
   tsb,
   stellar,
+  valor,
 };

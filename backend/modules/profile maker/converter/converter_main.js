@@ -66,6 +66,7 @@ const exportFuncs = {
   Kylin: ex.kylin,
   TSB: ex.tsb,
   Stellar: ex.stellar,
+  Valor: ex.valor,
 };
 
 const fileExtensions = {
@@ -96,6 +97,7 @@ const fileExtensions = {
   Kylin: "json",
   Stellar: "json",
   TSB: "json",
+  Valor: "json",
 };
 
 const saveProfiles = async () => {
