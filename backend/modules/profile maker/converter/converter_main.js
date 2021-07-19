@@ -385,7 +385,10 @@ const exportProfiles = async (profs, group, bot) => {
   if (bot === "Hayha") {
     fs.mkdirSync(path.join(dir, now, "Hayha"));
     for (const prof of converted) {
-      fs.writeFileSync(path.join(dir, now, "Hayha"), prof);
+      fs.writeFileSync(
+        path.join(dir, now, "Hayha", `${prof.profilename}.hayha`),
+        JSON.stringify(prof)
+      );
     }
   } else {
     fs.writeFileSync(

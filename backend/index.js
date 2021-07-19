@@ -181,6 +181,11 @@ const setup = () => {
     );
     const config = JSON.parse(config_unparsed);
 
+    if (process.env.NODE_ENV === "development") {
+      resolve(1);
+      return;
+    }
+
     if (config.global.key !== "") {
       console.log(
         `[${new Date().toLocaleTimeString()}] - Key found in config (${

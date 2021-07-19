@@ -382,7 +382,11 @@ ipcMain.on("export-profiles", (event, { profs, group, bot }) => {
   console.log(
     `[${new Date().toLocaleTimeString()}] - Exporting profiles ${profs}`
   );
-  profiles.exportProfiles(profs, group, bot);
+  if (bot.length > 0) {
+    bot.forEach((robot) => {
+      profiles.exportProfiles(profs, group, robot);
+    });
+  }
 });
 
 ipcMain.on("import-profiles", (event, { path, bot }) => {

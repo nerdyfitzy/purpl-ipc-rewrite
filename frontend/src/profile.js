@@ -509,17 +509,16 @@ $("#bots .col-6 .im-ex-icons").each(function () {
     $("#import-file-btn").text(`Import ${this.getAttribute("id")} File`);
   });
 });
-var export_bot;
 $("#bots-export .col-6 .im-ex-icons").each(function () {
   var icon = $(this);
   icon.on("click", () => {
-    $("#bots .col-6 .im-ex-icons").each(function () {
+    if ($(this).hasClass("selected")) {
       $(this).removeClass("selected");
       $(this).css("border", "");
-    });
-    $(this).addClass("selected");
-    $(this).css("border", "1px solid #733fcc");
-    export_bot = this.getAttribute("id");
+    } else {
+      $(this).addClass("selected");
+      $(this).css("border", "1px solid #733fcc");
+    }
   });
 });
 
@@ -532,11 +531,19 @@ $("#export-button").on("click", async () => {
       console.log($(el).parent());
     }
   }
+
+  let sel_bots = [];
+  let allBots = $("#bots-export .col-6 .im-ex-icons");
+  for (const el of allBots) {
+    if ($(el).hasClass("selected")) {
+      sel_bots.push($(el).attr("id"));
+    }
+  }
   console.log(sel, "sel");
   ipcRenderer.send("export-profiles", {
     profs: sel.length === 0 ? null : sel, //array of uuids selected
     group: currentgroup,
-    bot: export_bot,
+    bot: sel_bots,
   });
 });
 

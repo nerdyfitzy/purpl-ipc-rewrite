@@ -1456,7 +1456,7 @@ const ksr = (profs) => {
   };
   for (const profile of profs) {
     let newp = {
-      Id: count,
+      Id: counter,
       Name: profile.profile_name,
       LineOne: profile.shipping.addy1,
       LineTwo: profile.shipping.addy2,
@@ -1475,7 +1475,8 @@ const ksr = (profs) => {
       CcExpMonth: profile.payment.month,
       CcExpYear: `20${profile.payment.year}`,
     };
-    count++;
+    ksrArr.push(newp);
+    counter++;
   }
 
   return ksrArr;
