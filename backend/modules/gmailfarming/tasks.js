@@ -469,6 +469,7 @@ const actionSpecific = (uuid, group, manualLogin = false) => {
 
     groups[group].gmails[uuid].running = false;
     runningTasks[uuid].kill();
+    delete runningTasks[uuid];
     saveGmails();
     return false;
   }

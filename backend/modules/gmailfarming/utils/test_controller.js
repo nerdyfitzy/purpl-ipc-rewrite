@@ -1,15 +1,12 @@
-const {
-  Worker,
-  isMainThread,
-  workerData,
-  parentPort,
-} = require("worker_threads");
 var path = require("path");
 const puppeteer = require("puppeteer-extra");
 const console = require("../../../utils/logger");
 
 const stealth = require("puppeteer-extra-plugin-stealth");
 puppeteer.use(stealth());
+
+const { uuid, gmail, pass, proxy, recovery, security, type, group } =
+  process.argv[2];
 
 const humanTyping = async (element, word, page) => {
   for (let i = 0; i < word.length; i++) {
@@ -20,12 +17,33 @@ const humanTyping = async (element, word, page) => {
 
 const login = async () => {
   try {
-    const browser = await puppeteer.launch({
-      headless: false,
-      executablePath:
-        "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",
-    });
+    var browser;
+    if (proxy !== "localhost") {
+      browser = await puppeteer.launch({
+        headless: false,
+        executablePath:
+          "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",
+        args: [
+          "--proxy-server=" + proxy.split(":")[0] + ":" + proxy.split(":")[1],
+        ],
+      });
+    } else {
+      browser = await puppeteer.launch({
+        headless: false,
+        executablePath:
+          "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",
+      });
+    }
     const page = await browser.newPage();
+    if (
+      proxy !== "localhost" &&
+      proxy.indexOf(":") !== proxy.lastIndexOf(":")
+    ) {
+      await page.authenticate({
+        username: proxy.split(":")[2],
+        password: proxy.split(":")[3],
+      });
+    }
     await page.setUserAgent(
       "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36"
     );
@@ -40,7 +58,7 @@ const login = async () => {
 
     await navigationPromise;
 
-    await humanTyping('input[type="email"]', workerData.gmail, page);
+    await humanTyping('input[type="email"]', gmail, page);
 
     await page.waitForSelector("#identifierNext");
     await page.click("#identifierNext");
@@ -51,7 +69,7 @@ const login = async () => {
       console.log("couldnt find acc", "debug");
       browser.close();
       parentPort.postMessage({
-        id: workerData.uuid,
+        id: uuid,
         errors: "Invalid Email",
         message: "Email Invalid! Stopping.",
       });
@@ -63,7 +81,7 @@ const login = async () => {
     await page.click('input[type="email"]');
     await page.waitFor(500);
 
-    await humanTyping('input[type="password"]', workerData.pass, page);
+    await humanTyping('input[type="password"]', pass, page);
     await page.waitForSelector("#passwordNext");
     await page.click("#passwordNext");
 
@@ -72,7 +90,7 @@ const login = async () => {
     if (emailHTML.includes("Wrong password.")) {
       browser.close();
       parentPort.postMessage({
-        id: workerData.uuid,
+        id: uuid,
         errors: "Password Incorrect",
         message: "Incorrect Password! Stopping.",
       });
@@ -114,7 +132,7 @@ const login = async () => {
         );
         await humanTyping(
           "#knowledge-preregistered-email-response",
-          workerData.recovery,
+          recovery,
           page
         );
         await page.waitForNavigation();
@@ -153,11 +171,7 @@ const login = async () => {
           );
         }
         await page.waitForSelector("#secret-question-response");
-        await humanTyping(
-          "#secret-question-response",
-          workerData.security,
-          page
-        );
+        await humanTyping("#secret-question-response", security, page);
         await page.waitForNavigation();
         if (page.url().includes("https://myaccount.google.com/")) {
           // runFlow({
@@ -172,7 +186,7 @@ const login = async () => {
       } else {
         browser.close();
         parentPort.postMessage({
-          id: workerData.uuid,
+          id: uuid,
           errors: null,
           message: "Manual Login Required!",
         });
@@ -184,7 +198,7 @@ const login = async () => {
       browser.close();
     }
     parentPort.postMessage({
-      id: workerData.uuid,
+      id: uuid,
       errors: null,
       message: "Manual Login Required!",
     });
@@ -237,31 +251,34 @@ const testCaptchaV2 = async (page) => {
   }
 };
 
-if (!isMainThread) {
-  (async () => {
-    const browserInfo = await login();
-    if (workerData.type === "v3") {
-      const score = await testRecapV3(browserInfo.page);
-      console.log(score, "debug");
-      browserInfo.browser.close();
-      parentPort.postMessage({
+(async () => {
+  const browserInfo = await login();
+  if (type === "v3") {
+    const score = await testRecapV3(browserInfo.page);
+    console.log(score, "debug");
+    process.stdout.write(
+      JSON.stringify({
         score: score,
-        uuid: workerData.uuid,
-      });
-    } else if (workerData.type === "v2v") {
-      const result = await testCaptchaV2(browserInfo.page);
-      browserInfo.browser.close();
-      parentPort.postMessage({
+        uuid: uuid,
+      })
+    );
+  } else if (type === "v2v") {
+    const result = await testCaptchaV2(browserInfo.page);
+    browserInfo.browser.close();
+    process.stdout.write(
+      JSON.stringify({
         score: result,
-        uuid: workerData.uuid,
-      });
-    } else if (workerData.type === "v2i") {
-      const result = await testCaptchaInvis(browserInfo.page);
-      browserInfo.browser.close();
-      parentPort.postMessage({
+        uuid: uuid,
+      })
+    );
+  } else if (type === "v2i") {
+    const result = await testCaptchaInvis(browserInfo.page);
+    browserInfo.browser.close();
+    process.stdout.write(
+      JSON.stringify({
         score: result,
-        uuid: workerData.uuid,
-      });
-    }
-  })();
-}
+        uuid: uuid,
+      })
+    );
+  }
+})();

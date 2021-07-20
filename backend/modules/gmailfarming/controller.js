@@ -1,4 +1,3 @@
-const { isMainThread, parentPort, workerData } = require("worker_threads");
 //stop = 1
 //manual login = 2
 const tasks = require("./tasks");
@@ -567,7 +566,6 @@ const login = async (browser, proxy) => {
       //mark
 
       if (proxy !== "localhost") {
-        let proxy = proxy;
         var browser = await puppeteer.launch({
           headless: true,
           executablePath:
@@ -599,7 +597,6 @@ const login = async (browser, proxy) => {
       }
     } else {
       if (proxy !== "localhost") {
-        let proxy = proxy;
         var browser = await puppeteer.launch({
           headless: true,
           executablePath:
@@ -608,7 +605,6 @@ const login = async (browser, proxy) => {
             "--proxy-server=" + proxy.split(":")[0] + ":" + proxy.split(":")[1],
           ],
         });
-        listener(browser);
         login(browser, proxy);
       } else {
         var browser = await puppeteer.launch({
@@ -616,7 +612,6 @@ const login = async (browser, proxy) => {
           executablePath:
             "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",
         });
-        listener(browser);
         login(browser);
       }
     }

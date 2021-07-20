@@ -1,10 +1,11 @@
 //file holding functions to test recap
-const { Worker, isMainThread, parentPort } = require("worker_threads");
+const { spawn } = require("child_process");
 
 const path = require("path");
 const farmer = require("../tasks");
 
 const threads = new Set();
+let runningTasks = {};
 const queued = new Array();
 
 const maxRunning = 10;
@@ -31,22 +32,33 @@ const testGmail = async (uuid, group, type) => {
         group: gmail.groupID,
       };
       console.log(data, "debug");
-      const worker = new Worker(path.join(__dirname, "test_controller.js"), {
-        workerData: data,
-      });
-      threads.add(worker);
-      worker.on("message", (message) => {
+      const child = spawn("node", [
+        path.join(__dirname, "test_controller.js"),
+        data,
+      ]);
+      runningTasks[uuid] = child;
+
+      child.stdout.on("data", (data) => {
         console.log(message, "debug");
-        worker.terminate();
-        resolve(JSON.stringify(message));
+        try {
+          const dParse = JSON.parse(data.toString());
+          runningTasks[dParse.uuid].kill();
+          delete runningTasks[dParse.uuid];
+          pullFromQ();
+          resolve(message.toString());
+        } catch (e) {
+          console.log(e, "error");
+        }
       });
-      worker.on("exit", () => {
-        threads.delete(worker);
+      child.on("close", (code) => {
         pullFromQ();
+        delete runningTasks[uuid];
       });
-      worker.on("error", (err) => {
-        console.log(err, "error");
-        worker.terminate();
+      child.stderr.on("data", (data) => {
+        console.log(data, "error");
+        runningTasks[uuid].kill();
+        delete runningTasks[uuid];
+        pullFromQ();
       });
     } else {
       console.log("queueing", "info");
