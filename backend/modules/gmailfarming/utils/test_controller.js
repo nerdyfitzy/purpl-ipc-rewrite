@@ -6,7 +6,7 @@ const stealth = require("puppeteer-extra-plugin-stealth");
 puppeteer.use(stealth());
 
 const { uuid, gmail, pass, proxy, recovery, security, type, group } =
-  process.argv[2];
+  JSON.parse(process.argv[2]);
 
 const humanTyping = async (element, word, page) => {
   for (let i = 0; i < word.length; i++) {
