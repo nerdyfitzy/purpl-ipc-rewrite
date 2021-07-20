@@ -1,11 +1,12 @@
 //meant to handle all gmail tasks
-const { Worker, isMainThread, parentPort } = require("worker_threads");
 const path = require("path");
 const fs = require("fs");
 const csv = require("csv-parser");
 const uuid = require("uuid");
 const clipboardy = require("clipboardy");
 const console = require("../../utils/logger");
+const { spawn } = require("child_process");
+let runningTasks = {};
 
 const { gmailSettings } = fs.existsSync(
   path.join(process.env.APPDATA, "purpl", "local-data", "config.json")
@@ -49,7 +50,6 @@ const runinputhigh = gmailSettings.runinputlow;
 
 //queued gmails
 let queued = [];
-const threads = new Set();
 const interests = ["gaming", "cooking", "tech", "fashion", "shoes"];
 
 const copy = (group, gmail, thing) => {
@@ -313,27 +313,23 @@ const setScore = (group, gmail, type, score) => {
 
 //REWRITE THIS FUNCTION ASAP!!!!
 const startAll = async (groupID) => {
-  if (isMainThread) {
-    for (const gmail in groups[groupID].gmails) {
-      if (!groups[groupID].gmails[gmail].running) {
-        await actionSpecific(gmail, groupID);
-      }
+  for (const gmail in groups[groupID].gmails) {
+    if (typeof runningTasks[gmail] === "undefined") {
+      actionSpecific(gmail, groupID);
     }
-
-    saveGmails();
   }
+
+  saveGmails();
 };
 
 const stopAll = async (groupID) => {
-  if (isMainThread) {
-    for (const gmail in groups[groupID].gmails) {
-      if (groups[groupID].gmails[gmail].running) {
-        await actionSpecific(gmail, groupID);
-      }
+  for (const gmail in groups[groupID].gmails) {
+    if (typeof runningTasks[gmail] !== "undefined") {
+      actionSpecific(gmail, groupID);
     }
-
-    saveGmails();
   }
+
+  saveGmails();
 };
 
 var statuses = [];
@@ -348,121 +344,131 @@ const saveCookies = (cookies, gmail, group) => {
   saveGmails();
 };
 
-const actionSpecific = async (specificUuid, groupID) => {
-  if (!groups[groupID].gmails[specificUuid].running) {
+const actionSpecific = (uuid, group, manualLogin = false) => {
+  if (
+    typeof runningTasks[uuid] === "undefined" &&
+    groups[group].gmails[uuid].status !== "Queued"
+  ) {
+    //start
     console.log(
       `[${new Date().toLocaleTimeString()}] - Starting gmail ${specificUuid}`,
       "info"
     );
 
-    //start gmail
-    groups[groupID].gmails[specificUuid].running = true;
-    //starts a specific gmail, method here to reduce clutter in task structure
+    groups[group].gmails[uuid].running = true;
     if (queueCheck()) {
       console.log(
         `[${new Date().toLocaleTimeString()}] - Gmail queued ${specificUuid}`,
         "info"
       );
       queued.push({
-        uuid: specificUuid,
-        groupID: groupID,
+        uuid: uuid,
+        groupID: group,
       });
       groups[groupID].gmails[specificUuid].status = "Queued";
       statuses.push({
-        uuid: specificUuid,
+        uuid: uuid,
         status: "Queued",
       });
+
       return "qd";
     } else {
-      //sleepIn is how long until browser will be slept
-      //returnIn is how long browser will be slept for
-
-      const data = {
-        gmail: groups[groupID].gmails[specificUuid],
-        sleepIn:
-          Date.now() +
-          Math.floor(
-            Math.random() *
-              (runinputhigh * 60000 - runinputlow * 60000 + runinputlow * 60000)
-          ),
-        returnIn: Math.floor(
+      const SLEEPIN =
+        Date.now() +
+        Math.floor(
           Math.random() *
-            (sleepinputhigh * 60000 -
-              sleepinputlow * 60000 +
-              sleepinputlow * 60000)
-        ),
-        manual: false,
-      };
-      const worker = new Worker(path.join(__dirname, "controller.js"), {
-        workerData: data,
-      });
-      threads.add(worker);
-      worker.on("message", (message) => {
+            (runinputhigh * 60000 - runinputlow * 60000 + runinputlow * 60000)
+        );
+      const RETURNIN = Math.floor(
+        Math.random() *
+          (sleepinputhigh * 60000 -
+            sleepinputlow * 60000 +
+            sleepinputlow * 60000)
+      );
+
+      const GMAIL = groups[group].gmails[uuid];
+      let args = [
+        path.join(__dirname, "controller.js"),
+        GMAIL,
+        SLEEPIN,
+        RETURNIN,
+      ];
+      if (manualLogin) args.push("-m");
+      const child = spawn("node", args);
+      runningTasks[uuid] = child;
+
+      child.stdout.on("data", (data) => {
         console.log(
           `[${new Date().toLocaleTimeString()}] - Received message ${JSON.stringify(
-            message
+            data.toString()
           )}`
         );
-        if (message.message.substring(0, 5) === "sleep") {
-          sleepBrowser(worker.workerData.gmail.uuid);
-        } else if (message.message === "stop") {
-          console.log(
-            `[${new Date().toLocaleTimeString()}] - Stopping worker ${
-              message.id
-            }`,
-            "debug"
-          );
-          worker.terminate();
-          statuses.push({
-            uuid: message.id,
-            status: "Idle",
-          });
-        } else if (message.cookie) {
-          saveCookies(message.cookies, message.gmail, message.group);
+        var dParse;
+        try {
+          dParse = JSON.parse(data.toString());
+        } catch (e) {
+          console.log(data, "info");
+        }
+        if (dParse.cookie)
+          saveCookies(dParse.cookies, dParse.gmail, dParse.group);
+        if (dParse.message === "stop") {
+          runningTasks[dParse.id].kill();
+        }
+        if (dParse.errors !== null) {
+          runningTasks[dParse.id].kill();
+        }
+        groups[dParse.group].gmails[dParse.id].status = dParse.message;
+        statuses.push({
+          uuid: dParse.id,
+          status: dParse.message,
+          errors: dParse.errors,
+        });
+      });
+      child.on("close", (code) => {
+        if (code === 0) {
+          //rewrite this
+          sleepBrowser(uuid, group);
         } else {
-          groups[message.group].gmails[message.id].status = message.message;
+          //errored out
           statuses.push({
-            uuid: message.id,
-            status: message.message,
-            errors: message.errors,
+            uuid: uuid,
+            status: "Fatal Error",
+            errors: "Fatal Error",
           });
+        }
 
-          //FOR THE TASK STATUSES ON UI
-        }
-      });
-      worker.on("error", (err) => {
-        console.log(
-          `[${new Date().toLocaleTimeString()}] - Worker encountered error ${err}`,
-          "error"
-        );
-        worker.terminate();
-      });
-      worker.on("exit", () => {
-        threads.delete(worker);
-        if (queued.length > 0) {
-          pullFromQueue();
-        }
+        if (queued.length > 0) pullFromQueue();
+
         console.log(
           `[${new Date().toLocaleTimeString()}] - Worker deleted`,
           "info"
         );
       });
+
+      child.stderr.on("data", (data) => {
+        console.log(
+          `[${new Date().toLocaleTimeString()}] - Ran into error ${data.toString()}`
+        );
+
+        child.kill();
+      });
+
       saveGmails();
       return true;
     }
+  } else if (groups[group].gmails[uuid].status === "Queued") {
+    //taske gmail out of q
+    const index = queued.indexOf({ uuid: uuid, groupID: group });
+    queued.splice(index, index);
   } else {
+    //stop running task
     console.log(
       `[${new Date().toLocaleTimeString()}] - Stopping gmail ${specificUuid}`,
       "info"
     );
-    //stop gmail
-    groups[groupID].gmails[specificUuid].running = false;
-    for (const worker of threads) {
-      worker.postMessage({
-        op: 2,
-        uuid: specificUuid,
-      });
-    }
+
+    groups[group].gmails[uuid].running = false;
+    runningTasks[uuid].kill();
     saveGmails();
     return false;
   }
@@ -470,86 +476,11 @@ const actionSpecific = async (specificUuid, groupID) => {
 //2 = stop
 //1 - manual login
 const manualLogin = async (uuid, group) => {
-  if (groups[group].gmails[uuid].running) {
-    for (const worker of threads) {
-      worker.postMessage({
-        op: 1,
-        uuid: uuid,
-      });
-    }
-  } else {
-    groups[group].gmails[uuid].running = true;
-    const data = {
-      gmail: groups[group].gmails[uuid],
-      sleepIn:
-        Date.now() +
-        Math.floor(
-          Math.random() *
-            (runinputhigh * 60000 - runinputlow * 60000 + runinputlow * 60000)
-        ),
-      returnIn: Math.floor(
-        Math.random() *
-          (sleepinputhigh * 60000 -
-            sleepinputlow * 60000 +
-            sleepinputlow * 60000)
-      ),
-      manual: true,
-    };
-    const worker = new Worker(path.join(__dirname, "controller.js"), {
-      workerData: data,
-    });
-    threads.add(worker);
-    worker.on("message", (message) => {
-      console.log(
-        `[${new Date().toLocaleTimeString()}] - Received message ${message}`,
-        "info"
-      );
-      if (message.message.substring(0, 5) === "sleep") {
-        sleepBrowser(worker.workerData.gmail.uuid);
-      } else if (message.message === "stop") {
-        console.log(
-          `[${new Date().toLocaleTimeString()}] - Stopping worker ${
-            message.id
-          }`,
-          "info"
-        );
-        worker.terminate();
-        statuses.push({
-          uuid: message.id,
-          status: "Idle",
-        });
-      } else if (message.cookie) {
-        saveCookies(message.cookies, message.gmail, message.group);
-      } else {
-        groups[message.group].gmails[message.id].status = message.message;
-        statuses.push({
-          uuid: message.id,
-          status: message.message,
-        });
-
-        //FOR THE TASK STATUSES ON UI
-      }
-    });
-    worker.on("error", (err) => {
-      console.log(
-        `[${new Date().toLocaleTimeString()}] - Worker encountered error ${err}`,
-        "error"
-      );
-      worker.terminate();
-    });
-    worker.on("exit", () => {
-      threads.delete(worker);
-      if (queued.length > 0) {
-        pullFromQueue();
-      }
-      console.log(
-        `[${new Date().toLocaleTimeString()}] - Worker deleted`,
-        info
-      );
-    });
+  if (typeof runningTasks[uuid] !== "undefined") {
+    await actionSpecific(uuid, group);
   }
 
-  saveGmails();
+  actionSpecific(uuid, group, true);
 };
 
 const testGmail = async (uuid, group, type) => {
@@ -579,13 +510,10 @@ const testGmail = async (uuid, group, type) => {
   });
 };
 
-//FIX THIS, FIND IF YOU CAN ACCESS WORKERDATA FROM OUTSIDE WORKER CONTEXT
-const sleepBrowser = (uuid, groupID, worker) => {
+const sleepBrowser = (uuid, groupID) => {
   if (queued.length > 0) {
     pullFromQueue();
   }
-
-  worker.terminate();
   queued.push({
     uuid: uuid,
     groupID: groupID,
@@ -595,7 +523,7 @@ const sleepBrowser = (uuid, groupID, worker) => {
 const queueCheck = () => {
   //check to see if there is already max number of browsers running, if so it returns true to queue the browser
   console.log(`[${new Date().toLocaleTimeString()}] - Checking q`, "info");
-  if (threads.size >= maxRunning) {
+  if (Object.values(runningTasks).length >= maxRunning) {
     console.log(`[${new Date().toLocaleTimeString()}] - Gmail queued`, "info");
     return true;
   } else {

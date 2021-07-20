@@ -15,6 +15,9 @@ const path = require("path");
 const stealth = require("puppeteer-extra-plugin-stealth");
 puppeteer.use(stealth());
 
+const { cookies, password, uuid, groupID, recovery, email, edu } =
+  process.argv[2];
+
 //parentport message format
 // {
 //     "id": "TASK ID",
@@ -25,27 +28,24 @@ puppeteer.use(stealth());
 const writeCookies = async (page) => {
   const client = await page.target().createCDPSession();
   // This gets all cookies from all URLs, not just the current URL
-  const cookies = (await client.send("Network.getAllCookies"))["cookies"];
+  const cookiesNew = (await client.send("Network.getAllCookies"))["cookies"];
 
-  console.log(`Saving ${cookies.length} cookies`, "debug");
-  parentPort.postMessage({
-    cookie: true,
-    cookies: cookies,
-    gmail: workerData.gmail.uuid,
-    group: workerData.gmail.groupID,
-    message: "",
-  });
-  return cookies;
+  console.log(`Saving ${cookiesNew.length} cookies`, "debug");
+  console.log(
+    JSON.stringify({
+      cookie: true,
+      cookies: cookiesNew,
+      gmail: uuid,
+      group: groupID,
+      message: "",
+    })
+  );
+  return cookiesNew;
 };
 
-const restoreCookies = async (page, cookies) => {
+const restoreCookies = async (page, cookiesNew) => {
   try {
-    // const cookies = await fs.readJSON(cookiesPath);
-    // let buf = fs.readFileSync(cookiesPath);
-    // let cookies = JSON.parse(buf);
-    console.log(`Loading ${cookies.length} cookies into the browser`, "info");
-    await page.setCookie(...cookies);
-    console.log("Loaded cookies", "info");
+    await page.setCookie(...cookiesNew);
   } catch (err) {
     console.log(err, "error");
   }
@@ -70,105 +70,133 @@ const loggedIn = async (page) => {
 };
 
 const runFlow = async (browserInfo) => {
-  console.log(`sleeping in ${workerData.sleepIn}`, "debug");
-  parentPort.postMessage({
-    id: workerData.gmail.uuid,
-    group: workerData.gmail.groupID,
-    errors: null,
-    message: "Subscribing To News",
-  });
-  await subscribe.subscribe(browserInfo.page, workerData.gmail.email);
+  console.log(`sleeping in ${process.argv[3]}`, "debug");
+  process.stdout.write(
+    JSON.stringify({
+      id: uuid,
+      group: groupID,
+      errors: null,
+      message: "Subscribing To News",
+    })
+  );
+  await subscribe.subscribe(browserInfo.page, email);
 
-  parentPort.postMessage({
-    id: workerData.gmail.uuid,
-    group: workerData.gmail.groupID,
-    errors: null,
-    message: "Checking Emails",
-  });
+  process.stdout.write(
+    JSON.stringify({
+      id: uuid,
+      group: groupID,
+      errors: null,
+      message: "Checking Emails",
+    })
+  );
   await emails.checkEmails(browserInfo.page);
 
-  parentPort.postMessage({
-    id: workerData.gmail.uuid,
-    group: workerData.gmail.groupID,
-    errors: null,
-    message: "Sending Emails",
-  });
+  process.stdout.write(
+    JSON.stringify({
+      id: uuid,
+      group: groupID,
+      errors: null,
+      message: "Sending Emails",
+    })
+  );
   await emails.sendEmails(browserInfo.page);
 
-  if (Date.now() >= workerData.sleepIn) {
-    parentPort.postMessage({
-      id: workerData.gmail.uuid,
-      group: workerData.gmail.groupID,
-      errors: null,
-      message: "Sleeping",
-    });
+  if (Date.now() >= process.argv[3]) {
+    process.stdout.write(
+      JSON.stringify({
+        id: uuid,
+        group: groupID,
+        errors: null,
+        message: "Sleeping",
+      })
+    );
+
+    process.exit(0);
   }
   let choice = Math.floor(Math.random() * 9 + 1);
   if (choice > 5) {
     //read news
-    parentPort.postMessage({
-      id: workerData.gmail.uuid,
-      group: workerData.gmail.groupID,
-      errors: null,
-      message: "Reading News",
-    });
+    process.stdout.write(
+      JSON.stringify({
+        id: uuid,
+        group: groupID,
+        errors: null,
+        message: "Reading News",
+      })
+    );
     await news.readNews(browserInfo.page);
   } else if (choice < 5) {
     //search google
-    parentPort.postMessage({
-      id: workerData.gmail.uuid,
-      group: workerData.gmail.groupID,
-      errors: null,
-      message: "Searching Google",
-    });
+    process.stdout.write(
+      JSON.stringify({
+        id: uuid,
+        group: groupID,
+        errors: null,
+        message: "Searching Google",
+      })
+    );
     await google.google(browserInfo.page);
   } else {
-    parentPort.postMessage({
-      id: workerData.gmail.uuid,
-      group: workerData.gmail.groupID,
-      errors: null,
-      message: "Viewing Images",
-    });
+    process.stdout.write(
+      JSON.stringify({
+        id: uuid,
+        group: groupID,
+        errors: null,
+        message: "Viewing Images",
+      })
+    );
     await images.images(browserInfo.page);
   }
 
   //check sleep time
-  if (Date.now() >= workerData.sleepIn) {
-    parentPort.postMessage({
-      id: workerData.gmail.uuid,
-      group: workerData.gmail.groupID,
-      errors: null,
-      message: "Sleeping",
-    });
+  if (Date.now() >= process.argv[3]) {
+    process.stdout.write(
+      JSON.stringify({
+        id: uuid,
+        group: groupID,
+        errors: null,
+        message: "Sleeping",
+      })
+    );
+
+    process.exit(0);
   }
 
-  if (!workerData.gmail.edu) {
+  if (!edu) {
     //watch youtube 1-2 vids
-    parentPort.postMessage({
-      id: workerData.gmail.uuid,
-      group: workerData.gmail.groupID,
-      errors: null,
-      message: "Watching Youtube",
-    });
+    process.stdout.write(
+      JSON.stringify({
+        id: uuid,
+        group: groupID,
+        errors: null,
+        message: "Watching Youtube",
+      })
+    );
     await youtube.watchYT(browserInfo.page);
   } else {
     //do google docs
-    parentPort.postMessage({
-      id: workerData.gmail.uuid,
-      group: workerData.gmail.groupID,
-      errors: null,
-      message: "Writing Docs",
-    });
+    process.stdout.write(
+      JSON.stringify({
+        id: uuid,
+        group: groupID,
+        errors: null,
+        message: "Writing Docs",
+      })
+    );
     await docs.docs(browserInfo.page);
   }
 
-  parentPort.postMessage({
-    id: workerData.gmail.uuid,
-    group: workerData.gmail.groupID,
-    errors: null,
-    message: "Sleeping",
-    data: {},
-  });
+  process.stdout.write(
+    JSON.stringify({
+      id: uuid,
+      group: groupID,
+      errors: null,
+      message: "Sleeping",
+      data: {},
+    })
+  );
+
+  process.exit(0);
 };
 
 const login = async (browser, proxy) => {
@@ -184,8 +212,8 @@ const login = async (browser, proxy) => {
       });
     }
   }
-  if (typeof workerData.gmail.cookies !== "undefined") {
-    await restoreCookies(page, workerData.gmail.cookies);
+  if (typeof cookies !== "undefined") {
+    await restoreCookies(page, cookies);
     await page.goto("https://accounts.google.com/");
     await page.waitFor(2000);
     if (
@@ -201,25 +229,29 @@ const login = async (browser, proxy) => {
       );
       await humanTyping(
         "#password > div.aCsJod.oJeWuf > div > div.Xb9hP > input",
-        workerData.gmail.password,
+        password,
         page
       );
       await page.click("#passwordNext > div > button > div.VfPpkd-RLmnJb");
       await page.waitForNavigation();
       let emailHTML = await page.evaluate(() => document.body.innerHTML);
       if (emailHTML.includes("Wrong password.")) {
-        parentPort.postMessage({
-          id: workerData.gmail.uuid,
-          group: workerData.gmail.groupID,
-          errors: null,
-          message: "Incorrect Password! Stopping.",
-        });
+        process.stdout.write(
+          JSON.stringify({
+            id: uuid,
+            group: groupID,
+            errors: null,
+            message: "Incorrect Password! Stopping.",
+          })
+        );
         browser.close();
-        parentPort.postMessage({
-          id: workerData.gmail.uuid,
-          group: workerData.gmail.groupID,
-          message: "stop",
-        });
+        process.stdout.write(
+          JSON.stringify({
+            id: uuid,
+            group: groupID,
+            message: "stop",
+          })
+        );
       }
 
       if (page.url().includes("https://myaccount.google.com/")) {
@@ -253,7 +285,7 @@ const login = async (browser, proxy) => {
           await page.waitForSelector("#knowledge-preregistered-email-response");
           await humanTyping(
             "#knowledge-preregistered-email-response",
-            workerData.gmail.recovery,
+            recovery,
             page
           );
           await page.click(
@@ -297,11 +329,7 @@ const login = async (browser, proxy) => {
             );
           }
           await page.waitForSelector("#secret-question-response");
-          await humanTyping(
-            "#secret-question-response",
-            workerData.gmail.security,
-            page
-          );
+          await humanTyping("#secret-question-response", security, page);
           await page.waitForNavigation();
           if (page.url().includes("https://myaccount.google.com/")) {
             writeCookies(page);
@@ -316,12 +344,14 @@ const login = async (browser, proxy) => {
           }
         } else {
           browser.close();
-          parentPort.postMessage({
-            id: workerData.gmail.uuid,
-            group: workerData.gmail.groupID,
-            errors: null,
-            message: "Manual Login Required!",
-          });
+          process.stdout.write(
+            JSON.stringify({
+              id: uuid,
+              group: groupID,
+              errors: null,
+              message: "Manual Login Required!",
+            })
+          );
         }
       }
     } else {
@@ -332,22 +362,26 @@ const login = async (browser, proxy) => {
     }
   } else {
     const navigationPromise = page.waitForNavigation();
-    parentPort.postMessage({
-      id: workerData.gmail.uuid,
-      group: workerData.gmail.groupID,
-      errors: null,
-      message: "Logging in...",
-    });
+    process.stdout.write(
+      JSON.stringify({
+        id: uuid,
+        group: groupID,
+        errors: null,
+        message: "Logging in...",
+      })
+    );
     try {
       await page.goto("https://accounts.google.com/");
     } catch (e) {
       if (e.includes("PROXY_CONNECTION_FAILED"))
-        parentPort.postMessage({
-          id: workerData.gmail.uuid,
-          group: workerData.gmail.groupID,
-          errors: "Proxy Error",
-          message: "Proxy Error",
-        });
+        process.stdout.write(
+          JSON.stringify({
+            id: uuid,
+            group: groupID,
+            errors: "Proxy Error",
+            message: "Proxy Error",
+          })
+        );
     }
 
     await navigationPromise;
@@ -357,7 +391,7 @@ const login = async (browser, proxy) => {
 
     await navigationPromise;
 
-    await humanTyping('input[type="email"]', workerData.gmail.email, page);
+    await humanTyping('input[type="email"]', email, page);
 
     await page.waitForSelector("#identifierNext");
     await page.click("#identifierNext");
@@ -366,18 +400,22 @@ const login = async (browser, proxy) => {
     let emailHTML = await page.evaluate(() => document.body.innerHTML);
     if (emailHTML.includes("Couldn't find your Google Account")) {
       console.log("couldnt find acc", "error");
-      parentPort.postMessage({
-        id: workerData.gmail.uuid,
-        group: workerData.gmail.groupID,
-        errors: "Invalid Email",
-        message: "Email Invalid! Stopping.",
-      });
+      process.stdout.write(
+        JSON.stringify({
+          id: uuid,
+          group: groupID,
+          errors: "Invalid Email",
+          message: "Email Invalid! Stopping.",
+        })
+      );
       browser.close();
-      parentPort.postMessage({
-        id: workerData.gmail.uuid,
-        group: workerData.gmail.groupID,
-        message: "stop",
-      });
+      process.stdout.write(
+        JSON.stringify({
+          id: uuid,
+          group: groupID,
+          message: "stop",
+        })
+      );
     }
 
     await page.waitForSelector(
@@ -386,29 +424,29 @@ const login = async (browser, proxy) => {
     await page.click('input[type="email"]');
     await page.waitFor(500);
 
-    await humanTyping(
-      'input[type="password"]',
-      workerData.gmail.password,
-      page
-    );
+    await humanTyping('input[type="password"]', password, page);
     await page.waitForSelector("#passwordNext");
     await page.click("#passwordNext");
 
     await page.waitFor(2500);
     emailHTML = await page.evaluate(() => document.body.innerHTML);
     if (emailHTML.includes("Wrong password.")) {
-      parentPort.postMessage({
-        id: workerData.gmail.uuid,
-        group: workerData.gmail.groupID,
-        errors: null,
-        message: "Incorrect Password! Stopping.",
-      });
+      process.stdout.write(
+        JSON.stringify({
+          id: uuid,
+          group: groupID,
+          errors: null,
+          message: "Incorrect Password! Stopping.",
+        })
+      );
       browser.close();
-      parentPort.postMessage({
-        id: workerData.gmail.uuid,
-        group: workerData.gmail.groupID,
-        message: "stop",
-      });
+      process.stdout.write(
+        JSON.stringify({
+          id: uuid,
+          group: groupID,
+          message: "stop",
+        })
+      );
     }
 
     if (page.url().includes("https://myaccount.google.com/")) {
@@ -442,7 +480,7 @@ const login = async (browser, proxy) => {
         await page.waitForSelector("#knowledge-preregistered-email-response");
         await humanTyping(
           "#knowledge-preregistered-email-response",
-          workerData.gmail.recovery,
+          recovery,
           page
         );
         await page.click(
@@ -482,11 +520,7 @@ const login = async (browser, proxy) => {
           );
         }
         await page.waitForSelector("#secret-question-response");
-        await humanTyping(
-          "#secret-question-response",
-          workerData.gmail.security,
-          page
-        );
+        await humanTyping("#secret-question-response", security, page);
         await page.waitForNavigation();
         if (page.url().includes("https://myaccount.google.com/")) {
           writeCookies(page);
@@ -499,162 +533,115 @@ const login = async (browser, proxy) => {
         }
       } else {
         browser.close();
-        parentPort.postMessage({
-          id: workerData.gmail.uuid,
-          group: workerData.gmail.groupID,
-          errors: null,
-          message: "Manual Login Required!",
-        });
+        process.stdout.write(
+          JSON.stringify({
+            id: uuid,
+            group: groupID,
+            errors: null,
+            message: "Manual Login Required!",
+          })
+        );
       }
     }
   }
 };
-let listenerb = false;
-const listener = (browser1) => {
-  listenerb = true;
-  parentPort.on("message", async (message) => {
-    if (message.uuid === workerData.gmail.uuid && message.op === 1) {
-      browser1.close();
-      const browserHeaded = await puppeteer.launch({
+
+(async () => {
+  try {
+    //STOP TASKS N SHITTTT
+
+    if (process.argv[5] === "-m") {
+      var browserHeaded = await puppeteer.launch({
         headless: false,
         executablePath:
           "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",
       });
-      const pageH = await browserHeaded.newPage();
+      var pageH = await browserHeaded.newPage();
       await pageH.setUserAgent(
         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36"
       );
       await pageH.goto("https://accounts.google.com/");
       await loggedIn(pageH);
-      await pageH.goto("chrome://version");
-      let temp = await pageH.evaluate(
-        () => document.getElementById("profile_path").innerHTML
-      );
-      let userDataDir = temp.split("\\Default")[0];
-      var browser = await puppeteer.launch({
-        headless: false,
-        executablePath:
-          "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",
-        args: [`--user-data-dir=${userDataDir}`],
-      });
-      var page = await browser.newPage();
+      let cookies = await writeCookies(pageH);
       browserHeaded.close();
-      writeCookies(page);
-      runFlow({
-        browser: browser,
-        page: page,
-      });
-    } else if (workerData.gmail.uuid === message.uuid && message.op === 2) {
-      browser1.close();
-      parentPort.postMessage({
-        id: workerData.gmail.uuid,
-        group: workerData.gmail.groupID,
-        message: "stop",
-      });
-    }
-  });
-};
+      //mark
 
-if (isMainThread) {
-} else {
-  (async () => {
-    try {
-      //STOP TASKS N SHITTTT
-
-      if (workerData.manual) {
-        var browserHeaded = await puppeteer.launch({
-          headless: false,
+      if (proxy !== "localhost") {
+        let proxy = proxy;
+        var browser = await puppeteer.launch({
+          headless: true,
+          executablePath:
+            "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",
+          args: [
+            `--proxy-server=${proxy.split(":")[0]}:${proxy.split(":")[1]}`,
+          ],
+        });
+        var page = await browser.newPage();
+        await restoreCookies(page, cookies);
+        await page.goto("https://accounts.google.com/");
+        runFlow({
+          browser: browser,
+          page: page,
+        });
+      } else {
+        var browser = await puppeteer.launch({
+          headless: true,
           executablePath:
             "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",
         });
-        var pageH = await browserHeaded.newPage();
-        await pageH.setUserAgent(
-          "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36"
-        );
-        await pageH.goto("https://accounts.google.com/");
-        await loggedIn(pageH);
-        let cookies = await writeCookies(pageH);
-        browserHeaded.close();
-        //mark
-
-        if (workerData.gmail.proxy !== "localhost") {
-          let proxy = workerData.gmail.proxy;
-          var browser = await puppeteer.launch({
-            headless: true,
-            executablePath:
-              "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",
-            args: [
-              `--proxy-server=${proxy.split(":")[0]}:${proxy.split(":")[1]}`,
-            ],
-          });
-          listener(browser);
-          var page = await browser.newPage();
-          await restoreCookies(page, cookies);
-          await page.goto("https://accounts.google.com/");
-          runFlow({
-            browser: browser,
-            page: page,
-          });
-        } else {
-          var browser = await puppeteer.launch({
-            headless: true,
-            executablePath:
-              "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",
-          });
-          listener(browser);
-          var page = await browser.newPage();
-          await restoreCookies(page, cookies);
-          await page.goto("https://accounts.google.com/");
-          runFlow({
-            browser: browser,
-            page: page,
-          });
-        }
-      } else {
-        if (workerData.gmail.proxy !== "localhost") {
-          let proxy = workerData.gmail.proxy;
-          var browser = await puppeteer.launch({
-            headless: true,
-            executablePath:
-              "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",
-            args: [
-              "--proxy-server=" +
-                proxy.split(":")[0] +
-                ":" +
-                proxy.split(":")[1],
-            ],
-          });
-          listener(browser);
-          login(browser, proxy);
-        } else {
-          var browser = await puppeteer.launch({
-            headless: true,
-            executablePath:
-              "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",
-          });
-          listener(browser);
-          login(browser);
-        }
+        var page = await browser.newPage();
+        await restoreCookies(page, cookies);
+        await page.goto("https://accounts.google.com/");
+        runFlow({
+          browser: browser,
+          page: page,
+        });
       }
+    } else {
+      if (proxy !== "localhost") {
+        let proxy = proxy;
+        var browser = await puppeteer.launch({
+          headless: true,
+          executablePath:
+            "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",
+          args: [
+            "--proxy-server=" + proxy.split(":")[0] + ":" + proxy.split(":")[1],
+          ],
+        });
+        listener(browser);
+        login(browser, proxy);
+      } else {
+        var browser = await puppeteer.launch({
+          headless: true,
+          executablePath:
+            "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe",
+        });
+        listener(browser);
+        login(browser);
+      }
+    }
 
-      parentPort.postMessage({
-        id: workerData.gmail.uuid,
-        group: workerData.gmail.groupID,
+    process.stdout.write(
+      JSON.stringify({
+        id: uuid,
+        group: groupID,
         errors: null,
         message: "Starting Task",
-      });
-    } catch (err) {
-      if (browser) {
-        browser.close();
-      }
-      parentPort.postMessage({
-        id: workerData.gmail.uuid,
-        group: workerData.gmail.groupID,
-        errors: null,
+      })
+    );
+  } catch (err) {
+    if (browser) {
+      browser.close();
+    }
+    process.stdout.write(
+      JSON.stringify({
+        id: uuid,
+        group: groupID,
+        errors: err,
         message: err.includes("PROXY_CONNECTION_FAILED")
           ? "Proxy Error"
           : "Manual Login Required!",
-      });
-    }
-  })();
-}
+      })
+    );
+  }
+})();
