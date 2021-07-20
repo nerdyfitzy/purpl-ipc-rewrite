@@ -57,7 +57,7 @@ const copy = (group, gmail, thing) => {
 };
 
 //GROUP FUNCTIONS
-const addGroup = (name, tags) => {
+const addGroup = (name, tags, save = true) => {
   const groupuuid = uuid.v4();
   groups[groupuuid] = {
     uuid: groupuuid,
@@ -65,7 +65,7 @@ const addGroup = (name, tags) => {
     tags: tags,
     gmails: {},
   };
-  saveGmails();
+  if (save) saveGmails();
   return groups[groupuuid];
 };
 
@@ -80,7 +80,15 @@ const deleteGroup = (id) => {
   saveGmails();
 };
 
-const newGmail = async (email1, pass, proxy, recovery, security, group) => {
+const newGmail = async (
+  email1,
+  pass,
+  proxy,
+  recovery,
+  security,
+  group,
+  save = true
+) => {
   const testv3OnAdd = false;
   if (!proxy) {
     let proxy = "localhost";
@@ -140,10 +148,7 @@ const newGmail = async (email1, pass, proxy, recovery, security, group) => {
     }
 
     groups[group].gmails[gmail.uuid] = gmail;
-    fs.writeFileSync(
-      path.join(process.env.APPDATA, "purpl", "local-data", "gmails.json"),
-      JSON.stringify(groups)
-    );
+    if (save) saveGmails();
     return gmail;
     //do this on close
   }
@@ -168,7 +173,8 @@ const importFromFile = (path) => {
                 row.Proxy,
                 row["Recovery Email"],
                 row["Security Answer"],
-                "default"
+                "default",
+                false
               );
             } else if (typeof newGroups[row.Category] === "undefined") {
               const newG = await addGroup(row["Category"], "Other");
@@ -182,7 +188,8 @@ const importFromFile = (path) => {
                 row["Proxy"],
                 row["Recovery Email"],
                 row["Security Answer"],
-                newG.uuid
+                newG.uuid,
+                false
               );
             } else if (typeof newGroups[row.Category] !== "undefined") {
               newGmail(
@@ -191,11 +198,12 @@ const importFromFile = (path) => {
                 row["Proxy"],
                 row["Recovery Email"],
                 row["Security Answer"],
-                newGroups[row["Category"]].uuid
+                newGroups[row["Category"]].uuid,
+                false
               );
             }
           }
-
+          saveGmails();
           resolve(groups);
         });
     } else {
@@ -351,21 +359,21 @@ const actionSpecific = (uuid, group, manualLogin = false) => {
   ) {
     //start
     console.log(
-      `[${new Date().toLocaleTimeString()}] - Starting gmail ${specificUuid}`,
+      `[${new Date().toLocaleTimeString()}] - Starting gmail ${uuid}`,
       "info"
     );
 
     groups[group].gmails[uuid].running = true;
     if (queueCheck()) {
       console.log(
-        `[${new Date().toLocaleTimeString()}] - Gmail queued ${specificUuid}`,
+        `[${new Date().toLocaleTimeString()}] - Gmail queued ${uuid}`,
         "info"
       );
       queued.push({
         uuid: uuid,
         groupID: group,
       });
-      groups[groupID].gmails[specificUuid].status = "Queued";
+      groups[groupID].gmails[uuid].status = "Queued";
       statuses.push({
         uuid: uuid,
         status: "Queued",
@@ -387,9 +395,10 @@ const actionSpecific = (uuid, group, manualLogin = false) => {
       );
 
       const GMAIL = groups[group].gmails[uuid];
+      console.log(JSON.stringify(GMAIL));
       let args = [
         path.join(__dirname, "controller.js"),
-        GMAIL,
+        JSON.stringify(GMAIL),
         SLEEPIN,
         RETURNIN,
       ];
@@ -403,26 +412,24 @@ const actionSpecific = (uuid, group, manualLogin = false) => {
             data.toString()
           )}`
         );
-        var dParse;
+
         try {
-          dParse = JSON.parse(data.toString());
-        } catch (e) {
-          console.log(data, "info");
-        }
-        if (dParse.cookie)
-          saveCookies(dParse.cookies, dParse.gmail, dParse.group);
-        if (dParse.message === "stop") {
-          runningTasks[dParse.id].kill();
-        }
-        if (dParse.errors !== null) {
-          runningTasks[dParse.id].kill();
-        }
-        groups[dParse.group].gmails[dParse.id].status = dParse.message;
-        statuses.push({
-          uuid: dParse.id,
-          status: dParse.message,
-          errors: dParse.errors,
-        });
+          const dParse = JSON.parse(data.toString());
+          if (dParse.cookie)
+            saveCookies(dParse.cookies, dParse.gmail, dParse.group);
+          if (dParse.message === "stop") {
+            runningTasks[dParse.id].kill();
+          }
+          if (dParse.errors !== null) {
+            runningTasks[dParse.id].kill();
+          }
+          groups[dParse.group].gmails[dParse.id].status = dParse.message;
+          statuses.push({
+            uuid: dParse.id,
+            status: dParse.message,
+            errors: dParse.errors,
+          });
+        } catch (e) {}
       });
       child.on("close", (code) => {
         if (code === 0) {
@@ -463,7 +470,7 @@ const actionSpecific = (uuid, group, manualLogin = false) => {
   } else {
     //stop running task
     console.log(
-      `[${new Date().toLocaleTimeString()}] - Stopping gmail ${specificUuid}`,
+      `[${new Date().toLocaleTimeString()}] - Stopping gmail ${uuid}`,
       "info"
     );
 

@@ -14,8 +14,10 @@ const path = require("path");
 const stealth = require("puppeteer-extra-plugin-stealth");
 puppeteer.use(stealth());
 
-const { cookies, password, uuid, groupID, recovery, email, edu } =
-  process.argv[2];
+const { cookies, password, uuid, groupID, recovery, email, edu, proxy } =
+  JSON.parse(process.argv[2]);
+
+console.log("ARGS " + JSON.stringify(process.argv[2]));
 
 //parentport message format
 // {
@@ -596,7 +598,7 @@ const login = async (browser, proxy) => {
         });
       }
     } else {
-      if (proxy !== "localhost") {
+      if (proxy !== "localhost" || typeof proxy !== "undefined") {
         var browser = await puppeteer.launch({
           headless: true,
           executablePath:
@@ -628,15 +630,17 @@ const login = async (browser, proxy) => {
     if (browser) {
       browser.close();
     }
-    process.stdout.write(
-      JSON.stringify({
-        id: uuid,
-        group: groupID,
-        errors: err,
-        message: err.includes("PROXY_CONNECTION_FAILED")
-          ? "Proxy Error"
-          : "Manual Login Required!",
-      })
-    );
+
+    console.log(err, "error");
+    // process.stdout.write(
+    //   JSON.stringify({
+    //     id: uuid,
+    //     group: groupID,
+    //     errors: err,
+    //     message: err.includes("PROXY_CONNECTION_FAILED")
+    //       ? "Proxy Error"
+    //       : "Manual Login Required!",
+    //   })
+    // );
   }
 })();
